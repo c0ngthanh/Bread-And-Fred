@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class player1 : MonoBehaviour
+public class player1 : NetworkBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2d;
     private Animator ani;
     private SpriteRenderer sprite;
     [SerializeField] private LayerMask GroundLayer;
+    private float jumpSpeed = 18;
+    private float dirX;
     // Vector2 movement;
     void Start()
     {
@@ -21,13 +24,32 @@ public class player1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        float dirX = Input.GetAxisRaw("Horizontal");
+        if(!IsOwner) return;
+        // float dirX = Input.GetAxisRaw("Horizontal");
+        // playerMove(dirX);
+        // if (isGrounded() && Input.GetKeyDown(KeyCode.W))
+        // {
+        //     GetComponent<Rigidbody2D>().velocity = new Vector3(0, 18, 0);
+        // }
+        // float horizontal = Input.GetAxisRaw("Horizontal");
+        // float vertical = Input.GetAxisRaw("Vertical");
+        // movement = new Vector2(horizontal, vertical);
+        // // rb.velocity = new Vector2(getX, getY)*speed;
+        dirX = Input.GetAxisRaw("Horizontal");
+    }
+    private void FixedUpdate()
+    {
+        if (!IsOwner) return;
         playerMove(dirX);
         if (isGrounded() && Input.GetKeyDown(KeyCode.W))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector3(0, 18, 0);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(rb.velocity.x,jumpSpeed);
         }
+        // rb.velocity = new Vector2(movement.x * speed * Time.deltaTime, rb.velocity.y);
+        // if (Input.GetKeyDown(KeyCode.W))
+        // {
+        //     rb.AddForce(Vector2.up * jumpSpeed);
+        // }
     }
 
     private void playerMove(float dirX)
