@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class player1 : NetworkBehaviour
+public class player1multiplayer : NetworkBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2d;
@@ -24,7 +24,7 @@ public class player1 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(!IsOwner) return;
+        if(!IsOwner) return;
         // float dirX = Input.GetAxisRaw("Horizontal");
         // playerMove(dirX);
         // if (isGrounded() && Input.GetKeyDown(KeyCode.W))
@@ -39,7 +39,7 @@ public class player1 : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        // if (!IsOwner) return;
+        if (!IsOwner) return;
         playerMove(dirX);
         if (isGrounded() && Input.GetKeyDown(KeyCode.W))
         {
