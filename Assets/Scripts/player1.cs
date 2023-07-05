@@ -36,6 +36,10 @@ public class player1 : NetworkBehaviour
         // movement = new Vector2(horizontal, vertical);
         // // rb.velocity = new Vector2(getX, getY)*speed;
         dirX = Input.GetAxisRaw("Horizontal");
+        if (isGrounded() && Input.GetKeyDown(KeyCode.W))
+        {
+            FixedUpdate();
+        }
     }
     private void FixedUpdate()
     {
@@ -43,7 +47,7 @@ public class player1 : NetworkBehaviour
         playerMove(dirX);
         if (isGrounded() && Input.GetKeyDown(KeyCode.W))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(rb.velocity.x,jumpSpeed);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
         // rb.velocity = new Vector2(movement.x * speed * Time.deltaTime, rb.velocity.y);
         // if (Input.GetKeyDown(KeyCode.W))
@@ -59,12 +63,12 @@ public class player1 : NetworkBehaviour
             if (isGrounded())
             {
                 ani.SetBool("sitting", true);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(dirX * 0f, 0);
             }
         }
         else
         {
             ani.SetBool("sitting", false);
-
             rb.velocity = new Vector2(dirX * 9f, rb.velocity.y);
             updateAnimation(dirX);
         }
