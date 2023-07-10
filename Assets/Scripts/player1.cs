@@ -43,12 +43,12 @@ public class player1 : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        // if (!IsOwner) return;
         playerMove(dirX);
         if (isGrounded() && Input.GetKeyDown(KeyCode.W))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
+        // if (!IsOwner) return;
         // rb.velocity = new Vector2(movement.x * speed * Time.deltaTime, rb.velocity.y);
         // if (Input.GetKeyDown(KeyCode.W))
         // {
