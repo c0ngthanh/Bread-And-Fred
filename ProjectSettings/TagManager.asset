@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Crank
   - Rope
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - Ground
   - Rock
   - 
@@ -43,7 +44,16 @@ TagManager:
   - name: Background
     uniqueID: 3347149453
     locked: 0
-  - name: SubBackground
+  - name: Moutain1
+    uniqueID: 263283251
+    locked: 0
+  - name: Moutain2
+    uniqueID: 2423689785
+    locked: 0
+  - name: Cloud
+    uniqueID: 1419088849
+    locked: 0
+  - name: Tree
     uniqueID: 3709923817
     locked: 0
   - name: Default

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d136e7f1f90d442880981aaf1f6f70, type: 3}
+  m_Name: Rex
+  m_EditorClassIdentifier: 
+  id: 1
+  displayName: Rex - Water
+  icon: {fileID: -635960911, guid: b2e1a077293606845bffc252db5ab4e3, type: 3}
+  introPrefab: {fileID: 4307209440560213956, guid: 4b978ef1b027ff5419d55d738599433a, type: 3}
+  gameplayPrefab: {fileID: 6094754241921371944, guid: 10ab2545f0237094d83e14e1e9a4fcb8, type: 3}
