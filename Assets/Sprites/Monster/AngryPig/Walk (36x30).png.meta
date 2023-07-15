@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 41b53e0b86810d549a95f4610be397a6
+guid: 0788089fe1141de47b50a8a5849f2145
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -20,12 +20,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -48,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -64,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -72,12 +70,11 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -90,7 +87,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -103,7 +99,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -116,33 +111,19 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DinoSprites - doux_0
+      name: Walk (36x30)_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 352ec9675f7bdf14a8a4766b12288267
-      internalID: -635960911
+      spriteID: acf72b430c051b147987f074982dece3
+      internalID: 1276694432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_1
+      name: Walk (36x30)_1
       rect:
         serializedVersion: 2
-        x: 24
+        x: 36
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,41 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c78bc575650e3e4ba70f6573794599b
-      internalID: -636468339
+      spriteID: 011ded31f83625e48b1fa587c5c327e9
+      internalID: -1693560781
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_2
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 861a1e19deb465c4a9422a2541f30a33
-      internalID: -1535283797
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_3
+      name: Walk (36x30)_2
       rect:
         serializedVersion: 2
         x: 72
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 718d01a7fe35d0d4fa2b34bca3e4e520
-      internalID: 597513381
+      spriteID: 0a1aec7eb1a5bd2469935334c3a2df95
+      internalID: 1119772265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_4
+      name: Walk (36x30)_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 108
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,41 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0167a7d369e8d2d43b18b29a2e807b5d
-      internalID: 2088253307
+      spriteID: fa14093e1553fa4449994a1f80651082
+      internalID: -1301283954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_5
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d42c6f9429cc4e749befb5a0317fdbd1
-      internalID: -2004797219
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_6
+      name: Walk (36x30)_4
       rect:
         serializedVersion: 2
         x: 144
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10b4ea3f1c994504aac72df756f30baa
-      internalID: 1639066523
+      spriteID: a36b1a5ac7a76344a98ad7477c0e7127
+      internalID: -1856433285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_7
+      name: Walk (36x30)_5
       rect:
         serializedVersion: 2
-        x: 168
+        x: 180
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,41 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bfcc74d3fec4ee4f874e73a89eed6e3
-      internalID: -1577312624
+      spriteID: c883af37b613aa247973a88800f343fe
+      internalID: -1484828308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_8
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 042bf4e0fc560ed4f95ce9538c2c9533
-      internalID: 877448292
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_9
+      name: Walk (36x30)_6
       rect:
         serializedVersion: 2
         x: 216
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -339,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83984bdb0ce85d74eb7ba6b3141be67d
-      internalID: -1547100785
+      spriteID: c531571ffae17f54c881b0db715a81a6
+      internalID: -1503714120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_10
+      name: Walk (36x30)_7
       rect:
         serializedVersion: 2
-        x: 240
+        x: 252
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -360,41 +278,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13d0f194f1355b34181d66f6d4e5b443
-      internalID: 1779544946
+      spriteID: 5a38d78459e166845bedb9f85a1aae88
+      internalID: 2081419064
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_11
-      rect:
-        serializedVersion: 2
-        x: 264
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 54d254b9edb6320428b3c5b306dc7330
-      internalID: -361142787
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_12
+      name: Walk (36x30)_8
       rect:
         serializedVersion: 2
         x: 288
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,20 +299,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14a29fa6a1242d144b8d98cb2a584b4a
-      internalID: -206693519
+      spriteID: 344f55d11cd658446919b49382e44be9
+      internalID: -221163216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_13
+      name: Walk (36x30)_9
       rect:
         serializedVersion: 2
-        x: 312
+        x: 324
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,41 +320,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a269f88095260164a8e85f7a50b351bb
-      internalID: 1135766580
+      spriteID: b16a6f415ea07de4a93f326e9e532ba3
+      internalID: -652608607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_14
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 71419173c0a5f7844905c6de2d899739
-      internalID: -466050063
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_15
+      name: Walk (36x30)_10
       rect:
         serializedVersion: 2
         x: 360
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -465,20 +341,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4595deec2b61e247b384e91f2391896
-      internalID: 2038580241
+      spriteID: c6fda50543af97c4e843f64e8c6f2541
+      internalID: 33107750
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_16
+      name: Walk (36x30)_11
       rect:
         serializedVersion: 2
-        x: 384
+        x: 396
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,41 +362,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 034e23c985a8f8e4f85e46e76ad11a71
-      internalID: 323719677
+      spriteID: a18635467ad2f0b4aa38b429f8882979
+      internalID: 1060262032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_17
-      rect:
-        serializedVersion: 2
-        x: 408
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86c96ced3af8f8d43bab72566729071f
-      internalID: 902755162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_18
+      name: Walk (36x30)_12
       rect:
         serializedVersion: 2
         x: 432
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -528,20 +383,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14e7db7382df5d04bb0cf780190ff29f
-      internalID: -1235192765
+      spriteID: 5940239f619b6284991f37ba9216dc2a
+      internalID: 1476884083
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_19
+      name: Walk (36x30)_13
       rect:
         serializedVersion: 2
-        x: 456
+        x: 468
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -549,41 +404,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 579d33091abd80c408d63ed541bada08
-      internalID: -625813052
+      spriteID: b1b6ea34d1deb5b4eb8ff2dfcff46262
+      internalID: -219614232
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_20
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a7639014c32a054889fbfb06ecc3b0f
-      internalID: -2111616763
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_21
+      name: Walk (36x30)_14
       rect:
         serializedVersion: 2
         x: 504
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -591,20 +425,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 519d3bc916273224aaf14530544390a2
-      internalID: -952001897
+      spriteID: c2b21d5a617d5f5439c7592434bcc603
+      internalID: 1816800318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DinoSprites - doux_22
+      name: Walk (36x30)_15
       rect:
         serializedVersion: 2
-        x: 528
+        x: 540
         y: 0
-        width: 24
-        height: 24
+        width: 36
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -612,29 +446,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da6722b302959d44bbfb934f13242a30
-      internalID: -1116202329
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DinoSprites - doux_23
-      rect:
-        serializedVersion: 2
-        x: 552
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ba4ea9f57e7b2d48bded1c7d6229146
-      internalID: 930812087
+      spriteID: fbd875baf77b3f946886e00c507e877c
+      internalID: 720420247
       vertices: []
       indices: 
       edges: []
@@ -643,39 +456,32 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DinoSprites - doux_0: -635960911
-      DinoSprites - doux_1: -636468339
-      DinoSprites - doux_10: 1779544946
-      DinoSprites - doux_11: -361142787
-      DinoSprites - doux_12: -206693519
-      DinoSprites - doux_13: 1135766580
-      DinoSprites - doux_14: -466050063
-      DinoSprites - doux_15: 2038580241
-      DinoSprites - doux_16: 323719677
-      DinoSprites - doux_17: 902755162
-      DinoSprites - doux_18: -1235192765
-      DinoSprites - doux_19: -625813052
-      DinoSprites - doux_2: -1535283797
-      DinoSprites - doux_20: -2111616763
-      DinoSprites - doux_21: -952001897
-      DinoSprites - doux_22: -1116202329
-      DinoSprites - doux_23: 930812087
-      DinoSprites - doux_3: 597513381
-      DinoSprites - doux_4: 2088253307
-      DinoSprites - doux_5: -2004797219
-      DinoSprites - doux_6: 1639066523
-      DinoSprites - doux_7: -1577312624
-      DinoSprites - doux_8: 877448292
-      DinoSprites - doux_9: -1547100785
-  mipmapLimitGroupName: 
+      Walk (36x30)_2: 1119772265
+      Walk (36x30)_12: 1476884083
+      Walk (36x30)_4: -1856433285
+      Walk (36x30)_14: 1816800318
+      Walk (36x30)_15: 720420247
+      Walk (36x30)_0: 1276694432
+      Walk (36x30)_13: -219614232
+      Walk (36x30)_5: -1484828308
+      Walk (36x30)_1: -1693560781
+      Walk (36x30)_11: 1060262032
+      Walk (36x30)_8: -221163216
+      Walk (36x30)_6: -1503714120
+      Walk (36x30)_3: -1301283954
+      Walk (36x30)_10: 33107750
+      Walk (36x30)_7: 2081419064
+      Walk (36x30)_9: -652608607
+  spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
