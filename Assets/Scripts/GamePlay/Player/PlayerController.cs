@@ -7,6 +7,12 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     // public static PlayerController Instance { get; private set; }
+    public enum PlayerState
+    {
+        Idle,
+        Running,
+        Sitting
+    }
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider2d;
     private Animator ani;
@@ -16,12 +22,14 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Transform checkGroundPosition;
     [SerializeField] private float checkGroundRadius;
     [SerializeField] private Transform spawnBulletPoint;
+    private float rotationSpeed = 40;
     private float jumpSpeed = 18;
     public float dirX = 0;
     // network properties
     private NetworkVariable<bool> isFacingRight = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> disUpdate = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> damage = new NetworkVariable<float>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
 
 
     // Vector2 movement;
@@ -34,6 +42,7 @@ public class PlayerController : NetworkBehaviour
         // Instance = this;
         disUpdate.Value = false;
         disUpdate.OnValueChanged += OnValueChanged;
+        playerState.OnValueChanged += SetPlayerAnimation;
     }
 
     private void OnValueChanged(bool previousValue, bool newValue)
@@ -44,29 +53,53 @@ public class PlayerController : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
+        if (IsServer)
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                if (this.playerState.Value != PlayerState.Sitting)
+                {
+                    this.playerState.Value = PlayerState.Sitting;
+                    this.disUpdate.Value = true;
+                }
+                else
+                {
+                    this.playerState.Value = PlayerState.Idle;
+                    this.disUpdate.Value = false;
+                }
+            }
+        }
         if (Input.GetKeyDown(KeyCode.J))
         {
             OnAttackingSpawnServerRpc();
         }
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
-        dirX = Input.GetAxisRaw("Horizontal");
+        // dirX = Input.GetAxisRaw("Horizontal");
+        dirX = 0;
+        if (Input.GetKey(KeyCode.D))
+        {
+            dirX = 1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            dirX = -1;
+        }
     }
     [ServerRpc(RequireOwnership = false)]
     public void OnAttackingSpawnServerRpc()
     {
-        normalAttackPrefab.GetComponent<NormalAttack>().SetDir(isFacingRight.Value ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0));
-        normalAttackPrefab.GetComponent<NormalAttack>().SetDamage(this.damage.Value);
+        normalAttackPrefab.GetComponent<Bullet>().SetDir(isFacingRight.Value ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0));
+        normalAttackPrefab.GetComponent<Bullet>().SetDamage(this.damage.Value);
         Transform transform = Instantiate(normalAttackPrefab, spawnBulletPoint.position, Quaternion.identity);
         transform.GetComponent<NetworkObject>().Spawn();
     }
     private void FixedUpdate()
     {
         if (!IsOwner) return;
-        
-
+        if (disUpdate.Value) return;
         playerMove(dirX);
     }
     private void playerMove(float dirX)
@@ -75,25 +108,32 @@ public class PlayerController : NetworkBehaviour
         {
             if (IsGrounded())
             {
-                ani.SetBool("sitting", true);
+                SetPlayerStateServerRpc(PlayerState.Sitting);
             }
         }
         else
         {
-            ani.SetBool("sitting", false);
+            SetPlayerStateServerRpc(PlayerState.Idle);
             if (!disUpdate.Value)
             {
-                rb.velocity = new Vector2(dirX * 9f, rb.velocity.y);
+                // if (GameState.GetGameState() == GameState.State.Normal)
+                // {
+                // rb.velocity = new Vector2(dirX * 9f, rb.velocity.y);
+                // }
+                // else if (GameState.GetGameState() == GameState.State.Rotate)
+                // {
+                // }
+                rb.AddForce(new Vector2(dirX, 0) * rotationSpeed);
             }
             updateAnimation(dirX);
         }
     }
-
     private void updateAnimation(float dirX)
     {
         if (dirX > 0f)
         {
-            ani.SetBool("running", true);
+            SetPlayerStateServerRpc(PlayerState.Running);
+
             if (!isFacingRight.Value)
             {
                 transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
@@ -102,7 +142,8 @@ public class PlayerController : NetworkBehaviour
         }
         else if (dirX < 0f)
         {
-            ani.SetBool("running", true);
+            SetPlayerStateServerRpc(PlayerState.Running);
+
             if (isFacingRight.Value)
             {
                 transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
@@ -111,7 +152,8 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
-            ani.SetBool("running", false);
+            SetPlayerStateServerRpc(PlayerState.Idle);
+
         }
 
     }
@@ -119,5 +161,37 @@ public class PlayerController : NetworkBehaviour
     public bool IsGrounded()
     {
         return Physics2D.OverlapCircle(checkGroundPosition.position, checkGroundRadius, GroundLayer);
+    }
+    public float GetSignFacingRight()
+    {
+        return this.isFacingRight.Value ? 1 : -1;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerStateServerRpc(PlayerState state)
+    {
+        this.playerState.Value = state;
+    }
+    private void SetPlayerAnimation(PlayerState previousValue, PlayerState newValue)
+    {
+        if (this.playerState.Value == PlayerState.Idle)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            ani.SetBool("sitting", false);
+            ani.SetBool("running", false);
+        }
+        if (this.playerState.Value == PlayerState.Running)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            ani.SetBool("running", true);
+        }
+        if (this.playerState.Value == PlayerState.Sitting)
+        {
+            ani.SetBool("sitting", true);
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+    }
+    public PlayerState GetPlayerState()
+    {
+        return this.playerState.Value;
     }
 }

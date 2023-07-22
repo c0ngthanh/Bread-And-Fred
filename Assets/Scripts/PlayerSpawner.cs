@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerSpawner : NetworkBehaviour
 {
+    [SerializeField] Rope ropePrefab;
     [SerializeField] CharacterDatabase characterDatabase;
     public override void OnNetworkSpawn()
     {
@@ -19,6 +20,7 @@ public class PlayerSpawner : NetworkBehaviour
                 characterInstance.SpawnAsPlayerObject(client.Value.clientId);
             }
         }
+        Rope rope = Instantiate(ropePrefab);
+        rope.NetworkObject.Spawn();
     }
-
 }

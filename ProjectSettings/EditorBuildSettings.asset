@@ -17,10 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChooseDinoScene.unity
     guid: fc3197e21a26fb449b64932c3a650387
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CoopScene.unity
     guid: bdeeeb2bd7bbd5840b1265dcc67ce4e9
   - enabled: 0
     path: Assets/Scenes/DevCoopScene.unity
     guid: 0d2d95f9294587049a353fd046cfc870
+  - enabled: 1
+    path: Assets/Scenes/CoopSceneTest.unity
+    guid: 6491bf47d20c031428025b08251f4c1d
   m_configObjects: {}

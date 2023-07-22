@@ -2758,6 +2758,11 @@ MonoBehaviour:
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 2074205635666685158, guid: 75e2ba5f31deb97458686cd3f83e7f3a, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 1
@@ -4025,8 +4030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0cc218928b06f4da733661eae508be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChooseDinoScene: ChooseDinoScene
-  GameScene: CoopScene
 --- !u!4 &1125116968
 Transform:
   m_ObjectHideFlags: 0
