@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dir:
     m_InternalValue: {x: 0, y: 1, z: 0}
+  damage:
+    m_InternalValue: 0
 --- !u!61 &3342004233211314920
 BoxCollider2D:
   m_ObjectHideFlags: 0

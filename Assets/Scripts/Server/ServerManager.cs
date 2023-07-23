@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class ServerManager : MonoBehaviour
 {
-    public string ChooseDinoScene = "ChooseDinoScene";
-    public string GameScene = "ChooseDinoScene";
+    private string ChooseDinoScene = "ChooseDinoScene";
+    private string GameScene = "CoopSceneTest";
     private int maxPlayer = 2;
     public static ServerManager Instance { get; private set;}
 

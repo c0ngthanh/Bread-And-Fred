@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601936061629799218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.24, y: 0.48, z: 0}
+  m_LocalPosition: {x: 10, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -129,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.9375, y: 1.0625}
+    oldSize: {x: 1.5, y: 1.5}
     newSize: {x: 1.5, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -190,7 +190,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   normalAttackPrefab: {fileID: 242024271445923679, guid: 1885242e0d024fe4ea0e2f7f6de1e38a, type: 3}
+  checkGroundPosition: {fileID: 0}
+  checkGroundRadius: 0
   spawnBulletPoint: {fileID: 5054484717885401856}
+  dirX: 0
+  disUpdate:
+    m_InternalValue: 0
+  damage:
+    m_InternalValue: 1
 --- !u!114 &8026515641911550062
 MonoBehaviour:
   m_ObjectHideFlags: 0
