@@ -136,7 +136,6 @@ public class MonsterController : NetworkBehaviour
         if (isStuned) return;
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log(NetworkManager.Singleton.LocalClientId + " " + other.gameObject.GetComponent<PlayerController>().IsOwner + other.gameObject);
             if (other.gameObject.GetComponent<PlayerController>().IsOwner)
             {
                 other.gameObject.GetComponent<PlayerController>().disUpdate.Value = true;

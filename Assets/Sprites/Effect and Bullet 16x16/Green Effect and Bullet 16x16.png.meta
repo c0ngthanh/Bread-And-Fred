@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -8046,8 +8046,8 @@ TextureImporter:
       Green Effect and Bullet 16x16_133: -1183880064
       Green Effect and Bullet 16x16_258: 1972865145
       Green Effect and Bullet 16x16_53: 1826926483
-      Green Effect and Bullet 16x16_83: -1378629772
       Green Effect and Bullet 16x16_282: 538792425
+      Green Effect and Bullet 16x16_83: -1378629772
       Green Effect and Bullet 16x16_76: 1326418686
       Green Effect and Bullet 16x16_326: -109978516
       Green Effect and Bullet 16x16_361: 471969357
@@ -8093,9 +8093,9 @@ TextureImporter:
       Green Effect and Bullet 16x16_212: 755804387
       Green Effect and Bullet 16x16_21: -1744647901
       Green Effect and Bullet 16x16_63: -2036138926
-      Green Effect and Bullet 16x16_81: -891201734
-      Green Effect and Bullet 16x16_229: 928005740
       Green Effect and Bullet 16x16_368: -634942381
+      Green Effect and Bullet 16x16_229: 928005740
+      Green Effect and Bullet 16x16_81: -891201734
       Green Effect and Bullet 16x16_33: 1223981126
       Green Effect and Bullet 16x16_170: 782665389
       Green Effect and Bullet 16x16_73: 803840754
@@ -8192,17 +8192,17 @@ TextureImporter:
       Green Effect and Bullet 16x16_139: -915778519
       Green Effect and Bullet 16x16_321: 2086459690
       Green Effect and Bullet 16x16_142: 1650918705
-      Green Effect and Bullet 16x16_262: -1669758260
       Green Effect and Bullet 16x16_298: -1694678595
+      Green Effect and Bullet 16x16_262: -1669758260
       Green Effect and Bullet 16x16_74: 438857976
       Green Effect and Bullet 16x16_366: -1322448225
       Green Effect and Bullet 16x16_64: 1383433275
       Green Effect and Bullet 16x16_96: -725351833
       Green Effect and Bullet 16x16_290: 892967341
       Green Effect and Bullet 16x16_106: -284230276
+      Green Effect and Bullet 16x16_270: 510258157
       Green Effect and Bullet 16x16_0: 753123942
       Green Effect and Bullet 16x16_66: 986862414
-      Green Effect and Bullet 16x16_270: 510258157
       Green Effect and Bullet 16x16_118: -995388520
       Green Effect and Bullet 16x16_285: 722501851
       Green Effect and Bullet 16x16_283: 1126171584

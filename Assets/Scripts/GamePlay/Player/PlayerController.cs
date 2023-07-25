@@ -24,11 +24,11 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Transform spawnBulletPoint;
     private float rotationSpeed = 40;
     private float jumpSpeed = 18;
-    public float dirX = 0;
     // network properties
-    private NetworkVariable<bool> isFacingRight = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> isFacingRight = new NetworkVariable<bool>(true);
     public NetworkVariable<bool> disUpdate = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> damage = new NetworkVariable<float>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> dirX = new NetworkVariable<float>(0);
     public NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
 
 
@@ -75,17 +75,99 @@ public class PlayerController : NetworkBehaviour
         // }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            JumpServerRpc();
         }
-        // dirX = Input.GetAxisRaw("Horizontal");
-        dirX = 0;
+        SetDirXServerRpc(0);
         if (Input.GetKey(KeyCode.D))
         {
-            dirX = 1;
+            SetDirXServerRpc(1);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            dirX = -1;
+            SetDirXServerRpc(-1);
+        }
+    }
+    // [ServerRpc(RequireOwnership = false)]
+    // private void UpdateServerRpc()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.J))
+    //     {
+    //         OnAttackingSpawnServerRpc();
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.W))
+    //     {
+    //         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+    //     }
+    //     SetDirXServerRpc(0);
+    //     if (Input.GetKey(KeyCode.D))
+    //     {
+    //         SetDirXServerRpc(1);
+    //     }
+    //     if (Input.GetKey(KeyCode.A))
+    //     {
+    //         SetDirXServerRpc(-1);
+    //     }
+    // }
+    // [ClientRpc]
+    // private void UpdateClientRpc()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.J))
+    //     {
+    //         OnAttackingSpawnServerRpc();
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.W))
+    //     {
+    //         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+    //     }
+    //     SetDirXServerRpc(0);
+    //     if (Input.GetKey(KeyCode.D))
+    //     {
+    //         SetDirXServerRpc(1);
+    //     }
+    //     if (Input.GetKey(KeyCode.A))
+    //     {
+    //         SetDirXServerRpc(-1);
+    //     }
+    // }
+    [ServerRpc(RequireOwnership = false)]
+    private void SetDirXServerRpc(float value)
+    {
+        if (IsServer)
+        {
+            this.dirX.Value = value;
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void SetIsFacingRightServerRpc(bool value)
+    {
+        if (IsServer)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, value ? 0 : 180, transform.rotation.z);
+            this.isFacingRight.Value = value;
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void MoveServerRpc()
+    {
+        if (IsServer)
+        {
+            // rb.AddForce(new Vector2(this.dirX.Value, 0) * rotationSpeed);
+            // if (GameState.GetGameState() == GameState.State.Normal)
+            // {
+            //     rb.velocity = new Vector2(dirX.Value * 9f, rb.velocity.y);
+            // }
+            // else if (GameState.GetGameState() == GameState.State.Rotate)
+            // {
+            // }
+            rb.AddForce(new Vector2(this.dirX.Value, 0) * rotationSpeed);
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void JumpServerRpc()
+    {
+        if (IsServer)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         }
     }
     [ServerRpc(RequireOwnership = false)]
@@ -99,9 +181,19 @@ public class PlayerController : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!IsOwner) return;
-
-
-        playerMove(dirX);
+        if (disUpdate.Value) return;
+        playerMove(dirX.Value);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void FixedUpdateServerRpc()
+    {
+        // FixedUpdateClientRpc();
+        playerMove(dirX.Value);
+    }
+    [ClientRpc]
+    private void FixedUpdateClientRpc()
+    {
+        playerMove(dirX.Value);
     }
     private void playerMove(float dirX)
     {
@@ -124,7 +216,7 @@ public class PlayerController : NetworkBehaviour
                 // else if (GameState.GetGameState() == GameState.State.Rotate)
                 // {
                 // }
-                rb.AddForce(new Vector2(dirX, 0) * rotationSpeed);
+                MoveServerRpc();
             }
             updateAnimation(dirX);
         }
@@ -137,8 +229,8 @@ public class PlayerController : NetworkBehaviour
 
             if (!isFacingRight.Value)
             {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
-                isFacingRight.Value = true;
+                // transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+                SetIsFacingRightServerRpc(true);
             }
         }
         else if (dirX < 0f)
@@ -147,8 +239,8 @@ public class PlayerController : NetworkBehaviour
 
             if (isFacingRight.Value)
             {
-                transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
-                isFacingRight.Value = false;
+                // transform.rotation = Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z);
+                SetIsFacingRightServerRpc(false);
             }
         }
         else
