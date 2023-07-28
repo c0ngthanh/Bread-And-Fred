@@ -10,6 +10,9 @@ TagManager:
   - Point
   - HealthBar
   - StoneBoss
+  - LaserAttack
+  - Player1
+  - Player2
   layers:
   - Default
   - TransparentFX

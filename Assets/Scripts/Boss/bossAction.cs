@@ -1,62 +1,175 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 public class bossAction : MonoBehaviour
 {
 
-    public int maxHealth = 100;
-    public int currentHealth = 100;
-    public HealthBar healthBar;
-    private SpriteRenderer sprite;
-    private Animator ani;
-    [SerializeField] private Transform player;
+    [SerializeField] private BossData bossData;
     [SerializeField] private GameObject laserAttack;
     [SerializeField] private SpriteRenderer laserAttack_sprite;
 
 
+    public HealthBar healthBar;
+    private SpriteRenderer sprite;
+    private Animator ani;
+    private Vector3 movement;
+    private GameObject player1;
+    private GameObject player2;
 
+
+    public float maxHealth = 50;
+    public float currentHealth;
     private int direction = 1;
     private int follow = 0;
-    private Vector3 movement;
     public int S = 500;
-    private float distance;
-    private int typeAction;
+    private float distance1 = 1000, distance2 = 1000, distance = 0;
+    private int typeAction = 2;
+    private float speed = 2;
+    private float angrySpeed;
+    private bool die = false;
+    private bool isAttack = false;
+
+    private bool attackPlayer = false;
+
+
+    private NetworkVariable<bool> isFacing = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> BossHP = new NetworkVariable<float>();
 
 
 
-    private void Start()
+    private void Awake()
     {
+        // đọc dữ liệu từ bảng data lên trên thuộc tính của nó được up lên cloud
+        BossHP.Value = 100;
+        if (bossData.speed != 0)
+        {
+            speed = bossData.speed;
+        }
+
+        angrySpeed = bossData.speed * 2;
+        // speed = normalSpeed;
+        // Debug.Log("speed_boss: " + speed);
+
+        // player1 = GameObject.FindGameObjectWithTag("Player");
+        // Debug.Log(player1);
+
+        GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
+        if (gameObjectArray.Length == 2)
+        {
+            player1 = gameObjectArray[0];
+            player2 = gameObjectArray[1];
+        }
+        else if (gameObjectArray.Length == 1)
+        {
+            player1 = gameObjectArray[0];
+            player2 = gameObjectArray[0];
+        }
+
+
+
+
+        // player2 = GameObject.FindGameObjectWithTag("Player2");
+        // player2 = GetComponent<Transform>();
         sprite = GetComponent<SpriteRenderer>();
         ani = GetComponent<Animator>();
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        // HP.OnValueChanged += OnHPValueChanged;
     }
+
+    public void SetHP(float HP)
+    {
+        int dmg = (int)this.BossHP.Value - (int)HP;
+        this.BossHP.Value = HP;
+        // Debug.Log(this.BossHP);
+        TakeDamage(dmg);
+    }
+    public NetworkVariable<float> GetHP()
+    {
+        return this.BossHP;
+    }
+    public BossData GetBossData()
+    {
+        return this.bossData;
+    }
+
+    public bool GetAttackPlayer()
+    {
+        return attackPlayer;
+    }
+
+    public void SetAttackPlayer(bool type)
+    {
+        attackPlayer = type;
+    }
+
+    public int GetTypeAction()
+    {
+        return this.typeAction;
+    }
+
+
+
 
     private void Update()
     {
-        if (follow == 0)
+        if (player1 == null || player2 == null)
         {
-            AutoMovement();
+            GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
+            if (gameObjectArray.Length == 2)
+            {
+                player1 = gameObjectArray[0];
+                player2 = gameObjectArray[1];
+            }
+            else if (gameObjectArray.Length == 1)
+            {
+                player1 = gameObjectArray[0];
+                player2 = gameObjectArray[0];
+            }
+
+        }
+
+        Debug.Log(player1.transform.position + " " + player2.transform.position);
+
+
+
+        distance1 = Vector3.Distance(transform.position, player1.transform.position);
+        distance2 = Vector3.Distance(transform.position, player2.transform.position);
+        if (distance1 < distance2)
+        {
+            distance = distance1;
         }
         else
+        {
+            distance = distance2;
+        }
+        Debug.Log("min distance " + distance);
+
+        if (follow == 0)
+        {
+            if (distance > 15.0)
+            {
+                AutoMovement();
+            }
+            else
+            {
+                FollowPlayer();
+                follow = 1;
+            }
+        }
+        else if (follow == 1 || isAttack)
         {
             FollowPlayer();
         }
 
-        distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log(distance + "//" + currentHealth);
-        if (distance < 10.0)
-        {
-            follow = 1;
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-        }
-        if (currentHealth == 0)
+
+
+        if (currentHealth <= 0)
         {
             CallStatus(0);
         }
@@ -65,10 +178,12 @@ public class bossAction : MonoBehaviour
 
     private void AutoMovement()
     {
+        Debug.Log("typeaction: " + typeAction);
         if (typeAction != 1)
         {
-            movement = new Vector3(2 * direction, 0f);
+            movement = new Vector3(speed * direction, 0f);
             transform.position = transform.position + movement * Time.deltaTime;
+            // Debug.Log(speed + " " + transform.position + " " + "type  " + typeAction);
             S--;
         }
 
@@ -91,19 +206,30 @@ public class bossAction : MonoBehaviour
     private void FollowPlayer()
     {
         //lấy vector từ player --> boss
-        Vector3 distVector = player.position - transform.position;
-        Debug.Log(distVector);
+        Vector3 distVector = player1.transform.position - transform.position;
+
+        // Debug.Log(distVector);
 
         // boss follow player
         if (typeAction != 1)
         {
-            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, 1.5f * Time.deltaTime);
+            if (currentHealth > 80)
+            {
+                transform.position = Vector2.MoveTowards(this.transform.position, player1.transform.position, 1.5f * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(this.transform.position, player1.transform.position, 2 * 1.5f * Time.deltaTime);
+            }
 
         }
         if (distVector.x < 0)
         {
             sprite.flipX = true;
             laserAttack_sprite.flipX = true;
+            // SpriteRenderer sample = laserAttack_sprite;
+            // laserAttack_sprite.transform.position = new Vector3(2 * sprite.transform.position.x - sample.transform.position.x, laserAttack_sprite.transform.position.y, 0);
+
         }
         else
         {
@@ -111,22 +237,6 @@ public class bossAction : MonoBehaviour
             laserAttack_sprite.flipX = false;
 
         }
-
-
-        // if (HP > 0)
-        // {
-        // just follow and melee attack
-        // if (distance < 7.0)
-        // {
-        //     CallStatus(4);
-        // }
-        // else
-        // {
-        //     CallStatus(2);
-        // }
-        // }
-        // else if (HP > 20){
-        //     // follow + melee attack + laser attach
         if (distance < 7.0)
         {
             CallStatus(3);
@@ -187,16 +297,32 @@ public class bossAction : MonoBehaviour
         // }
     }
 
-    // private void OnTriggerEnter2D(Collider2D collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Player"))
-    //     {
-    //         Debug.Log("trigger");
-    //         // updateDirection(rb.velocity);
-    //         // AppleTxt.text = "Apple: " + apples;
-    //     }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<PlayerController>().TakeDamage(20);
+            Debug.Log("trigger wuth player");
+        }
+    }
 
-    // }
+    void DoDelayAction(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
+
+    IEnumerator DelayAction(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
+        if (die)
+        {
+            Destroy(gameObject);
+        }
+
+    }
 
 
     //  MeleeAttack: 3
@@ -213,9 +339,8 @@ public class bossAction : MonoBehaviour
                 ani.SetBool("Block", false);
                 ani.SetBool("MeleeAttack", false);
                 ani.SetBool("LaserAttack", false);
-                // Destroy(laserAttack);
-                // Destroy(sprite);
-                Destroy(this, 5);
+                die = true;
+                DoDelayAction(1);
                 break;
             case 1: // block
                 ani.SetBool("Block", true);
@@ -235,6 +360,8 @@ public class bossAction : MonoBehaviour
                 ani.SetBool("Die", false);
                 ani.SetBool("Block", false);
                 ani.SetBool("MeleeAttack", false);
+                // raycastHit2D = Physics2D.Raycast(transform.position, direction ? new Vector2(1, 0) : new Vector2(-1, 0), attackRange, playerLayer);
+                // Debug.DrawRay(transform.position, isFacingRight.Value ? new Vector2(attackRange, 0) : new Vector2(-attackRange, 0), Color.red, 0.1f);
 
                 break;
             default: // normal
@@ -246,10 +373,15 @@ public class bossAction : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(float dmg)
     {
         currentHealth -= dmg;
         healthBar.SetHealth(currentHealth);
+        if (!isAttack)
+        {
+            isAttack = true;
+        }
+
     }
 
 }

@@ -23,7 +23,7 @@
 
 //     // public GameObject pulleySelected = null;
 //     // Vector2 movement;
-//     void Start()
+//     void Start() 
 //     {
 //         rb = GetComponent<Rigidbody2D>();
 //         ani = GetComponent<Animator>();

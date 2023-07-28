@@ -82,18 +82,18 @@ public class Rope : NetworkBehaviour
             lineRenderer.enabled = false;
         }
 
-        if ((player1.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting ||
-             player2.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting) &&
-             GameState.GetGameState() == GameState.State.Normal)
-        {
-            if (IsServer)
-            {
-                SetGameStateServerRpc(GameState.State.Rotate);
-            }
-        }
-        else if ( player1.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
-        player2.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
-        GameState.GetGameState() == GameState.State.Rotate)
+        // if ((player1.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting ||
+        //      player2.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting) &&
+        //      GameState.GetGameState() == GameState.State.Normal)
+        // {
+        //     if (IsServer)
+        //     {
+        //         SetGameStateServerRpc(GameState.State.Rotate);
+        //     }
+        // }
+        // else if (player1.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
+        // player2.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
+        // GameState.GetGameState() == GameState.State.Rotate)
         {
             if (IsServer)
             {
@@ -209,8 +209,8 @@ public class Rope : NetworkBehaviour
 
         //Max rope length
         Vector3[] ropeMaxPositions = new Vector3[2];
-        ropeMaxPositions[0] = new Vector3(player1.transform.position.x,player1.transform.position.y,-0.1f);
-        ropeMaxPositions[1] = new Vector3(player2.transform.position.x,player2.transform.position.y,-0.1f);
+        ropeMaxPositions[0] = new Vector3(player1.transform.position.x, player1.transform.position.y, -0.1f);
+        ropeMaxPositions[1] = new Vector3(player2.transform.position.x, player2.transform.position.y, -0.1f);
         ropeMaxLinerenderer.startWidth = lineWidth;
         ropeMaxLinerenderer.endWidth = lineWidth;
         ropeMaxLinerenderer.positionCount = 2;

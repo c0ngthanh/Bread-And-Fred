@@ -8,4 +8,14 @@ public class MonsterAndBullet : MonoBehaviour
         monster.SetHP(monster.GetHP().Value - bullet.GetDamage());
         Destroy(bullet.gameObject);
     }
+
+
+    public static void BulletAttackBoss(Bullet bullet, bossAction boss)
+    {
+        boss.TakeDamage(bullet.GetDamage());
+        Destroy(bullet.gameObject);
+
+    }
+
+
 }
