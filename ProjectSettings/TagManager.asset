@@ -10,6 +10,11 @@ TagManager:
   - Point
   - HealthBar
   - StoneBoss
+  - Ground
+  - UIManager
+  - Statue
+  - Gems
+  - Money
   layers:
   - Default
   - TransparentFX

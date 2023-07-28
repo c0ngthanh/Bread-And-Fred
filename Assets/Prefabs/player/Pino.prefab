@@ -73,13 +73,13 @@ GameObject:
   - component: {fileID: 4655401712537020453}
   - component: {fileID: 4655401712537020452}
   - component: {fileID: 4655401712537020449}
-  - component: {fileID: 4655401712537020448}
   - component: {fileID: 4655401712537020454}
   - component: {fileID: 4655401712537020450}
   - component: {fileID: 8687447121232337086}
   - component: {fileID: 2987606024096996829}
   - component: {fileID: -7908476893819462512}
   - component: {fileID: -4809904372956079363}
+  - component: {fileID: 345689194880176797}
   m_Layer: 6
   m_Name: Pino
   m_TagString: Player
@@ -177,32 +177,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &4655401712537020448
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4655401712537020474}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.09614813, y: -0.045783043}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 0.24, y: 0.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.826123, y: 1.0432167}
-  m_EdgeRadius: 0
 --- !u!114 &4655401712537020454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,11 +232,12 @@ MonoBehaviour:
   checkGroundPosition: {fileID: 3189133499424986951}
   checkGroundRadius: 0
   spawnBulletPoint: {fileID: 3284621953705174142}
-  dirX: 0
   disUpdate:
     m_InternalValue: 0
   damage:
     m_InternalValue: 1
+  dirX:
+    m_InternalValue: 0
   playerState:
     m_InternalValue: 0
 --- !u!231 &2987606024096996829
@@ -324,3 +299,19 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!70 &345689194880176797
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655401712537020474}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.08206582, y: 0.003730297}
+  m_Size: {x: 0.9777632, y: 1.1195126}
+  m_Direction: 0

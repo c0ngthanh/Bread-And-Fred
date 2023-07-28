@@ -30,6 +30,8 @@ public class PlayerController : NetworkBehaviour
     public NetworkVariable<float> damage = new NetworkVariable<float>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> dirX = new NetworkVariable<float>(0);
     public NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
+    public NetworkVariable<float> money = new NetworkVariable<float>(0);
+    public NetworkVariable<float> gems = new NetworkVariable<float>(0);
 
 
     // Vector2 movement;
@@ -69,10 +71,10 @@ public class PlayerController : NetworkBehaviour
                 }
             }
         }
-        // if (Input.GetKeyDown(KeyCode.J))
-        // {
-        //     OnAttackingSpawnServerRpc();
-        // }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            OnAttackingSpawnServerRpc();
+        }
         if (Input.GetKeyDown(KeyCode.W))
         {
             JumpServerRpc();
@@ -171,13 +173,13 @@ public class PlayerController : NetworkBehaviour
         }
     }
     [ServerRpc(RequireOwnership = false)]
-    // public void OnAttackingSpawnServerRpc()
-    // {
-    //     normalAttackPrefab.GetComponent<Bullet>().SetDir(isFacingRight.Value ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0));
-    //     normalAttackPrefab.GetComponent<Bullet>().SetDamage(this.damage.Value);
-    //     Transform transform = Instantiate(normalAttackPrefab, spawnBulletPoint.position, Quaternion.identity);
-    //     transform.GetComponent<NetworkObject>().Spawn();
-    // }
+    public void OnAttackingSpawnServerRpc()
+    {
+        normalAttackPrefab.GetComponent<Bullet>().SetDir(isFacingRight.Value ? new Vector3(1, 0, 0) : new Vector3(-1, 0, 0));
+        normalAttackPrefab.GetComponent<Bullet>().SetDamage(this.damage.Value);
+        Transform transform = Instantiate(normalAttackPrefab, spawnBulletPoint.position, Quaternion.identity);
+        transform.GetComponent<NetworkObject>().Spawn();
+    }
     private void FixedUpdate()
     {
         if (!IsOwner) return;
@@ -286,5 +288,17 @@ public class PlayerController : NetworkBehaviour
     public PlayerState GetPlayerState()
     {
         return this.playerState.Value;
+    }
+    public void SetMoney(float value){
+        this.money.Value = value;
+    }
+    public void SetGem(float value){
+        this.gems.Value = value;
+    }
+    public NetworkVariable<float> GetMoney(){
+        return this.money;
+    }
+    public NetworkVariable<float> GetGems(){
+        return this.gems;
     }
 }

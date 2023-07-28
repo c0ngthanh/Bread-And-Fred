@@ -10,6 +10,7 @@ public class GhostBullet : Bullet
         if (other.gameObject.tag == "Player")
         {
             if(IsServer){
+                Debug.Log(ghostBulletDataInfo.forceX*this.dir.Value.x);
                 Destroy(gameObject);
                 other.GetComponent<Rigidbody2D>().AddForce(new Vector2(ghostBulletDataInfo.forceX*this.dir.Value.x, ghostBulletDataInfo.forceY),ForceMode2D.Impulse);
             }

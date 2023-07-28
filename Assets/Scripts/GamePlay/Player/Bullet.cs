@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static Helper;
 
 public class Bullet : NetworkBehaviour
 {
@@ -10,12 +11,11 @@ public class Bullet : NetworkBehaviour
     public NetworkVariable<float> damage = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private float speed = 0;
     private float scale = 1.2f;
+    [SerializeField] private Element element;
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
         speed = 5;
-        Debug.Log("OnnetworkSpawn bullet");
-        Debug.Log(speed);
     }
     public void SetDamage(float damage)
     {
@@ -32,13 +32,27 @@ public class Bullet : NetworkBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.tag == "Statue")
+        {
+            if (other.gameObject.GetComponent<Statue>().GetIsActive() == false)
+            {
+                other.gameObject.GetComponent<Statue>().CheckBullet(this);
+            }
+            Destroy(gameObject);
+        }
         if (other.gameObject.tag == "Monster" && IsHost)
+        {
             MonsterAndBullet.BulletAttackMonster(this, other.gameObject.GetComponent<MonsterController>());
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position += speed * Time.deltaTime * this.dir.Value.normalized;
+    }
+    public Element GetElement()
+    {
+        return this.element;
     }
 }
