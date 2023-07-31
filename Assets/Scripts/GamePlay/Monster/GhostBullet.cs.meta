@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/UI/BarUI/Billboard.cs.meta
+guid: fc0929b174d8bc14f86e7a4d41081d6b
+========
+guid: 6ee91a5a6ba612a45ab4ebb2669e026e
+>>>>>>>> 26c35fc6e176755c8259c94fe79447b6c874dee4:Assets/Scripts/GamePlay/Monster/GhostBullet.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

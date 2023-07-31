@@ -13,6 +13,7 @@ public class MonsterAndBullet : MonoBehaviour
     public static void BulletAttackBoss(Bullet bullet, bossAction boss)
     {
         boss.TakeDamage(bullet.GetDamage());
+        // Debug.Log(boss.GetHealth());
         Destroy(bullet.gameObject);
 
     }

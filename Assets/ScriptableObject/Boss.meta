@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ScriptableObject/Boss.meta
 guid: 7468fd7e3ce2e7344be2fc578c2cec9b
+========
+guid: 6477d8e7dc30306498f653964d1f7cf7
+>>>>>>>> 26c35fc6e176755c8259c94fe79447b6c874dee4:Assets/Prefabs/Chest.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

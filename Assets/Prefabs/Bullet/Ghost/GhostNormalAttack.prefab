@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8938119850416223310}
   - component: {fileID: 5905772827655739920}
+  - component: {fileID: 1391166512401919915}
   - component: {fileID: 1446815032148035347}
   - component: {fileID: 2520831425977352805}
   - component: {fileID: 6926582299902282720}
@@ -55,6 +56,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1391166512401919915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554552324246625832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee91a5a6ba612a45ab4ebb2669e026e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir:
+    m_InternalValue: {x: 0, y: 1, z: 0}
+  damage:
+    m_InternalValue: 0
+  ghostBulletDataInfo: {fileID: 11400000, guid: 8dd09f712513a9f44a0afe2f52953148, type: 2}
 --- !u!212 &1446815032148035347
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -133,7 +151,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0000000037252903, y: -0.039331444}

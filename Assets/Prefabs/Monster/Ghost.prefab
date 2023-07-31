@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3906780158157011489}
   - component: {fileID: 3906780158157011494}
   - component: {fileID: 4906417076789522304}
-  - component: {fileID: 6206216762342443111}
   - component: {fileID: 607613301019855622}
   - component: {fileID: -196439775959517418}
   - component: {fileID: 374198080804952202}
@@ -118,7 +117,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3906780158157011495}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -127,27 +126,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0021745444, y: -0.009785498}
   m_Size: {x: 0.25044367, y: 0.26563653}
   m_Direction: 0
---- !u!50 &6206216762342443111
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3906780158157011495}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &607613301019855622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,10 +180,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387418eb51fc32c408ac2f0d4baea1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   attackRange: 7
+  ghostBulletData: {fileID: 11400000, guid: a4f362068675e4946bc0b2739f6efedf, type: 2}
+  monsterBulletSpawnPoint: {fileID: 3906780158355040353}
 --- !u!1 &3906780158355040358
 GameObject:
   m_ObjectHideFlags: 0

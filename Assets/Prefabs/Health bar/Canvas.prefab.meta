@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Health bar/Canvas.prefab.meta
 guid: 718bd1145ee9d184da58c450b7752ca8
+========
+guid: 7a01c14bf93a7124c9789c9f9a127b78
+>>>>>>>> 26c35fc6e176755c8259c94fe79447b6c874dee4:Assets/Prefabs/Challenge/Challenge1/Statue.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

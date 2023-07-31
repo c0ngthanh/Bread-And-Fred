@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static Helper;
 
 public class Bullet : NetworkBehaviour
 {
@@ -10,12 +11,11 @@ public class Bullet : NetworkBehaviour
     public NetworkVariable<float> damage = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private float speed = 0;
     private float scale = 1.2f;
+    [SerializeField] private Element element;
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
         speed = 5;
-        dir.OnValueChanged += ChangValue;
-        // PlayerController.Instance.onAttacking += PlayerController_OnAttacking;
     }
     public void SetDamage(float damage)
     {
@@ -24,10 +24,6 @@ public class Bullet : NetworkBehaviour
     public float GetDamage()
     {
         return this.damage.Value;
-    }
-    private void ChangValue(Vector3 previousValue, Vector3 newValue)
-    {
-        Debug.Log("ChangValue: " + previousValue + " " + newValue);
     }
 
     public void SetDir(Vector3 dir)
@@ -43,11 +39,23 @@ public class Bullet : NetworkBehaviour
         {
             MonsterAndBullet.BulletAttackBoss(this, other.gameObject.GetComponent<bossAction>());
         }
+        if (other.gameObject.tag == "Statue")
+        {
+            if (other.gameObject.GetComponent<Statue>().GetIsActive() == false)
+            {
+                other.gameObject.GetComponent<Statue>().CheckBullet(this);
+            }
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position += speed * Time.deltaTime * this.dir.Value.normalized;
+    }
+    public Element GetElement()
+    {
+        return this.element;
     }
 }

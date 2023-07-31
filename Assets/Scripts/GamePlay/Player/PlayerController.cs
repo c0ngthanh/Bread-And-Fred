@@ -17,14 +17,12 @@ public class PlayerController : NetworkBehaviour
     private BoxCollider2D boxCollider2d;
     private Animator ani;
     private SpriteRenderer sprite;
-    public HealthBar healthBar;
     [SerializeField] private LayerMask GroundLayer;
     [SerializeField] private Transform normalAttackPrefab;
     [SerializeField] private Transform checkGroundPosition;
     [SerializeField] private float checkGroundRadius;
     [SerializeField] private Transform spawnBulletPoint;
     public float maxHealth = 100;
-    public float currentHealth;
     private float rotationSpeed = 40;
     private float jumpSpeed = 18;
     private bool die = false;
@@ -34,6 +32,9 @@ public class PlayerController : NetworkBehaviour
     public NetworkVariable<float> damage = new NetworkVariable<float>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> dirX = new NetworkVariable<float>(0);
     public NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
+    public NetworkVariable<float> money = new NetworkVariable<float>(0);
+    public NetworkVariable<float> gems = new NetworkVariable<float>(0);
+    public NetworkVariable<float> currentHealth = new NetworkVariable<float>(0);
 
 
     // Vector2 movement;
@@ -47,8 +48,11 @@ public class PlayerController : NetworkBehaviour
         disUpdate.Value = false;
         disUpdate.OnValueChanged += OnValueChanged;
         playerState.OnValueChanged += SetPlayerAnimation;
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+
+
+
+        currentHealth.Value = maxHealth;
+        // healthBar.SetMaxHealth(maxHealth);
     }
 
     private void OnValueChanged(bool previousValue, bool newValue)
@@ -61,7 +65,6 @@ public class PlayerController : NetworkBehaviour
         if (!IsOwner) return;
         if (IsServer)
         {
-            Debug.Log("current health of player: " + currentHealth);
             if (Input.GetKeyDown(KeyCode.K))
             {
                 if (this.playerState.Value != PlayerState.Sitting)
@@ -75,7 +78,7 @@ public class PlayerController : NetworkBehaviour
                     this.disUpdate.Value = false;
                 }
             }
-            if (currentHealth <= 0)
+            if (this.currentHealth.Value <= 0)
             {
                 die = true;
                 DoDelayAction(1);
@@ -302,11 +305,11 @@ public class PlayerController : NetworkBehaviour
 
     public void TakeDamage(float dmg)
     {
-        if (IsOwner)
+        if (IsServer)
         {
-            this.currentHealth -= dmg;
-            healthBar.SetHealth(currentHealth);
-            Debug.Log("-------------------current health_player: " + currentHealth);
+            this.currentHealth.Value -= dmg;
+            // healthBar.SetHealth(currentHealth);
+            Debug.Log("-------------------current health_player: " + currentHealth.Value);
         }
     }
 
@@ -324,16 +327,44 @@ public class PlayerController : NetworkBehaviour
         //Do the action after the delay time has finished.
         if (die)
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            Debug.Log("Player died");
             die = false;
             DoDelayAction(7);
         }
         if (!die)
         {
-            // Debug.Log("Song lai");
-            OnNetworkSpawn();
+            Debug.Log("Song lai");
+            die = true;
+            // OnNetworkSpawn();
         }
 
     }
 
+    public void SetMoney(float value)
+    {
+        this.money.Value = value;
+    }
+    public void SetGem(float value)
+    {
+        this.gems.Value = value;
+    }
+    public NetworkVariable<float> GetMoney()
+    {
+        return this.money;
+    }
+    public NetworkVariable<float> GetGems()
+    {
+        return this.gems;
+    }
+
+    public Bullet GetBullet()
+    {
+        return this.normalAttackPrefab.GetComponent<Bullet>();
+    }
+
+    public NetworkVariable<float> GetHealth()
+    {
+        return this.currentHealth;
+    }
 }

@@ -16,16 +16,45 @@ public class Laser : MonoBehaviour
         return this.damage.Value;
     }
 
+    [SerializeField] bossAction boss;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
-            BossHitPlayer.LaserAttackPlayer(this, other.gameObject.GetComponent<PlayerController>());
+        {
+            // int type = GetComponent<bossAction>().GetTypeAction();
+            // Debug.Log("type of boss " + type);
+            // Debug.Log("type of boss ");
+
+            // if (type == 2)
+            // {
+
+            Debug.Log("type of boss " + boss.GetTypeAction());
+            if (boss.GetTypeAction().Value == 4)
+            {
+                other.gameObject.GetComponent<PlayerController>().TakeDamage(5);
+            }
+            // }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    void DoDelayAction(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
+
+    IEnumerator DelayAction(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
 
     }
 }

@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Boss/Golem/Golem.prefab.meta
 guid: b4c9442c9fb6c884a895f0ca24474a4f
 PrefabImporter:
+========
+guid: ea9a425009231d5418263fad58eb086e
+DefaultImporter:
+>>>>>>>> 26c35fc6e176755c8259c94fe79447b6c874dee4:Assets/Sprites/statue/Thumbs.db.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

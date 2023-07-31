@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ScriptableObject/Boss/StoneBosData.asset.meta
 guid: 536f2aa72a2278a4db4298dda1b95ffd
+========
+guid: fcd747bc4e1f92c45a91a7f3dcce9c4b
+>>>>>>>> 26c35fc6e176755c8259c94fe79447b6c874dee4:Assets/ScriptableObject/ObjectDictionary.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

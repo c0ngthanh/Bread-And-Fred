@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -7918,8 +7918,8 @@ TextureImporter:
       Purple Effect and Bullet 16x16_361: -1433614261
       Purple Effect and Bullet 16x16_14: -856142713
       Purple Effect and Bullet 16x16_27: 325213008
-      Purple Effect and Bullet 16x16_160: -1746520237
       Purple Effect and Bullet 16x16_284: 1094304213
+      Purple Effect and Bullet 16x16_160: -1746520237
       Purple Effect and Bullet 16x16_294: -1619599812
       Purple Effect and Bullet 16x16_76: -1966990736
       Purple Effect and Bullet 16x16_182: 996915728
@@ -7935,8 +7935,8 @@ TextureImporter:
       Purple Effect and Bullet 16x16_87: 239486547
       Purple Effect and Bullet 16x16_111: -176281395
       Purple Effect and Bullet 16x16_155: -743465342
-      Purple Effect and Bullet 16x16_206: -348269510
       Purple Effect and Bullet 16x16_232: 1170650198
+      Purple Effect and Bullet 16x16_206: -348269510
       Purple Effect and Bullet 16x16_110: -847020949
       Purple Effect and Bullet 16x16_130: -40198017
       Purple Effect and Bullet 16x16_133: 235626268
@@ -8097,8 +8097,8 @@ TextureImporter:
       Purple Effect and Bullet 16x16_114: -1012233009
       Purple Effect and Bullet 16x16_162: 1464228339
       Purple Effect and Bullet 16x16_136: 257883216
-      Purple Effect and Bullet 16x16_153: 1292152250
       Purple Effect and Bullet 16x16_289: 1720219639
+      Purple Effect and Bullet 16x16_153: 1292152250
       Purple Effect and Bullet 16x16_269: -489358146
       Purple Effect and Bullet 16x16_339: -1945709367
       Purple Effect and Bullet 16x16_61: -111507640
@@ -8138,8 +8138,8 @@ TextureImporter:
       Purple Effect and Bullet 16x16_177: 1644154344
       Purple Effect and Bullet 16x16_23: -2117636805
       Purple Effect and Bullet 16x16_191: 219121755
-      Purple Effect and Bullet 16x16_213: 449717325
       Purple Effect and Bullet 16x16_244: 220376252
+      Purple Effect and Bullet 16x16_213: 449717325
       Purple Effect and Bullet 16x16_365: 188661995
       Purple Effect and Bullet 16x16_187: 2086242838
       Purple Effect and Bullet 16x16_345: 795111539
@@ -8155,8 +8155,8 @@ TextureImporter:
       Purple Effect and Bullet 16x16_281: -965304649
       Purple Effect and Bullet 16x16_113: -1835745898
       Purple Effect and Bullet 16x16_44: -199780267
-      Purple Effect and Bullet 16x16_273: 1456014021
       Purple Effect and Bullet 16x16_349: -527890725
+      Purple Effect and Bullet 16x16_273: 1456014021
       Purple Effect and Bullet 16x16_125: 2113920917
       Purple Effect and Bullet 16x16_97: 2007665033
       Purple Effect and Bullet 16x16_28: -1409198070
