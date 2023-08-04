@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af38cf394c1ecfe499c3b79a867f0bb6, type: 3}
+  m_Name: HEALTH
+  m_EditorClassIdentifier: 
+  itemName: HEALTH
+  sellBy: 0
+  typeSell: 3
+  iconItemSprite: {fileID: 83419410, guid: e459d54edee829543817ff131386663b, type: 3}
+  levelBarListSprite:
+  - {fileID: 287055543, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  - {fileID: 1664708478, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  - {fileID: -1642682315, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  - {fileID: -1851313099, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  - {fileID: -442675596, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  price:
+  - 5
+  - 15
+  - 30
+  - 50
+  - 50
+  itemDescription: "T\u0103ng m\xE1u th\xEAm 50%"
+  percentIncrease: 50

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3906780158157011489}
   - component: {fileID: 3906780158157011494}
   - component: {fileID: 4906417076789522304}
-  - component: {fileID: 607613301019855622}
   - component: {fileID: -196439775959517418}
   - component: {fileID: 374198080804952202}
+  - component: {fileID: 5848712774175279617}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -98,7 +98,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 979105152, guid: fd96192dd2692a7498f72241c36ffb17, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -126,32 +126,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0021745444, y: -0.009785498}
   m_Size: {x: 0.25044367, y: 0.26563653}
   m_Direction: 0
---- !u!114 &607613301019855622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3906780158157011495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496591b88cbb9ba4dbdeace999c598c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 0
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 0
-  SyncScaleX: 1
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
 --- !u!114 &-196439775959517418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +161,32 @@ MonoBehaviour:
   attackRange: 7
   ghostBulletData: {fileID: 11400000, guid: a4f362068675e4946bc0b2739f6efedf, type: 2}
   monsterBulletSpawnPoint: {fileID: 3906780158355040353}
+--- !u!114 &5848712774175279617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906780158157011495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 0
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 1
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
 --- !u!1 &3906780158355040358
 GameObject:
   m_ObjectHideFlags: 0

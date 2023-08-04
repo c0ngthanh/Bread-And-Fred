@@ -31,9 +31,9 @@ TagManager:
   - Player
   - Ground
   - Rock
-  - 
-  - 
-  - 
+  - Monster
+  - BackGround
+  - Minimap
   - 
   - 
   - 
@@ -76,6 +76,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player
+    uniqueID: 1448391017
+    locked: 0
   - name: Terrain
     uniqueID: 3583583769
+    locked: 0
+  - name: SkillEffect
+    uniqueID: 3651590147
     locked: 0

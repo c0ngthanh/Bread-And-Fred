@@ -60,7 +60,7 @@ public class NormalChest : NetworkBehaviour
         if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<PlayerController>().IsLocalPlayer)
         {
             notificationUI.SetText("Press E to open");
-            notificationUI.OnPlayerTriggerEnterWithChest();
+            notificationUI.SetActive(true);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -71,7 +71,7 @@ public class NormalChest : NetworkBehaviour
         }
         if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<PlayerController>().IsLocalPlayer)
         {
-            notificationUI.OnPlayerTriggerExitWithChest();
+            notificationUI.SetActive(false);
         }
     }
     [ServerRpc(RequireOwnership = false)]
@@ -96,6 +96,10 @@ public class NormalChest : NetworkBehaviour
                 temp.gameObject.GetComponent<Rigidbody2D>().interpolation = RigidbodyInterpolation2D.Interpolate;
             }
         }
-        gameObject.SetActive(false);
+        setActiveClientRpc(false);
+    }
+    [ClientRpc]
+    private void setActiveClientRpc(bool value){
+        gameObject.SetActive(value);
     }
 }

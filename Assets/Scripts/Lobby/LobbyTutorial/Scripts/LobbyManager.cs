@@ -65,9 +65,19 @@ public class LobbyManager : MonoBehaviour
     private string playerName;
 
 
-    private void Awake()
+    private async void  Awake()
     {
+        await UnityServices.InitializeAsync();
         Instance = this;
+#if UNITY_EDITOR
+        if (ParrelSync.ClonesManager.IsClone())
+        {
+            // When using a ParrelSync clone, switch to a different authentication profile to force the clone
+            // to sign in as a different anonymous user account.
+            string customArgument = ParrelSync.ClonesManager.GetArgument();
+            AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
+        }
+#endif
     }
 
     private void Update()
@@ -89,7 +99,6 @@ public class LobbyManager : MonoBehaviour
         {
             // do nothing
             Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
-
             RefreshLobbyList();
         };
 
@@ -150,9 +159,11 @@ public class LobbyManager : MonoBehaviour
 
                     joinedLobby = null;
                 }
-                if(joinedLobby.Data[KEY_START_GAME].Value!="0"){
+                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
+                {
                     //Start the game
-                    if(!IsLobbyHost()){
+                    if (!IsLobbyHost())
+                    {
                         TestRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
                     }
                     joinedLobby = null;
@@ -444,12 +455,13 @@ public class LobbyManager : MonoBehaviour
                 Debug.Log("StartGame");
                 string replayCode = await TestRelay.Instance.CreateRelay();
                 Debug.Log(joinedLobby);
-                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions{
-                    Data = new Dictionary<string,DataObject>{
+                Lobby lobby = await Lobbies.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+                {
+                    Data = new Dictionary<string, DataObject>{
                         {KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member,replayCode)}
                     }
                 });
-                
+
             }
             catch (LobbyServiceException e)
             {

@@ -10,4 +10,23 @@ public class Helper : MonoBehaviour
         Elec,
         Dendro
     };
+    public enum SellBy{
+        Money,
+        Gems
+    };
+    public enum TypeSell{
+        ATK,
+        ATKSPD,
+        SPEED,
+        HEALTH,
+        SKILL
+    };
+    public enum SkillState{
+        Unlocked,
+        Locked
+    }
+    public enum WaypointState{
+        Unlocked,
+        Locked
+    }
 }

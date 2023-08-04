@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af38cf394c1ecfe499c3b79a867f0bb6, type: 3}
+  m_Name: SKILL
+  m_EditorClassIdentifier: 
+  itemName: SKILL Q
+  sellBy: 1
+  typeSell: 4
+  iconItemSprite: {fileID: 21300000, guid: 8467f003c056e804c8d5e4c914abce1e, type: 3}
+  levelBarListSprite:
+  - {fileID: 1576352074, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  - {fileID: 1093636273, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  - {fileID: 751119912, guid: 95949c356de03334a92748e00ec527de, type: 3}
+  price:
+  - 5
+  - 10
+  - 15
+  itemDescription: "M\u1EDF kh\xF3a k\u0129 n\u0103ng \u0111\u1EB7c bi\u1EC7t"
+  percentIncrease: 100

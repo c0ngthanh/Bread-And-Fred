@@ -5,18 +5,22 @@ using UnityEngine;
 
 
 public class PlayerSpawner : NetworkBehaviour
-{   
+{
     [SerializeField] public static GameObject[] playerList;
     [SerializeField] Rope ropePrefab;
     [SerializeField] CharacterDatabase characterDatabase;
     public override void OnNetworkSpawn()
     {
-        if(!IsServer){
+        if (!IsServer)
+        {
             return;
         }
-        foreach(var client in ServerManager.Instance.ClientData){
+        Debug.Log(ServerManager.Instance.clientAndCharacterID);
+        foreach (var client in ServerManager.Instance.ClientData)
+        {
             var character = characterDatabase.GetCharacterById(client.Value.characterId);
-            if(character != null){
+            if (character != null)
+            {
                 var characterInstance = Instantiate(character.GameplayPrefab);
                 characterInstance.SpawnAsPlayerObject(client.Value.clientId);
             }
@@ -26,7 +30,8 @@ public class PlayerSpawner : NetworkBehaviour
         AddPlayerClientRpc();
     }
     [ClientRpc]
-    private void AddPlayerClientRpc(){
+    private void AddPlayerClientRpc()
+    {
         playerList = GameObject.FindGameObjectsWithTag("Player");
     }
 }

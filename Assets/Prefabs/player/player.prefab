@@ -77,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1448391017
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -635960911, guid: b2e1a077293606845bffc252db5ab4e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -193,11 +193,9 @@ MonoBehaviour:
   checkGroundPosition: {fileID: 0}
   checkGroundRadius: 0
   spawnBulletPoint: {fileID: 5054484717885401856}
-  dirX: 0
+  skillBurstHolder: {fileID: 0}
   disUpdate:
     m_InternalValue: 0
-  damage:
-    m_InternalValue: 1
 --- !u!114 &8026515641911550062
 MonoBehaviour:
   m_ObjectHideFlags: 0

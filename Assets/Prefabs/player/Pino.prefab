@@ -142,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1448391017
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ab351ef7b10c6694496428a5a5929ed8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -235,13 +235,8 @@ MonoBehaviour:
   spawnBulletPoint: {fileID: 3284621953705174142}
   maxHealth: 100
   currentHealth: 0
+  skillBurstHolder: {fileID: 2065376986744114749, guid: 79a6d945a46390e4086e56c88bd81fe8, type: 3}
   disUpdate:
-    m_InternalValue: 0
-  damage:
-    m_InternalValue: 1
-  dirX:
-    m_InternalValue: 0
-  playerState:
     m_InternalValue: 0
   money:
     m_InternalValue: 0
