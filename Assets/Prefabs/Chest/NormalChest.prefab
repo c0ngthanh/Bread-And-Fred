@@ -148,9 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31204d83117a8e34d9a452001eb93fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notificationUI: {fileID: 5147618261865705265, guid: ec6abe68e6514f64cb2451c856f4e643, type: 3}
   spawnPoint: {fileID: 3758278923915888792}
-  dictionary: {fileID: 11400000, guid: fcd747bc4e1f92c45a91a7f3dcce9c4b, type: 2}
+  dictionary: {fileID: 11400000, guid: 4c875384325ec71459c7865c01dedf09, type: 2}
   objectsList:
   - {fileID: 2182981407211958071, guid: b91821f17d8088b478bd70ed68d78d35, type: 3}
   - {fileID: 2182981407211958071, guid: 138a80525825ac74bb579f7b2fbe3b17, type: 3}
@@ -160,6 +159,8 @@ MonoBehaviour:
   - {x: 1, y: 2}
   - {x: 3, y: 3}
   idAndNumber: []
+  canOpen:
+    m_InternalValue: 0
 --- !u!114 &5973157789800432086
 MonoBehaviour:
   m_ObjectHideFlags: 0

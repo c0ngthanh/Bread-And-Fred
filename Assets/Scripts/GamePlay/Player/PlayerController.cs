@@ -23,7 +23,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Transform checkGroundPosition;
     [SerializeField] private float checkGroundRadius;
     [SerializeField] private Transform spawnBulletPoint;
-    public float maxHealth = 100;
+    // public float maxHealth = 100;
     [SerializeField] private GameObject skillBurstHolder;
     private float jumpSpeed = 18;
     private bool die = false;
@@ -65,7 +65,7 @@ public class PlayerController : NetworkBehaviour
 
 
 
-        currentHealth.Value = maxHealth;
+        currentHealth.Value = maxHealth.Value;
         // healthBar.SetMaxHealth(maxHealth);
     }
 
@@ -77,23 +77,6 @@ public class PlayerController : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
-        // if (IsServer)
-        // {
-        // Debug.Log(NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(1));
-        //     if (Input.GetKeyDown(KeyCode.K))
-        //     {
-        //         if (this.playerState.Value != PlayerState.Sitting)
-        //         {
-        //             this.playerState.Value = PlayerState.Sitting;
-        //             this.disUpdate.Value = true;
-        //         }
-        //         else
-        //         {
-        //             this.playerState.Value = PlayerState.Idle;
-        //             this.disUpdate.Value = false;
-        //         }
-        //     }
-        // }
         if (Input.GetKeyDown(KeyCode.Q) && canSkill)
         {
             if (skillState.Value == SkillState.Locked)
@@ -106,16 +89,16 @@ public class PlayerController : NetworkBehaviour
                 SetCanSkill(false);
                 StartCoroutine(CountDownTime());
             }
-            if (this.currentHealth.Value <= 0)
-            {
-                die = true;
-                DoDelayAction(1);
-            }
-            if (this.currentHealth.Value <= 0)
-            {
-                die = true;
-                DoDelayAction(1);
-            }
+            // if (this.currentHealth.Value <= 0)
+            // {
+            //     die = true;
+            //     DoDelayAction(1);
+            // }
+            // if (this.currentHealth.Value <= 0)
+            // {
+            //     die = true;
+            //     DoDelayAction(1);
+            // }
         }
         if (Input.GetKeyDown(KeyCode.J) && canShoot)
         {
@@ -126,10 +109,6 @@ public class PlayerController : NetworkBehaviour
         {
             JumpServerRpc();
         }
-        // if (Input.GetKeyDown(KeyCode.B))
-        // {
-        //     uIManager.shopUI.SetActiveStatus();
-        // }
         SetDirXServerRpc(0);
         if (Input.GetKey(KeyCode.D))
         {
@@ -443,5 +422,42 @@ public class PlayerController : NetworkBehaviour
     public NetworkVariable<float> GetHealth()
     {
         return this.currentHealth;
+    }
+        public void TakeDamage(float dmg)
+    {
+        if (IsServer)
+        {
+            this.currentHealth.Value -= dmg;
+            // healthBar.SetHealth(currentHealth);
+            Debug.Log("-------------------current health_player: " + currentHealth.Value);
+        }
+    }
+
+
+    void DoDelayAction(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
+
+    IEnumerator DelayAction(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
+        if (die)
+        {
+            // Destroy(gameObject);
+            Debug.Log("Player died");
+            die = false;
+            DoDelayAction(7);
+        }
+        if (!die)
+        {
+            Debug.Log("Song lai");
+            die = true;
+            // OnNetworkSpawn();
+        }
+
     }
 }
