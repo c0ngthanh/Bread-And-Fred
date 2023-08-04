@@ -15,9 +15,9 @@ public class Coin : NetworkBehaviour
             {
                 if (gameObject.tag == "Money")
                 {
-                    player.GetComponent<PlayerController>().SetMoney(player.GetComponent<PlayerController>().GetMoney().Value + this.value);
+                    player.GetComponent<PlayerController>().SetMoneyServerRpc(player.GetComponent<PlayerController>().GetMoney().Value + this.value);
                 }else{
-                    player.GetComponent<PlayerController>().SetGem(player.GetComponent<PlayerController>().GetGems().Value + this.value);
+                    player.GetComponent<PlayerController>().SetGemServerRpc(player.GetComponent<PlayerController>().GetGems().Value + this.value);
                 }
             Debug.Log("Gems: "+player.GetComponent<PlayerController>().GetGems());
             Debug.Log("Money: "+player.GetComponent<PlayerController>().GetMoney());

@@ -66,7 +66,7 @@ public class MonsterController : NetworkBehaviour
     IEnumerator StartAgain()
     {
         yield return new WaitForSeconds(10);
-        this.SetHP(monsterData.HP);
+        this.SetHPServerRpc(monsterData.HP);
         this.rb.bodyType = RigidbodyType2D.Kinematic;
         this.isStuned = false;
         animator.SetTrigger("NotStun");
@@ -159,10 +159,10 @@ public class MonsterController : NetworkBehaviour
         yield return new WaitForSeconds(Time.deltaTime);
         StartCoroutine(SetvelocityX(other));
     }
-    public void SetHP(float HP)
+    [ServerRpc(RequireOwnership = false)]
+    public void SetHPServerRpc(float HP)
     {
         this.HP.Value = HP;
-        Debug.Log(this.HP);
     }
     public NetworkVariable<float> GetHP()
     {

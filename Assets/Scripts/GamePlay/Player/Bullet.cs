@@ -11,11 +11,21 @@ public class Bullet : NetworkBehaviour
     public NetworkVariable<float> damage = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private float speed = 0;
     private float scale = 1.2f;
+    private float timeExist = 3f;
     [SerializeField] private Element element;
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
         speed = 5;
+        StartCoroutine(DestroyBullet());
+    }
+    IEnumerator DestroyBullet(){
+        yield return new WaitForSeconds(timeExist);
+        DestroyClientRpc();
+    }
+    [ClientRpc]
+    private void DestroyClientRpc(){
+        Destroy(gameObject);
     }
     public void SetDamage(float damage)
     {

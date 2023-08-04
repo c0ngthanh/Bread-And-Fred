@@ -142,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1448391017
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -635960911, guid: b2e1a077293606845bffc252db5ab4e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -232,13 +232,8 @@ MonoBehaviour:
   checkGroundPosition: {fileID: 8790555204882665443}
   checkGroundRadius: 0
   spawnBulletPoint: {fileID: 4032428770044719771}
+  skillBurstHolder: {fileID: 2065376986744114749, guid: c19043dfc89eeb74aad61f0cf6f983f5, type: 3}
   disUpdate:
-    m_InternalValue: 0
-  damage:
-    m_InternalValue: 1
-  dirX:
-    m_InternalValue: 0
-  playerState:
     m_InternalValue: 0
 --- !u!231 &3804350872030280192
 SpringJoint2D:

@@ -10,17 +10,11 @@ public class NotificationUI : MonoBehaviour
     void Start()
     {
         gameObject.SetActive(false);
-        // textMeshPro.text = "Press E to open chest";
     }
     public void SetText(string text){
         textMeshPro.text = text;
     }
-    public void OnPlayerTriggerEnterWithChest(){
-        // textMeshPro.text = "Press E to open chest";
-        gameObject.SetActive(true);
-    }
-    public void OnPlayerTriggerExitWithChest(){
-        // textMeshPro.text = "Exit with chest";
-        gameObject.SetActive(false);
+    public void SetActive(bool value){
+        gameObject.SetActive(value);
     }
 }
