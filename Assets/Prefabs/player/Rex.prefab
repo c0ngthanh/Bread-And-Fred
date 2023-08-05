@@ -96,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 6094754241921371936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3, y: 4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4032428770044719771}
@@ -142,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 705236737
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -635960911, guid: b2e1a077293606845bffc252db5ab4e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -232,13 +232,10 @@ MonoBehaviour:
   checkGroundPosition: {fileID: 8790555204882665443}
   checkGroundRadius: 0
   spawnBulletPoint: {fileID: 4032428770044719771}
+  skillBurstHolder: {fileID: 2065376986744114749, guid: c19043dfc89eeb74aad61f0cf6f983f5, type: 3}
   disUpdate:
     m_InternalValue: 0
-  damage:
-    m_InternalValue: 1
-  dirX:
-    m_InternalValue: 0
-  playerState:
+  currentHealth:
     m_InternalValue: 0
 --- !u!231 &3804350872030280192
 SpringJoint2D:

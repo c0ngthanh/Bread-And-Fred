@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1601936061629799218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 10, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5054484717885401856}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1448391017
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -635960911, guid: b2e1a077293606845bffc252db5ab4e3, type: 3}
@@ -193,11 +193,11 @@ MonoBehaviour:
   checkGroundPosition: {fileID: 0}
   checkGroundRadius: 0
   spawnBulletPoint: {fileID: 5054484717885401856}
-  dirX: 0
+  skillBurstHolder: {fileID: 0}
   disUpdate:
     m_InternalValue: 0
-  damage:
-    m_InternalValue: 1
+  currentHealth:
+    m_InternalValue: 0
 --- !u!114 &8026515641911550062
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Character : ScriptableObject
     [SerializeField] private Sprite  icon;
     [SerializeField] private GameObject introPrefab;
     [SerializeField] private NetworkObject gameplayPrefab;
+    [SerializeField] private Sprite skillIcon;
 
 
     public int Id => id;
@@ -17,4 +18,5 @@ public class Character : ScriptableObject
     public Sprite Icon => icon;
     public GameObject IntroPrefab => introPrefab;
     public NetworkObject GameplayPrefab => gameplayPrefab;
+    public Sprite SkillIcon => skillIcon;
 }

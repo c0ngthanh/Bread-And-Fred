@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static Helper;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -23,23 +24,33 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Transform checkGroundPosition;
     [SerializeField] private float checkGroundRadius;
     [SerializeField] private Transform spawnBulletPoint;
-
-    public float maxHealth = 100;
-    private float rotationSpeed = 40;
+    // public float maxHealth = 100;
+    [SerializeField] private GameObject skillBurstHolder;
     private float jumpSpeed = 18;
     private bool die = false;
     // network properties
     private NetworkVariable<bool> isFacingRight = new NetworkVariable<bool>(true);
     public NetworkVariable<bool> disUpdate = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> damage = new NetworkVariable<float>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> dirX = new NetworkVariable<float>(0);
-    public NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
-    public NetworkVariable<float> money = new NetworkVariable<float>(0);
-    public NetworkVariable<float> gems = new NetworkVariable<float>(0);
+    private NetworkVariable<float> dirX = new NetworkVariable<float>(0);
+    private NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
+    private NetworkVariable<float> money = new NetworkVariable<float>(0);
+    private NetworkVariable<float> gems = new NetworkVariable<float>(0);
+    private NetworkVariable<float> damage = new NetworkVariable<float>(1);
+    private NetworkVariable<float> countDownNormalAttack = new NetworkVariable<float>(2);
+    private NetworkVariable<float> speed = new NetworkVariable<float>(40);
+    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(100);
+    private NetworkVariable<float> health = new NetworkVariable<float>(100);
+    private NetworkVariable<SkillState> skillState = new NetworkVariable<SkillState>(SkillState.Locked);
+    //EventHandler 
+    public event EventHandler<bool> SkillBurstChanged;
+    public event EventHandler<bool> SkillStateChanged;
     public NetworkVariable<float> currentHealth = new NetworkVariable<float>(0);
 
 
-    // Vector2 movement;
+    //
+    private float countDown;
+    private bool canSkill = true;
+    private bool canShoot = true;
     public override void OnNetworkSpawn()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,47 +59,52 @@ public class PlayerController : NetworkBehaviour
         boxCollider2d = GetComponent<BoxCollider2D>();
         // Instance = this;
         disUpdate.Value = false;
-        disUpdate.OnValueChanged += OnValueChanged;
+        // disUpdate.OnValueChanged += OnValueChanged;
         playerState.OnValueChanged += SetPlayerAnimation;
+        // uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        countDown = skillBurstHolder.GetComponent<SkillBurstHolder>().GetCountDown();
 
 
 
-        currentHealth.Value = maxHealth;
+        currentHealth.Value = maxHealth.Value;
         // healthBar.SetMaxHealth(maxHealth);
     }
 
-    private void OnValueChanged(bool previousValue, bool newValue)
-    {
-        // Debug.Log($"{previousValue}    {newValue}");
-    }
+    // private void OnValueChanged(bool previousValue, bool newValue)
+    // {
+    //     Debug.Log($"{previousValue}    {newValue}");
+    // }
 
     void Update()
     {
         if (!IsOwner) return;
-        if (IsServer)
+        if (Input.GetKeyDown(KeyCode.Q) && canSkill)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (skillState.Value == SkillState.Locked)
             {
-                if (this.playerState.Value != PlayerState.Sitting)
-                {
-                    this.playerState.Value = PlayerState.Sitting;
-                    this.disUpdate.Value = true;
-                }
-                else
-                {
-                    this.playerState.Value = PlayerState.Idle;
-                    this.disUpdate.Value = false;
-                }
+
             }
-            if (this.currentHealth.Value <= 0)
+            else
             {
-                die = true;
-                DoDelayAction(1);
+                SpawnSkillServerRpc(NetworkManager.Singleton.LocalClientId);
+                SetCanSkill(false);
+                StartCoroutine(CountDownTime());
             }
+            // if (this.currentHealth.Value <= 0)
+            // {
+            //     die = true;
+            //     DoDelayAction(1);
+            // }
+            // if (this.currentHealth.Value <= 0)
+            // {
+            //     die = true;
+            //     DoDelayAction(1);
+            // }
         }
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J) && canShoot)
         {
             OnAttackingSpawnServerRpc();
+            StartCoroutine(SetCanShoot());
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -104,48 +120,46 @@ public class PlayerController : NetworkBehaviour
             SetDirXServerRpc(-1);
         }
     }
-    // [ServerRpc(RequireOwnership = false)]
-    // private void UpdateServerRpc()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.J))
-    //     {
-    //         OnAttackingSpawnServerRpc();
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.W))
-    //     {
-    //         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-    //     }
-    //     SetDirXServerRpc(0);
-    //     if (Input.GetKey(KeyCode.D))
-    //     {
-    //         SetDirXServerRpc(1);
-    //     }
-    //     if (Input.GetKey(KeyCode.A))
-    //     {
-    //         SetDirXServerRpc(-1);
-    //     }
-    // }
-    // [ClientRpc]
-    // private void UpdateClientRpc()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.J))
-    //     {
-    //         OnAttackingSpawnServerRpc();
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.W))
-    //     {
-    //         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-    //     }
-    //     SetDirXServerRpc(0);
-    //     if (Input.GetKey(KeyCode.D))
-    //     {
-    //         SetDirXServerRpc(1);
-    //     }
-    //     if (Input.GetKey(KeyCode.A))
-    //     {
-    //         SetDirXServerRpc(-1);
-    //     }
-    // }
+    IEnumerator CountDownTime()
+    {
+        yield return new WaitForSeconds(countDown);
+        SetCanSkill(true);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void SpawnSkillServerRpc(ulong clientID)
+    {
+        StartCoroutine(SpawnSkill());
+        ClientRpcParams clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { clientID }
+            }
+        };
+        SpawnSkillClientRpc(clientRpcParams);
+    }
+    [ClientRpc]
+    private void SpawnSkillClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        GameObject temp = Instantiate(skillBurstHolder, transform.position, Quaternion.identity);
+        // StartCoroutine(SpawnSkill());
+    }
+    IEnumerator SpawnSkill()
+    {
+        yield return new WaitForSeconds(1);
+        if (skillBurstHolder.GetComponent<SkillBurstHolder>().GetNameSkill().GetComponent<RexSkill>())
+        {
+            skillBurstHolder.GetComponent<SkillBurstHolder>().GetNameSkill().GetComponent<RexSkill>().SetPlayer(transform);
+        }
+        GameObject temp = Instantiate(skillBurstHolder.GetComponent<SkillBurstHolder>().GetNameSkill(), transform.position, Quaternion.identity);
+        temp.GetComponent<NetworkObject>().Spawn();
+    }
+    IEnumerator SetCanShoot()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(countDownNormalAttack.Value);
+        canShoot = true;
+    }
     [ServerRpc(RequireOwnership = false)]
     private void SetDirXServerRpc(float value)
     {
@@ -176,7 +190,7 @@ public class PlayerController : NetworkBehaviour
             // else if (GameState.GetGameState() == GameState.State.Rotate)
             // {
             // }
-            rb.AddForce(new Vector2(this.dirX.Value, 0) * rotationSpeed);
+            rb.AddForce(new Vector2(this.dirX.Value, 0) * speed.Value);
         }
     }
     [ServerRpc(RequireOwnership = false)]
@@ -300,11 +314,117 @@ public class PlayerController : NetworkBehaviour
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
+    public bool GetCanSkill()
+    {
+        return this.canSkill;
+    }
     public PlayerState GetPlayerState()
     {
         return this.playerState.Value;
     }
+    public NetworkVariable<float> GetDamge()
+    {
+        return this.damage;
+    }
+    public NetworkVariable<float> GetMoney()
+    {
+        return this.money;
+    }
+    public NetworkVariable<float> GetGems()
+    {
+        return this.gems;
+    }
+    public NetworkVariable<float> GetMaxHealth()
+    {
+        return this.maxHealth;
+    }
+    public NetworkVariable<float> GetSpeed()
+    {
+        return this.speed;
+    }
+    public NetworkVariable<float> GetCountDownTime()
+    {
+        return this.countDownNormalAttack;
+    }
+    public NetworkVariable<float> GetCurrentHealth()
+    {
+        return this.health;
+    }
+    public NetworkVariable<SkillState> GetSkillState()
+    {
+        return this.skillState;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetSkillStateServerRpc(SkillState skillState)
+    {
+        this.skillState.Value = skillState;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetMoneyServerRpc(float value)
+    {
+        this.money.Value = value;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetGemServerRpc(float value)
+    {
+        this.gems.Value = value;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetDamageServerRpc(float value)
+    {
+        if (IsServer)
+        {
+            this.damage.Value = value;
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetCountDownNormalAttackServerRpc(float value)
+    {
+        if (IsServer)
+        {
+            this.countDownNormalAttack.Value = value;
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetMaxHealthServerRpc(float value)
+    {
+        if (IsServer)
+        {
+            this.health.Value = this.health.Value * value / this.maxHealth.Value;
+            this.maxHealth.Value = value;
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetSpeedServerRpc(float value)
+    {
+        if (IsServer)
+        {
+            this.speed.Value = value;
+        }
+    }
+    public void SetBulletPrefab(Transform value)
+    {
+        normalAttackPrefab = value;
+    }
+    public void UnlockSkill()
+    {
+        SkillStateChanged?.Invoke(this, true);
+    }
+    public void SetCanSkill(bool value)
+    {
+        canSkill = value;
+        SkillBurstChanged?.Invoke(this, canSkill);
+    }
 
+    public Bullet GetBullet()
+    {
+        return this.normalAttackPrefab.GetComponent<Bullet>();
+    }
+
+    public NetworkVariable<float> GetHealth()
+    {
+        return this.currentHealth;
+    }
     public void TakeDamage(float dmg)
     {
         if (IsServer)
@@ -339,33 +459,6 @@ public class PlayerController : NetworkBehaviour
             // OnNetworkSpawn();
         }
 
-    }
-
-    public void SetMoney(float value)
-    {
-        this.money.Value = value;
-    }
-    public void SetGem(float value)
-    {
-        this.gems.Value = value;
-    }
-    public NetworkVariable<float> GetMoney()
-    {
-        return this.money;
-    }
-    public NetworkVariable<float> GetGems()
-    {
-        return this.gems;
-    }
-
-    public Bullet GetBullet()
-    {
-        return this.normalAttackPrefab.GetComponent<Bullet>();
-    }
-
-    public NetworkVariable<float> GetHealth()
-    {
-        return this.currentHealth;
     }
 }
 

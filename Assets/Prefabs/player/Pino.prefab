@@ -96,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 4655401712537020474}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3284621953705174142}
@@ -142,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 705236737
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ab351ef7b10c6694496428a5a5929ed8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -225,7 +225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86dd6691e2fe0ba459285cb9c062c3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
   GroundLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -233,19 +232,10 @@ MonoBehaviour:
   checkGroundPosition: {fileID: 3189133499424986951}
   checkGroundRadius: 0
   spawnBulletPoint: {fileID: 3284621953705174142}
-  maxHealth: 100
-  currentHealth: 0
+  skillBurstHolder: {fileID: 2065376986744114749, guid: 79a6d945a46390e4086e56c88bd81fe8, type: 3}
   disUpdate:
     m_InternalValue: 0
-  damage:
-    m_InternalValue: 1
-  dirX:
-    m_InternalValue: 0
-  playerState:
-    m_InternalValue: 0
-  money:
-    m_InternalValue: 0
-  gems:
+  currentHealth:
     m_InternalValue: 0
 --- !u!231 &2987606024096996829
 SpringJoint2D:
