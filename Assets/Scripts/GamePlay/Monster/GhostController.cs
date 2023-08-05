@@ -48,7 +48,9 @@ public class GhostController : NetworkBehaviour
         if (randomShooting == 0)
         {
             animator.SetTrigger("Danger");
-        }else{
+        }
+        else
+        {
             animator.SetTrigger("Hit");
         }
     }

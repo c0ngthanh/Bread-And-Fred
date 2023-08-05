@@ -16,5 +16,9 @@ MonoBehaviour:
   npcName: "T\u01B0\u1EE3ng Thi\xEAn Th\u1EA7n"
   scale: 3
   dialogue:
-  - "Xin Ch\xE0o"
-  - Hihi
+  - 'Hi! '
+  - I guess I know where you guys are going
+  - Unfortunate things happen like this
+  - My friends told that terrible story
+  - I hope you can do it with courage and perseverance
+  - Good luck!
