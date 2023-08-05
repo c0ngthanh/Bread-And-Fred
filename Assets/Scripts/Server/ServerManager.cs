@@ -16,9 +16,7 @@ public class ServerManager : NetworkBehaviour
     public NetworkList<Vector2> clientAndCharacterID;
     public List<Vector2> clientAndCharacterIDLocal = new List<Vector2>();
     public Dictionary<ulong, ClientData> ClientData { get; private set;  }
-
-
-    private ulong tempID;
+    
     private bool gameHasStarted;
     private void Awake()
     {
@@ -66,7 +64,6 @@ public class ServerManager : NetworkBehaviour
         response.Approved = true;
         response.CreatePlayerObject = false;
         response.Pending = false;
-        // tempID = request.ClientNetworkId;
         ClientData[request.ClientNetworkId] = new ClientData(request.ClientNetworkId);
         // AddClientClientRpc();
         if (IsServer)
