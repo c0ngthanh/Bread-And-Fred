@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GhostBulletData
   m_EditorClassIdentifier: 
   bulletList:
-  - {fileID: 1391166512401919915, guid: 728f5bf3ee4514f46b04505d339b786f, type: 3}
-  - {fileID: 1975191368430288444, guid: 6fee4e377581d244cafa83a97d02f841, type: 3}
+  - {fileID: 3596664708780654446, guid: 728f5bf3ee4514f46b04505d339b786f, type: 3}
+  - {fileID: 5372861139076459998, guid: 6fee4e377581d244cafa83a97d02f841, type: 3}
