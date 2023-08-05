@@ -38,6 +38,8 @@ public class Bullet : NetworkBehaviour
 
     public void SetDir(Vector3 dir)
     {
+        Debug.Log(dir);
+        Debug.Log(this);
         this.dir.Value = dir;
     }
     private void OnTriggerEnter2D(Collider2D other)
