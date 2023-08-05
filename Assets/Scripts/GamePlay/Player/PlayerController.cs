@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Transform checkGroundPosition;
     [SerializeField] private float checkGroundRadius;
     [SerializeField] private Transform spawnBulletPoint;
+
     public float maxHealth = 100;
     private float rotationSpeed = 40;
     private float jumpSpeed = 18;
@@ -57,7 +59,7 @@ public class PlayerController : NetworkBehaviour
 
     private void OnValueChanged(bool previousValue, bool newValue)
     {
-        Debug.Log($"{previousValue}    {newValue}");
+        // Debug.Log($"{previousValue}    {newValue}");
     }
 
     void Update()
@@ -308,8 +310,6 @@ public class PlayerController : NetworkBehaviour
         if (IsServer)
         {
             this.currentHealth.Value -= dmg;
-            // healthBar.SetHealth(currentHealth);
-            Debug.Log("-------------------current health_player: " + currentHealth.Value);
         }
     }
 
@@ -368,3 +368,4 @@ public class PlayerController : NetworkBehaviour
         return this.currentHealth;
     }
 }
+

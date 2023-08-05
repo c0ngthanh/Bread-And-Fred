@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class HealthBar : NetworkBehaviour
     private GameObject boss;
     public Slider slider;
     private NetworkVariable<float> hp = new NetworkVariable<float>();
+    [SerializeField] public GameObject grid;
     void Start()
     {
         boss = GameObject.FindGameObjectWithTag("StoneBoss");
@@ -19,8 +21,9 @@ public class HealthBar : NetworkBehaviour
             SetMaxHealth(100);
         }
 
-        hp.Value = boss.GetComponent<bossAction>().GetHealth().Value;
-        hp.OnValueChanged += UpdateHealthBar;
+        boss.GetComponent<bossAction>().GetHealth().OnValueChanged += UpdateHealthBar;
+        grid.GetComponent<SetUpRoom>().GetBossAppear().OnValueChanged += UpdateHealthBarStatus;
+        Hide();
     }
     public void SetMaxHealth(float maxHealth)
     {
@@ -37,12 +40,22 @@ public class HealthBar : NetworkBehaviour
     {
         this.SetHealth(newValue);
     }
+    private void UpdateHealthBarStatus(bool previousValue, bool newValue)
+    {
+        if (newValue)
+        {
+            Show();
+        }
+        else
+        {
+            DoDelayAction(2);
+        }
+    }
 
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("chay ham update");
         if (boss == null)
         {
             boss = GameObject.FindGameObjectWithTag("StoneBoss");
@@ -55,6 +68,33 @@ public class HealthBar : NetworkBehaviour
         {
             hp.Value = boss.GetComponent<bossAction>().GetHealth().Value;
         }
-
     }
+
+    private void Hide()
+    {
+        Debug.Log("Tat HB boss");
+        gameObject.SetActive(false);
+    }
+
+    private void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+
+    void DoDelayAction(float delayTime)
+    {
+        StartCoroutine(DelayAction(delayTime));
+    }
+
+    IEnumerator DelayAction(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+        Hide();
+    }
+
+
 }
+
+

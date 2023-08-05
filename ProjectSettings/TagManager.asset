@@ -21,6 +21,8 @@ TagManager:
   - UIManager
   - HealthBar_1
   - HealthBar2
+  - FinalDoor
+  - BossStand
   layers:
   - Default
   - TransparentFX
@@ -55,6 +57,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Wall
+    uniqueID: 3295930311
+    locked: 0
   - name: Terrain_hide
     uniqueID: 3691773507
     locked: 0
@@ -78,4 +83,7 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 3583583769
+    locked: 0
+  - name: FinalDoor
+    uniqueID: 786321649
     locked: 0
