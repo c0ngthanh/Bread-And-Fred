@@ -9,6 +9,7 @@ public class WaypointList : MonoBehaviour
     [SerializeField] private TeleportWaypoint isActiveNow;
     [SerializeField] private TeleportWaypoint oldTeleport = null;
     [SerializeField] private MapUI mapUI;
+    [SerializeField] private Camera minimapCamera;
     private bool mapMode = false;
     private int index = 0;
     public List<TeleportWaypoint> GetTeleportWaypoints()
@@ -46,6 +47,7 @@ public class WaypointList : MonoBehaviour
         }
         teleportWaypoints[index].GetIsActiveIcon().gameObject.SetActive(true);
         oldTeleport = teleportWaypoints[index];
+        minimapCamera.transform.position = new Vector3(minimapCamera.transform.position.x, teleportWaypoints[index].transform.position.y,minimapCamera.transform.position.z);
         index++;
     }
 

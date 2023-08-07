@@ -48,6 +48,7 @@ public class PlayerController : NetworkBehaviour
 
 
     //
+    private float LastOnGroundTime;
     private float countDown;
     private bool canSkill = true;
     private bool canShoot = true;
@@ -78,6 +79,7 @@ public class PlayerController : NetworkBehaviour
     void Update()
     {
         if (!IsOwner) return;
+        LastOnGroundTime -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Q) && canSkill)
         {
             if (skillState.Value == SkillState.Locked)
@@ -118,6 +120,9 @@ public class PlayerController : NetworkBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             SetDirXServerRpc(-1);
+        }
+        if(IsGrounded()){
+            LastOnGroundTime = 0.1f;
         }
     }
     IEnumerator CountDownTime()
@@ -190,7 +195,33 @@ public class PlayerController : NetworkBehaviour
             // else if (GameState.GetGameState() == GameState.State.Rotate)
             // {
             // }
-            rb.AddForce(new Vector2(this.dirX.Value, 0) * speed.Value);
+            if (GameState.gameState == GameState.State.Normal)
+            {
+                #region Run 
+                float targetSpeed = dirX.Value * speed.Value;
+
+                float speedDif = targetSpeed - rb.velocity.x;
+
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? 9.5f : 9.5f;
+
+                float movement = Mathf.Pow(Mathf.Abs(speedDif), 1.2f) * Mathf.Sign(speedDif);
+
+                rb.AddForce(movement * Vector2.right);
+                #endregion
+                #region Friction 
+                if(LastOnGroundTime > 0 && Mathf.Abs(dirX.Value) < 0.01f){
+                    float amount = Mathf.Min(Mathf.Abs(rb.velocity.x),Mathf.Abs(0.2f));
+
+                    amount *= Mathf.Sign(rb.velocity.x);
+
+                    rb.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+                }
+                #endregion
+            }
+            else if (GameState.gameState == GameState.State.Rotate)
+            {
+                rb.AddForce(new Vector2(this.dirX.Value, 0) * speed.Value);
+            }
         }
     }
     [ServerRpc(RequireOwnership = false)]

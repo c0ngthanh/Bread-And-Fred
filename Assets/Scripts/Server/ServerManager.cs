@@ -15,8 +15,8 @@ public class ServerManager : NetworkBehaviour
 
     public NetworkList<Vector2> clientAndCharacterID;
     public List<Vector2> clientAndCharacterIDLocal = new List<Vector2>();
-    public Dictionary<ulong, ClientData> ClientData { get; private set;  }
-    
+    public Dictionary<ulong, ClientData> ClientData { get; private set; }
+
     private bool gameHasStarted;
     private void Awake()
     {
