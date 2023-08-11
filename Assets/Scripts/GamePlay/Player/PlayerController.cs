@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +18,7 @@ public class PlayerController : NetworkBehaviour
     private BoxCollider2D boxCollider2d;
     private Animator ani;
     private SpriteRenderer sprite;
+    [SerializeField] private PlayerRunData data;
     [SerializeField] private LayerMask GroundLayer;
     [SerializeField] private Transform normalAttackPrefab;
     [SerializeField] private Transform checkGroundPosition;
@@ -26,7 +26,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private Transform spawnBulletPoint;
     // public float maxHealth = 100;
     [SerializeField] private GameObject skillBurstHolder;
-    private float jumpSpeed = 18;
     private bool die = false;
     // network properties
     private NetworkVariable<bool> isFacingRight = new NetworkVariable<bool>(true);
@@ -37,22 +36,24 @@ public class PlayerController : NetworkBehaviour
     private NetworkVariable<float> gems = new NetworkVariable<float>(0);
     private NetworkVariable<float> damage = new NetworkVariable<float>(1);
     private NetworkVariable<float> countDownNormalAttack = new NetworkVariable<float>(2);
-    private NetworkVariable<float> speed = new NetworkVariable<float>(40);
+    private NetworkVariable<float> speed = new NetworkVariable<float>(15);
     private NetworkVariable<float> maxHealth = new NetworkVariable<float>(100);
     private NetworkVariable<float> health = new NetworkVariable<float>(100);
     private NetworkVariable<SkillState> skillState = new NetworkVariable<SkillState>(SkillState.Locked);
+    private NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false);
     //EventHandler 
     public event EventHandler<bool> SkillBurstChanged;
     public event EventHandler<bool> SkillStateChanged;
-    public NetworkVariable<float> currentHealth = new NetworkVariable<float>(0);
+    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(100);
 
 
     //
     private float LastOnGroundTime;
+    private float LastJumpTime;
     private float countDown;
     private bool canSkill = true;
-    private bool canShoot = true;
-    public override void OnNetworkSpawn()
+    public bool canShoot = true;
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
@@ -64,10 +65,8 @@ public class PlayerController : NetworkBehaviour
         playerState.OnValueChanged += SetPlayerAnimation;
         // uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         countDown = skillBurstHolder.GetComponent<SkillBurstHolder>().GetCountDown();
-
-
-
-        currentHealth.Value = maxHealth.Value;
+        // speed.Value = data.moveSpeed;
+        // currentHealth.Value = maxHealth.Value;
         // healthBar.SetMaxHealth(maxHealth);
     }
 
@@ -78,52 +77,97 @@ public class PlayerController : NetworkBehaviour
 
     void Update()
     {
-        if (!IsOwner) return;
         LastOnGroundTime -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Q) && canSkill)
+        LastJumpTime -= Time.deltaTime;
+        if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Multi)
         {
-            if (skillState.Value == SkillState.Locked)
+            if (!IsOwner) return;
+            if (Input.GetKeyDown(KeyCode.Q) && canSkill)
             {
+                if (skillState.Value == SkillState.Locked)
+                {
 
+                }
+                else
+                {
+                    UseSkill();
+                }
+                // if (this.currentHealth.Value <= 0)
+                // {
+                //     die = true;
+                //     DoDelayAction(1);
+                // }
+                // if (this.currentHealth.Value <= 0)
+                // {
+                //     die = true;
+                //     DoDelayAction(1);
+                // }
             }
-            else
+            if (Input.GetKeyDown(KeyCode.J) && canShoot)
             {
-                SpawnSkillServerRpc(NetworkManager.Singleton.LocalClientId);
-                SetCanSkill(false);
-                StartCoroutine(CountDownTime());
+                Attack();
             }
-            // if (this.currentHealth.Value <= 0)
-            // {
-            //     die = true;
-            //     DoDelayAction(1);
-            // }
-            // if (this.currentHealth.Value <= 0)
-            // {
-            //     die = true;
-            //     DoDelayAction(1);
-            // }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                OnJumpInput();
+            }
+            SetDirXServerRpc(0);
+            if (Input.GetKey(KeyCode.D))
+            {
+                SetDirXServerRpc(1);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                SetDirXServerRpc(-1);
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                if (IsGrounded())
+                {
+                    SetPlayerStateServerRpc(PlayerState.Sitting);
+                }
+            }
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                if (IsGrounded())
+                {
+                    SetPlayerStateServerRpc(PlayerState.Idle);
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.J) && canShoot)
+        if (LastOnGroundTime > 0 && LastJumpTime > 0 && !isJumping.Value)
         {
-            OnAttackingSpawnServerRpc();
-            StartCoroutine(SetCanShoot());
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
+            SetJumpServerRpc(true);
             JumpServerRpc();
         }
-        SetDirXServerRpc(0);
-        if (Input.GetKey(KeyCode.D))
+        if (isJumping.Value && rb.velocity.y < 0)
         {
-            SetDirXServerRpc(1);
+            SetJumpServerRpc(false);
         }
-        if (Input.GetKey(KeyCode.A))
+        if (IsGrounded() && !isJumping.Value)
         {
-            SetDirXServerRpc(-1);
+            LastOnGroundTime = data.coyoteTime;
         }
-        if(IsGrounded()){
-            LastOnGroundTime = 0.1f;
-        }
+    }
+    public void UseSkill()
+    {
+        SpawnSkillServerRpc(NetworkManager.Singleton.LocalClientId);
+        SetCanSkill(false);
+        StartCoroutine(CountDownTime());
+    }
+    public void Attack()
+    {
+        OnAttackingSpawnServerRpc();
+        StartCoroutine(SetCanShoot());
+    }
+    public void OnJumpInput()
+    {
+        LastJumpTime = data.jumpInputBufferTime;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void SetJumpServerRpc(bool value)
+    {
+        isJumping.Value = value;
     }
     IEnumerator CountDownTime()
     {
@@ -166,7 +210,7 @@ public class PlayerController : NetworkBehaviour
         canShoot = true;
     }
     [ServerRpc(RequireOwnership = false)]
-    private void SetDirXServerRpc(float value)
+    public void SetDirXServerRpc(float value)
     {
         if (IsServer)
         {
@@ -174,7 +218,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
     [ServerRpc(RequireOwnership = false)]
-    private void SetIsFacingRightServerRpc(bool value)
+    public void SetIsFacingRightServerRpc(bool value)
     {
         if (IsServer)
         {
@@ -187,30 +231,22 @@ public class PlayerController : NetworkBehaviour
     {
         if (IsServer)
         {
-            // rb.AddForce(new Vector2(this.dirX.Value, 0) * rotationSpeed);
-            // if (GameState.GetGameState() == GameState.State.Normal)
-            // {
-            //     rb.velocity = new Vector2(dirX.Value * 9f, rb.velocity.y);
-            // }
-            // else if (GameState.GetGameState() == GameState.State.Rotate)
-            // {
-            // }
-            if (GameState.gameState == GameState.State.Normal)
+            if (GameState.Instance.GetGameState().Value == GameState.State.Normal)
             {
                 #region Run 
                 float targetSpeed = dirX.Value * speed.Value;
-
                 float speedDif = targetSpeed - rb.velocity.x;
 
-                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? 9.5f : 9.5f;
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.acceleration : data.decceleration;
 
-                float movement = Mathf.Pow(Mathf.Abs(speedDif), 1.2f) * Mathf.Sign(speedDif);
+                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, data.velPower) * Mathf.Sign(speedDif);
 
                 rb.AddForce(movement * Vector2.right);
                 #endregion
                 #region Friction 
-                if(LastOnGroundTime > 0 && Mathf.Abs(dirX.Value) < 0.01f){
-                    float amount = Mathf.Min(Mathf.Abs(rb.velocity.x),Mathf.Abs(0.2f));
+                if (LastOnGroundTime > 0 && Mathf.Abs(dirX.Value) < 0.01f)
+                {
+                    float amount = Mathf.Min(Mathf.Abs(rb.velocity.x), Mathf.Abs(data.frictionAmount));
 
                     amount *= Mathf.Sign(rb.velocity.x);
 
@@ -218,19 +254,29 @@ public class PlayerController : NetworkBehaviour
                 }
                 #endregion
             }
-            else if (GameState.gameState == GameState.State.Rotate)
+            else if (GameState.Instance.GetGameState().Value == GameState.State.Rotate)
             {
-                rb.AddForce(new Vector2(this.dirX.Value, 0) * speed.Value);
+                rb.AddForce(new Vector2(this.dirX.Value, 0) * data.rotateForce);
             }
         }
     }
     [ServerRpc(RequireOwnership = false)]
     private void JumpServerRpc()
     {
-        if (IsServer)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        }
+        //Ensures we can't call Jump multiple times from one press
+        LastJumpTime = 0;
+        LastOnGroundTime = 0;
+
+        #region Perform Jump
+        //We increase the force applied if we are falling
+        //This means we'll always feel like we jump the same amount 
+        //(setting the player's Y velocity to 0 beforehand will likely work the same, but I find this more elegant :D)
+        float force = data.jumpForce;
+        if (rb.velocity.y < 0)
+            force -= rb.velocity.y;
+
+        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+        #endregion
     }
     [ServerRpc(RequireOwnership = false)]
     public void OnAttackingSpawnServerRpc()
@@ -242,7 +288,7 @@ public class PlayerController : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (!IsOwner) return;
+        // if (!IsOwner) return;
         if (disUpdate.Value) return;
         playerMove(dirX.Value);
     }
@@ -259,29 +305,12 @@ public class PlayerController : NetworkBehaviour
     }
     private void playerMove(float dirX)
     {
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (IsGrounded())
-            {
-                SetPlayerStateServerRpc(PlayerState.Sitting);
-            }
-        }
-        else
+        if (playerState.Value != PlayerState.Sitting)
         {
             SetPlayerStateServerRpc(PlayerState.Idle);
-            if (!disUpdate.Value)
-            {
-                // if (GameState.GetGameState() == GameState.State.Normal)
-                // {
-                // rb.velocity = new Vector2(dirX * 9f, rb.velocity.y);
-                // }
-                // else if (GameState.GetGameState() == GameState.State.Rotate)
-                // {
-                // }
-                MoveServerRpc();
-            }
             updateAnimation(dirX);
         }
+        MoveServerRpc();
     }
     private void updateAnimation(float dirX)
     {
@@ -322,7 +351,7 @@ public class PlayerController : NetworkBehaviour
         return this.isFacingRight.Value ? 1 : -1;
     }
     [ServerRpc(RequireOwnership = false)]
-    private void SetPlayerStateServerRpc(PlayerState state)
+    public void SetPlayerStateServerRpc(PlayerState state)
     {
         this.playerState.Value = state;
     }
@@ -330,20 +359,35 @@ public class PlayerController : NetworkBehaviour
     {
         if (this.playerState.Value == PlayerState.Idle)
         {
+            // GameState.Instance.SetGameState(GameState.State.Normal);
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             ani.SetBool("sitting", false);
             ani.SetBool("running", false);
         }
         if (this.playerState.Value == PlayerState.Running)
         {
+            // GameState.Instance.SetGameState(GameState.State.Normal);
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             ani.SetBool("running", true);
         }
         if (this.playerState.Value == PlayerState.Sitting)
         {
+            // GameState.Instance.SetGameState(GameState.State.Rotate);
             ani.SetBool("sitting", true);
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
+        if (newValue == PlayerState.Sitting)
+        {
+            SetGameStateServerRpc(GameState.State.Rotate);
+        }
+        else if (previousValue == PlayerState.Sitting && (newValue != PlayerState.Sitting))
+        {
+            SetGameStateServerRpc(GameState.State.Normal);
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void SetGameStateServerRpc(GameState.State state){
+        GameState.Instance.SetGameState(state);
     }
     public bool GetCanSkill()
     {
@@ -451,6 +495,10 @@ public class PlayerController : NetworkBehaviour
     {
         return this.normalAttackPrefab.GetComponent<Bullet>();
     }
+    public bool GetCanShoot()
+    {
+        return this.canShoot;
+    }
 
     public NetworkVariable<float> GetHealth()
     {
@@ -469,7 +517,10 @@ public class PlayerController : NetworkBehaviour
     {
         StartCoroutine(DelayAction(delayTime));
     }
-
+    public GameObject GetSkillBurstHolder()
+    {
+        return skillBurstHolder;
+    }
     IEnumerator DelayAction(float delayTime)
     {
         //Wait for the specified delay time before continuing.

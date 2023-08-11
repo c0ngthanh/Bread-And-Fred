@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class LockedChest : NormalChest
 {
-    [SerializeField] private NetworkVariable<bool> coditionOpen = new NetworkVariable<bool>(false);
+    private NetworkVariable<bool> coditionOpen = new NetworkVariable<bool>(false);
+    // NetworkVariable<bool> canOpen = new NetworkVariable<bool>(false);
     public override void Openchest()
     {
         if (Input.GetKeyDown(KeyCode.L))

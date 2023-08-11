@@ -11,16 +11,30 @@ public class Coin : NetworkBehaviour
         if (!IsServer) return;
         if (other.gameObject.tag == "Player")
         {
-            foreach (var player in PlayerSpawner.playerList)
+            if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Multi)
+            {
+                foreach (var player in PlayerSpawner.playerList)
+                {
+                    if (gameObject.tag == "Money")
+                    {
+                        player.GetComponent<PlayerController>().SetMoneyServerRpc(player.GetComponent<PlayerController>().GetMoney().Value + this.value);
+                    }
+                    else
+                    {
+                        player.GetComponent<PlayerController>().SetGemServerRpc(player.GetComponent<PlayerController>().GetGems().Value + this.value);
+                    }
+                }
+            }
+            else if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Single)
             {
                 if (gameObject.tag == "Money")
                 {
-                    player.GetComponent<PlayerController>().SetMoneyServerRpc(player.GetComponent<PlayerController>().GetMoney().Value + this.value);
-                }else{
-                    player.GetComponent<PlayerController>().SetGemServerRpc(player.GetComponent<PlayerController>().GetGems().Value + this.value);
+                    PlayerHolder.Instance.SetMoney(PlayerHolder.Instance.GetMoney().Value + this.value);
                 }
-            Debug.Log("Gems: "+player.GetComponent<PlayerController>().GetGems());
-            Debug.Log("Money: "+player.GetComponent<PlayerController>().GetMoney());
+                else
+                {
+                    PlayerHolder.Instance.SetGems(PlayerHolder.Instance.GetGems().Value + this.value);
+                }
             }
             SetActiveCoinClientRpc();
         }

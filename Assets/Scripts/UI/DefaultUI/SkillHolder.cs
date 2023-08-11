@@ -10,16 +10,34 @@ public class SkillHolder : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private DefaultUI defaultUI;
     [SerializeField] private Image lockIcon;
+    [SerializeField] private int idPlayer;
     private void Start()
     {
-        defaultUI.GetPlayerController().SkillBurstChanged += SkillBurstChangedAction;
-        defaultUI.GetPlayerController().SkillStateChanged += SkillStateChangedAction;
-        foreach (var client in ServerManager.Instance.clientAndCharacterID)
+        if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Multi)
         {
-            if (client.x == NetworkManager.Singleton.LocalClientId)
+            defaultUI.GetPlayerController().SkillBurstChanged += SkillBurstChangedAction;
+            defaultUI.GetPlayerController().SkillStateChanged += SkillStateChangedAction;
+            foreach (var client in ServerManager.Instance.clientAndCharacterID)
             {
-                image.sprite = defaultUI.GetUIManager().characterDatabase.GetCharacterById((int)client.y).SkillIcon;
+                if (client.x == NetworkManager.Singleton.LocalClientId)
+                {
+                    image.sprite = defaultUI.GetUIManager().characterDatabase.GetCharacterById((int)client.y).SkillIcon;
+                }
             }
+        }
+        else if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Single)
+        {
+            PlayerHolder playerHolder = PlayerHolder.Instance;
+            if (playerHolder.GetPlayerList()[idPlayer].GetSkillBurstHolder().GetComponent<SkillBurstHolder>().GetNameSkill().GetComponent<RexSkill>() != null)
+            {
+                image.sprite = playerHolder.GetPlayerList()[idPlayer].GetSkillBurstHolder().GetComponent<SkillBurstHolder>().GetNameSkill().GetComponent<RexSkill>().GetSkillIcon();
+            }
+            if (playerHolder.GetPlayerList()[idPlayer].GetSkillBurstHolder().GetComponent<SkillBurstHolder>().GetNameSkill().GetComponent<PinoSkill>() != null)
+            {
+                image.sprite = playerHolder.GetPlayerList()[idPlayer].GetSkillBurstHolder().GetComponent<SkillBurstHolder>().GetNameSkill().GetComponent<PinoSkill>().GetSkillIcon();
+            }
+            playerHolder.GetPlayerList()[idPlayer].SkillBurstChanged += SkillBurstChangedAction;
+            playerHolder.GetPlayerList()[idPlayer].SkillStateChanged += SkillStateChangedAction;
         }
     }
 
@@ -30,10 +48,13 @@ public class SkillHolder : MonoBehaviour
 
     private void SkillBurstChangedAction(object sender, bool e)
     {
-        if(e){
-            image.color = new Color(1,1,1,1);
-        }else{
-            image.color = new Color(1,1,1,0.5f);
+        if (e)
+        {
+            image.color = new Color(1, 1, 1, 1);
+        }
+        else
+        {
+            image.color = new Color(1, 1, 1, 0.5f);
         }
     }
 }

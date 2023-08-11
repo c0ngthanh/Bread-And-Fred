@@ -15,12 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/ChooseDinoScene.unity
     guid: fc3197e21a26fb449b64932c3a650387
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/SingleScene.unity
+    guid: 23df27d5ef9ffd944a70dc5e83f4625b
   - enabled: 1
-    path: Assets/Scenes/CoopSceneTest.unity
-    guid: 6491bf47d20c031428025b08251f4c1d
+    path: Assets/Scenes/SingleStartScene.unity
+    guid: 7b9a90b0627e61544a930424c72a2fa6
   - enabled: 1
-    path: Assets/Scenes/SampleSceneTest.unity
-    guid: 5a31c6a90050c2f4ea236d7de2218bce
+    path: Assets/Scenes/SampleSceneNew.unity
+    guid: 645bedbd5a5470745ad73caf04c86151
   m_configObjects: {}

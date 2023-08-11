@@ -7,7 +7,6 @@ public class SkillBurstHolder : MonoBehaviour
 {
     [SerializeField] GameObject nameSkill;
     [SerializeField] float countDown;
-
     public float GetCountDown(){
         return countDown;
     }

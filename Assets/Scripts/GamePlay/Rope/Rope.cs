@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static Helper;
 
 public class Rope : NetworkBehaviour
 {
@@ -15,9 +16,6 @@ public class Rope : NetworkBehaviour
     private float lineWidth = 0.1f;
     private SpringJoint2D joint;
 
-    public float moveSpeed;
-    public Vector3 movement;
-    public float dirX;
     private LineRenderer ropeMaxLinerenderer;
     // Use this for initialization
     void Start()
@@ -57,23 +55,56 @@ public class Rope : NetworkBehaviour
     {
         this.DrawRope();
         float distance = Vector2.Distance(player1.transform.position, player2.transform.position);
-        if (Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == player1.GetComponent<PlayerController>().GetSignFacingRight() &&
-        joint.enabled &&
-        (player1.GetComponent<PlayerController>().IsGrounded() &&
-        player2.GetComponent<PlayerController>().IsGrounded()))
+        if (player1.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting || player2.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting)
         {
-            joint.enabled = false;
-            ropeMaxLinerenderer.enabled = false;
-            lineRenderer.enabled = true;
-        }
-        else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight() &&
-        joint.enabled &&
-        (player1.GetComponent<PlayerController>().IsGrounded() &&
-        player2.GetComponent<PlayerController>().IsGrounded()))
-        {
-            joint.enabled = false;
-            ropeMaxLinerenderer.enabled = false;
-            lineRenderer.enabled = true;
+            if ((Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == player1.GetComponent<PlayerController>().GetSignFacingRight() || 
+            Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight()) &&
+            joint.enabled &&
+            (player1.GetComponent<PlayerController>().IsGrounded() &&
+            player2.GetComponent<PlayerController>().IsGrounded()))
+            {
+                joint.enabled = false;
+                ropeMaxLinerenderer.enabled = false;
+                lineRenderer.enabled = true;
+            }
+            // else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight() &&
+            // joint.enabled &&
+            // (player1.GetComponent<PlayerController>().IsGrounded() &&
+            // player2.GetComponent<PlayerController>().IsGrounded()))
+            // {
+            //     joint.enabled = false;
+            //     ropeMaxLinerenderer.enabled = false;
+            //     lineRenderer.enabled = true;
+            // }
+        }else{
+            if ((Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == player1.GetComponent<PlayerController>().GetSignFacingRight() || 
+            Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight()) &&
+            joint.enabled &&
+            (player1.GetComponent<PlayerController>().IsGrounded() ||
+            player2.GetComponent<PlayerController>().IsGrounded()))
+            {
+                joint.enabled = false;
+                ropeMaxLinerenderer.enabled = false;
+                lineRenderer.enabled = true;
+            }
+            // if (Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == player1.GetComponent<PlayerController>().GetSignFacingRight() &&
+            // joint.enabled &&
+            // (player1.GetComponent<PlayerController>().IsGrounded() ||
+            // player2.GetComponent<PlayerController>().IsGrounded()))
+            // {
+            //     joint.enabled = false;
+            //     ropeMaxLinerenderer.enabled = false;
+            //     lineRenderer.enabled = true;
+            // }
+            // else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight() &&
+            // joint.enabled &&
+            // (player1.GetComponent<PlayerController>().IsGrounded() ||
+            // player2.GetComponent<PlayerController>().IsGrounded()))
+            // {
+            //     joint.enabled = false;
+            //     ropeMaxLinerenderer.enabled = false;
+            //     lineRenderer.enabled = true;
+            // }
         }
         if (distance > 4 && !joint.enabled)
         {
@@ -94,23 +125,23 @@ public class Rope : NetworkBehaviour
         // else if (player1.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
         // player2.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
         // GameState.GetGameState() == GameState.State.Rotate)
-        {
-            if (IsServer)
-            {
-                SetGameStateServerRpc(GameState.State.Normal);
-            }
-        }
+        // {
+        //     if (IsServer)
+        //     {
+        //         SetGameStateServerRpc(GameState.State.Normal);
+        //     }
+        // }
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void SetGameStateServerRpc(GameState.State value)
-    {
-        SetGameStateClientRpc(value);
-    }
-    [ClientRpc]
-    public void SetGameStateClientRpc(GameState.State value)
-    {
-        GameState.SetGameState(value);
-    }
+    // [ServerRpc(RequireOwnership = false)]
+    // public void SetGameStateServerRpc(GameState.State value)
+    // {
+    //     SetGameStateClientRpc(value);
+    // }
+    // [ClientRpc]
+    // public void SetGameStateClientRpc(GameState.State value)
+    // {
+    //     GameState.Instance.SetGameState(value);
+    // }
     public void SetPlayer1(GameObject player1)
     {
         this.player1 = player1;

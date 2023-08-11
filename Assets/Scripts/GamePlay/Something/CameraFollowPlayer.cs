@@ -11,54 +11,59 @@ public class CameraFollowPlayer : NetworkBehaviour
 
     private void Start()
     {
-        SetCameraClientRpc();
+        // if (IsServer)
+        // SetCameraClientRpc();
+        player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
+        OldDirY = player.transform.position.y + 5;
     }
     [ClientRpc]
     private void SetCameraClientRpc()
     {
-        GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
-        if (gameObjectArray.Length == 2)
-        {
-            if (gameObjectArray[0].GetComponent<PlayerController>().IsLocalPlayer)
-            {
-                player = gameObjectArray[0];
-            }
-            if (gameObjectArray[1].GetComponent<PlayerController>().IsLocalPlayer)
-            {
-                player = gameObjectArray[1];
-            }
-        }
-        else
-        {
-            player = gameObjectArray[0];
+        // GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
+        // if (gameObjectArray.Length == 2)
+        // {
+        //     if (gameObjectArray[0].GetComponent<PlayerController>().IsLocalPlayer)
+        //     {
+        //         player = gameObjectArray[0];
+        //     }
+        //     if (gameObjectArray[1].GetComponent<PlayerController>().IsLocalPlayer)
+        //     {
+        //         player = gameObjectArray[1];
+        //     }
+        // }
+        // else
+        // {
+        //     player = gameObjectArray[0];
 
-        }
+        // }
+        // player = NetworkManager.LocalClient.PlayerObject.gameObject;
 
-        OldDirY = player.transform.position.y + 5;
+        // OldDirY = player.transform.position.y + 5;
     }
     // Update is called once per frame
     void Update()
     {
-
-        if (player.transform.position.y - this.transform.position.y > 15 || this.transform.position.y - player.transform.position.y > 15)
+        if (player != null)
         {
-            OldDirY = player.transform.position.y;
+            if (player.transform.position.y - this.transform.position.y > 15 || this.transform.position.y - player.transform.position.y > 15)
+            {
+                OldDirY = player.transform.position.y;
+            }
+            // this.transform.position = new Vector3(player.transform.position.x, OldDirY, -10);
+
+            transform.position = new Vector3(Mathf.Clamp(player.transform.position.x, -2.0f, 70f), Mathf.Clamp(OldDirY, 10f, 200f), this.transform.position.z);
         }
-        // this.transform.position = new Vector3(player.transform.position.x, OldDirY, -10);
-
-        transform.position = new Vector3(Mathf.Clamp(player.transform.position.x, -2.0f, 70f), Mathf.Clamp(OldDirY, 10f, 200f), this.transform.position.z);
-
 
     }
     public GameObject GetPlayer()
     {
         return this.player;
     }
-
-    private void FollowPlayer()
+    public void SetPlayer(GameObject player)
     {
-
+        this.player = player;
     }
+
 
     // void DoDelayAction(float delayTime)
     // {

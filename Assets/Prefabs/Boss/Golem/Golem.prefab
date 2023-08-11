@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1224717465159031918}
   - component: {fileID: 4825309245651558410}
   - component: {fileID: 3582837365629187962}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Golem
   m_TagString: StoneBoss
   m_Icon: {fileID: 0}
@@ -173,9 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db8e2200d5278540b29f939f41a24c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserAttack_sprite: {fileID: 1224717466268443944}
   maxHealth: 100
-  S: 500
   currentHealth:
     m_InternalValue: 0
   typeAction:

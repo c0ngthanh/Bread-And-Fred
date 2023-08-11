@@ -8,7 +8,8 @@ public class ShopKeeper : NetworkBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private UIManager uIManager;
     private bool canBuy = false;
-    private void Start() {
+    private void Start()
+    {
         uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
     }
     protected void Update()
@@ -19,7 +20,12 @@ public class ShopKeeper : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canBuy == true)
         {
-            uIManager.shopUI.SetActiveStatus();
+            if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Multi){
+                uIManager.shopUI.SetActiveStatus();
+
+            }else if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Single){
+                uIManager.shopUILocal.SetActiveStatus();
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D other)

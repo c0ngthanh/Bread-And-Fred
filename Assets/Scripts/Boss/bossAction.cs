@@ -364,6 +364,10 @@ public class bossAction : NetworkBehaviour
         {
             GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezePositionY;
             SetFlagServerRpc(false);
+            if (GameMode.Instance.GetGameMode().Value == GameMode.Mode.Single)
+            {
+                GetComponent<Rigidbody2D>().AddForce(Vector2.down);
+            }
         }
     }
 
