@@ -7,10 +7,6 @@ using System;
 
 public class bossAction : NetworkBehaviour
 {
-
-    [SerializeField] private SpriteRenderer laserAttack_sprite;
-
-
     // public HealthBar healthBar;
     private SpriteRenderer sprite;
     private Animator ani;
@@ -28,7 +24,6 @@ public class bossAction : NetworkBehaviour
 
 
     private float CurrentTimer = 0;
-    // private NetworkVariable<float> CurrentTimer = new NetworkVariable<float>;
     private float TimeBetweenTicks = 1f;
 
     private NetworkVariable<float> angrySpeed = new NetworkVariable<float>();
@@ -74,8 +69,6 @@ public class bossAction : NetworkBehaviour
         }
 
 
-        // animation = GetComponent<Animation>();
-
         sprite = GetComponent<SpriteRenderer>();
         ani = GetComponent<Animator>();
         currentHealth.Value = maxHealth;
@@ -86,12 +79,9 @@ public class bossAction : NetworkBehaviour
         angry.Value = false;
         follow.Value = false;
         grow.Value = false;
-        // increaseCount.Value = 2;
         minLengthMeleeAttack.Value = 9;
-        minLengthLaserAttack.Value = 11;
-        maxLengthLaserAttack.Value = 18;
-        minLengthBlock.Value = 26;
-        maxLengthBlock.Value = 32;
+        minLengthLaserAttack.Value = 10;
+        maxLengthLaserAttack.Value = 19;
         sprite.color = new Color(255, 255, 255);
 
         bossStand = GameObject.FindGameObjectWithTag("BossStand");
@@ -331,7 +321,6 @@ public class bossAction : NetworkBehaviour
         {
             distance = distance2;
         }
-        Debug.Log("currenthealth - boss: " + currentHealth.Value);
 
         if (currentHealth.Value > 60 && currentHealth.Value < 65)
         {
@@ -350,7 +339,6 @@ public class bossAction : NetworkBehaviour
         {
             SetAngrySpeedServerRpc(7f);
         }
-
 
 
         if (!follow.Value)
@@ -379,36 +367,10 @@ public class bossAction : NetworkBehaviour
         }
     }
 
-    // private void AutoMovement()
-    // {
-    //     if (typeAction.Value != 1)
-    //     {
-    //         movement = new Vector3(speed * direction, 0f);
-    //         transform.position = transform.position + movement * Time.deltaTime;
-    //         S--;
-    //     }
-
-    //     if (S == 0)
-    //     {
-    //         S = 500;
-    //         direction = direction * -1;
-    //     }
-    //     if (direction > 0)
-    //     {
-    //         sprite.flipX = false;
-
-    //     }
-    //     else
-    //     {
-    //         sprite.flipX = true;
-    //     }
-    // }
-
     private void FollowPlayer()
     {
         //lấy vector từ player --> boss
         Vector3 distVector = player1.transform.position - transform.position;
-        Debug.Log("Player position" + player1.transform.position);
         float num;
         if (typeAction.Value != 1)
         {
@@ -424,9 +386,6 @@ public class bossAction : NetworkBehaviour
             }
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(num, transform.position.y), angrySpeed.Value * Time.deltaTime);
         }
-
-        Debug.Log("distance " + distance);
-
         if (angry.Value && grow.Value == false)
         {
             CallStatus(6);
@@ -435,7 +394,7 @@ public class bossAction : NetworkBehaviour
             transform.localScale = new Vector2(transform.localScale.x * (float)1.5, transform.localScale.y * (float)1.5);
             sprite.color = new Color(0.72f, 0f, 0f);
             SetMinLengthMeleeAttackServerRpc(15);
-            SetMinLengthLaserAttackServerRpc(16);
+            SetMinLengthLaserAttackServerRpc(15);
             SetMaxLengthLaserAttackServerRpc(26);
         }
         else
@@ -446,7 +405,6 @@ public class bossAction : NetworkBehaviour
             }
             if (typeAction.Value != 1)
             {
-                // SetGrowServerRpc(true);
                 if (distance < minLengthMeleeAttack.Value)
                 {
                     CallStatus(3);
@@ -492,9 +450,7 @@ public class bossAction : NetworkBehaviour
     {
         if (other.gameObject.tag == "Ground" || other.gameObject.tag == "BossStand")
         {
-            Debug.Log("Va cham ground");
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
-
         }
     }
 
@@ -517,11 +473,6 @@ public class bossAction : NetworkBehaviour
                 }
                 CurrentTimer = 0;
             }
-        }
-
-        if (other.gameObject.tag == "BossStand")
-        {
-            Debug.Log("Trang thai cua boss stand" + other.gameObject.activeSelf);
         }
     }
 
@@ -605,14 +556,6 @@ public class bossAction : NetworkBehaviour
                 ani.SetBool("LaserAttack2", false);
                 ani.SetBool("AmorBuff", false);
                 break;
-            // case 2:
-            //     ani.SetBool("Die", false);
-            //     ani.SetBool("Block", false);
-            //     ani.SetBool("MeleeAttack", false);
-            //     ani.SetBool("LaserAttack", false);
-            //     ani.SetBool("Grow", false);
-            //     ani.SetBool("AmorBuff", false);
-            //     break;
             case 3: // melee attack
                 ani.SetBool("MeleeAttack", true);
 
@@ -697,16 +640,6 @@ public class bossAction : NetworkBehaviour
                 ani.SetBool("LaserAttack_angry2", false);
                 ani.SetBool("AmorBuff", false);
                 break;
-
-            // case 6:
-            //     ani.SetBool("AmorBuff", true);
-
-            //     ani.SetBool("Die", false);
-            //     ani.SetBool("Block", false);
-            //     ani.SetBool("MeleeAttack", false);
-            //     ani.SetBool("LaserAttack", false);
-            //     ani.SetBool("Grow", false);
-            //     break;
             default:
                 // idle
                 if (!angry.Value)
@@ -749,9 +682,7 @@ public class bossAction : NetworkBehaviour
                 isAttacked.Value = true;
             }
         }
-
     }
-
 }
 
 
