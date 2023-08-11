@@ -108,12 +108,12 @@ TextureImporter:
       name: Laser_sheet_2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 934
-        width: 400
-        height: 66
+        x: 205
+        y: 936
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -129,12 +129,12 @@ TextureImporter:
       name: Laser_sheet_2_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 868
-        width: 400
-        height: 66
+        x: 205
+        y: 872
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -150,12 +150,12 @@ TextureImporter:
       name: Laser_sheet_2_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 802
-        width: 400
-        height: 66
+        x: 205
+        y: 808
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -171,12 +171,12 @@ TextureImporter:
       name: Laser_sheet_2_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 736
-        width: 400
-        height: 66
+        x: 205
+        y: 744
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: Laser_sheet_2_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 670
-        width: 400
-        height: 66
+        x: 205
+        y: 680
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -213,12 +213,12 @@ TextureImporter:
       name: Laser_sheet_2_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 604
-        width: 400
-        height: 66
+        x: 205
+        y: 616
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -234,12 +234,12 @@ TextureImporter:
       name: Laser_sheet_2_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 538
-        width: 400
-        height: 66
+        x: 205
+        y: 552
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -255,12 +255,12 @@ TextureImporter:
       name: Laser_sheet_2_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 472
-        width: 400
-        height: 66
+        x: 205
+        y: 488
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -276,12 +276,12 @@ TextureImporter:
       name: Laser_sheet_2_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 406
-        width: 400
-        height: 66
+        x: 205
+        y: 424
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -297,12 +297,12 @@ TextureImporter:
       name: Laser_sheet_2_9
       rect:
         serializedVersion: 2
-        x: 0
-        y: 340
-        width: 400
-        height: 66
+        x: 205
+        y: 360
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -318,12 +318,12 @@ TextureImporter:
       name: Laser_sheet_2_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 274
-        width: 400
-        height: 66
+        x: 205
+        y: 296
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -339,12 +339,12 @@ TextureImporter:
       name: Laser_sheet_2_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 208
-        width: 400
-        height: 66
+        x: 205
+        y: 232
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -360,12 +360,12 @@ TextureImporter:
       name: Laser_sheet_2_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 142
-        width: 400
-        height: 66
+        x: 205
+        y: 168
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -381,12 +381,12 @@ TextureImporter:
       name: Laser_sheet_2_13
       rect:
         serializedVersion: 2
-        x: 0
-        y: 76
-        width: 400
-        height: 66
+        x: 205
+        y: 104
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -402,12 +402,12 @@ TextureImporter:
       name: Laser_sheet_2_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 10
-        width: 400
-        height: 66
+        x: 205
+        y: 40
+        width: 205
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

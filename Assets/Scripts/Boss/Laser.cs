@@ -6,41 +6,43 @@ using Unity.Netcode;
 public class Laser : MonoBehaviour
 {
     [SerializeField] bossAction boss;
-    // private RaycastHit2D raycastHit2D;
-    // [SerializeField] private LayerMask playerLayer;
+    private float CurrentTimer = 0;
+    private float TimeBetweenTicks = 2f;
 
-    // Vector2 sample;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        // new WaitForSeconds(10);
+        if ((boss.GetTypeAction().Value == 4 || boss.GetTypeAction().Value == 5) && other != null)
         {
-            if (boss.GetTypeAction().Value == 4)
+            CurrentTimer += Time.deltaTime;
+            if (CurrentTimer >= TimeBetweenTicks)
             {
-                other.gameObject.GetComponent<PlayerController>().TakeDamage(5);
+                if (!boss.GetComponent<bossAction>().GetAngryStatus().Value)
+                {
+                    other.gameObject.GetComponent<PlayerController>().TakeDamage(2);
+                }
+                else
+                {
+                    other?.gameObject.GetComponent<PlayerController>().TakeDamage(3);
+                }
+                CurrentTimer = 0;
             }
-            // }
         }
     }
 
-    // void Start()
+
+    // IEnumerator IncreaseHealth(float time)
     // {
-
-
-    // }
-
-    // void Update()
-    // {
-    //     sample = transform.position;
-    //     sample.y -= 0.5f;
-
-    //     raycastHit2D = Physics2D.Raycast(sample, new Vector2(7, -2), 40f, playerLayer);
-    //     Debug.DrawRay(sample, new Vector2(7, -2), Color.red, 20f);
-
-    //     if (raycastHit2D.collider != null)
+    //     if (isTrigger)
     //     {
-    //         Debug.Log("va cham laser +  " + raycastHit2D.collider);
+    //         Debug.Log("laser" + player.GetHealth().Value);
+    //         player.TakeDamage(5);
+    //         // player.TakeDamage(2);
+    //         isTrigger = !isTrigger;
+    //         yield return new WaitForSeconds(time);
+    //         Debug.Log("========");
+    //         isTrigger = !isTrigger;
     //     }
     // }
-
 }

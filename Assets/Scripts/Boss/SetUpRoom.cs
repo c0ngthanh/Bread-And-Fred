@@ -47,9 +47,10 @@ public class SetUpRoom : NetworkBehaviour
 
     private void BossDeath(bool oldVal, bool newVal)
     {
-        if (!newVal)
+        if (newVal)
         {
             SetBossAppearServerRpc(false);
+            Debug.Log("trang thai boss _ boss die" + bossAppear.Value);
         }
     }
 
@@ -90,10 +91,11 @@ public class SetUpRoom : NetworkBehaviour
         {
             SetCloseDoorServerRpc(true);
         }
-        if (player1.transform.position.x < 50 && player1.transform.position.y > 143 && player2.transform.position.x < 50 && player2.transform.position.y > 143)
+        if (player1.transform.position.x < 40 && player1.transform.position.y > 143 && player2.transform.position.x < 50 && player2.transform.position.y > 143)
         {
             SetBossAppearServerRpc(true);
         }
+        Debug.Log("trang thai boss _ boss appear" + bossAppear.Value);
     }
 
     private void setUpDoor(bool oldVal, bool newVal)

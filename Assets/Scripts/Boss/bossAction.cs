@@ -14,20 +14,23 @@ public class bossAction : NetworkBehaviour
     // public HealthBar healthBar;
     private SpriteRenderer sprite;
     private Animator ani;
-    private Vector3 movement;
     private GameObject player1;
     private GameObject player2;
+    private GameObject bossStand;
 
     // public new Animation animation;
 
 
     public float maxHealth = 100;
-    private int direction = 1;
     private NetworkVariable<bool> follow = new NetworkVariable<bool>();
-    public int S = 500;
     private float distance1 = 1000, distance2 = 1000, distance = 0;
-    // private int typeAction = 2;
     private float speed = 2f;
+
+
+    private float CurrentTimer = 0;
+    // private NetworkVariable<float> CurrentTimer = new NetworkVariable<float>;
+    private float TimeBetweenTicks = 1f;
+
     private NetworkVariable<float> angrySpeed = new NetworkVariable<float>();
     private NetworkVariable<bool> die = new NetworkVariable<bool>();
     private NetworkVariable<bool> isAttacked = new NetworkVariable<bool>();
@@ -37,13 +40,22 @@ public class bossAction : NetworkBehaviour
     // cập nhật animation cho boss
     public NetworkVariable<int> typeAction = new NetworkVariable<int>();
 
-    // fight: true --> đang chiến đấu, bật health bar
-    //        false --> không chiến đấu, tắt health bar
-    public NetworkVariable<bool> fight = new NetworkVariable<bool>();
-
     public NetworkVariable<bool> grow = new NetworkVariable<bool>();
     public NetworkVariable<int> minLengthMeleeAttack = new NetworkVariable<int>();
+    public NetworkVariable<int> minLengthLaserAttack = new NetworkVariable<int>();
+    public NetworkVariable<int> maxLengthLaserAttack = new NetworkVariable<int>();
+    public NetworkVariable<int> minLengthBlock = new NetworkVariable<int>();
+    public NetworkVariable<int> maxLengthBlock = new NetworkVariable<int>();
 
+
+
+    public NetworkVariable<bool> flag = new NetworkVariable<bool>();
+    public NetworkVariable<bool> angry = new NetworkVariable<bool>();
+
+    private float checkTime_before;
+    private float checkTime_after;
+    private float checkHealth_before;
+    private float checkHealth_after;
 
 
     private void Awake()
@@ -71,17 +83,58 @@ public class bossAction : NetworkBehaviour
         isAttacked.Value = false;
         die.Value = false;
         angrySpeed.Value = speed;
+        angry.Value = false;
         follow.Value = false;
-        fight.Value = false;
         grow.Value = false;
         // increaseCount.Value = 2;
-        minLengthMeleeAttack.Value = 7;
+        minLengthMeleeAttack.Value = 9;
+        minLengthLaserAttack.Value = 11;
+        maxLengthLaserAttack.Value = 18;
+        minLengthBlock.Value = 26;
+        maxLengthBlock.Value = 32;
+        sprite.color = new Color(255, 255, 255);
+
+        bossStand = GameObject.FindGameObjectWithTag("BossStand");
+        currentHealth.OnValueChanged += CheckAlphaHealth;
+        flag.Value = true;
+        checkTime_before = Time.time;
+        checkHealth_before = currentHealth.Value;
+    }
+
+    private void CheckAlphaHealth(float oldVal, float newVal)
+    {
+
+        checkTime_after = Time.time;
+        checkHealth_after = currentHealth.Value;
+        float num = (checkHealth_before - checkHealth_after) / (checkTime_after - checkTime_before);
+        if (num > 5)
+        {
+            CallStatus(1);
+            SetTypeActionServerRpc(1);
+        }
+        else if (num < 3)
+        {
+            if (!angry.Value)
+            {
+                CallStatus(2);
+                SetTypeActionServerRpc(2);
+            }
+            else
+            {
+                CallStatus(7);
+                SetTypeActionServerRpc(7);
+            }
+        }
+        checkHealth_before = checkHealth_after;
+        checkTime_before = checkTime_after;
     }
 
 
 
+
+
     [ServerRpc(RequireOwnership = false)]
-    public void SetHealthServerRpc(int HP)
+    public void SetHealthServerRpc(float HP)
     {
         if (IsServer)
         {
@@ -97,17 +150,17 @@ public class bossAction : NetworkBehaviour
 
 
     [ServerRpc(RequireOwnership = false)]
-    public void SetFightSatusServerRpc(bool status)
+    public void SetAngryStatusServerRpc(bool val)
     {
         if (IsServer)
         {
-            this.fight.Value = status;
+            this.angry.Value = val;
         }
     }
 
-    public NetworkVariable<bool> GetFight()
+    public NetworkVariable<bool> GetAngryStatus()
     {
-        return this.fight;
+        return this.angry;
     }
 
 
@@ -125,6 +178,45 @@ public class bossAction : NetworkBehaviour
     {
         return this.minLengthMeleeAttack;
     }
+
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetMinLengthLaserAttackServerRpc(int num)
+    {
+        if (IsServer)
+        {
+            this.minLengthLaserAttack.Value = num;
+        }
+    }
+
+
+
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetMaxLengthLaserAttackServerRpc(int num)
+    {
+        if (IsServer)
+        {
+            this.maxLengthLaserAttack.Value = num;
+        }
+    }
+
+
+
+
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetFlagServerRpc(bool num)
+    {
+        if (IsServer)
+        {
+            this.flag.Value = num;
+        }
+    }
+
 
 
 
@@ -239,30 +331,26 @@ public class bossAction : NetworkBehaviour
         {
             distance = distance2;
         }
-
-        if (player1.transform.position.y > 142.69f && player2.transform.position.y > 142.69f)
-        {
-            SetFightSatusServerRpc(true);
-        }
-
         Debug.Log("currenthealth - boss: " + currentHealth.Value);
-        if (currentHealth.Value > 60 && currentHealth.Value < 80)
+
+        if (currentHealth.Value > 60 && currentHealth.Value < 65)
         {
-
             SetAngrySpeedServerRpc(4f);
-
         }
-        else if (currentHealth.Value > 40 && currentHealth.Value < 60)
+        else if (currentHealth.Value > 50 && currentHealth.Value < 55)
         {
             SetAngrySpeedServerRpc(5f);
+            SetAngryStatusServerRpc(true);
         }
-        else if (currentHealth.Value < 40)
+        else if (currentHealth.Value > 40 && currentHealth.Value < 45)
         {
             SetAngrySpeedServerRpc(6f);
         }
+        else if (currentHealth.Value < 30)
+        {
+            SetAngrySpeedServerRpc(7f);
+        }
 
-
-        // Debug.Log("angry speed" + angrySpeed.Value); 
 
 
         if (!follow.Value)
@@ -273,7 +361,7 @@ public class bossAction : NetworkBehaviour
                 SetFollowServerRpc(true);
             }
         }
-        else if (follow.Value == true || isAttacked.Value == true)
+        else if (follow.Value == true)
         {
             FollowPlayer();
         }
@@ -283,107 +371,157 @@ public class bossAction : NetworkBehaviour
             CallStatus(0);
             SetTypeActionServerRpc(0);
         }
+
+        if (!bossStand.activeSelf && flag.Value)
+        {
+            GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+            SetFlagServerRpc(false);
+        }
     }
 
-    private void AutoMovement()
-    {
-        if (typeAction.Value != 1)
-        {
-            movement = new Vector3(speed * direction, 0f);
-            transform.position = transform.position + movement * Time.deltaTime;
-            S--;
-        }
+    // private void AutoMovement()
+    // {
+    //     if (typeAction.Value != 1)
+    //     {
+    //         movement = new Vector3(speed * direction, 0f);
+    //         transform.position = transform.position + movement * Time.deltaTime;
+    //         S--;
+    //     }
 
-        if (S == 0)
-        {
-            S = 500;
-            direction = direction * -1;
-        }
-        if (direction > 0)
-        {
-            sprite.flipX = false;
+    //     if (S == 0)
+    //     {
+    //         S = 500;
+    //         direction = direction * -1;
+    //     }
+    //     if (direction > 0)
+    //     {
+    //         sprite.flipX = false;
 
-        }
-        else
-        {
-            sprite.flipX = true;
-        }
-    }
+    //     }
+    //     else
+    //     {
+    //         sprite.flipX = true;
+    //     }
+    // }
 
     private void FollowPlayer()
     {
         //lấy vector từ player --> boss
         Vector3 distVector = player1.transform.position - transform.position;
-
+        Debug.Log("Player position" + player1.transform.position);
+        float num;
         if (typeAction.Value != 1)
         {
-            transform.position = Vector2.MoveTowards(this.transform.position, player1.transform.position, angrySpeed.Value * Time.deltaTime);
-        }
-        if (distVector.x < 0)
-        {
-            sprite.flipX = true;
-            laserAttack_sprite.flipX = true;
-        }
-        else
-        {
-            sprite.flipX = false;
-            laserAttack_sprite.flipX = false;
-        }
-        Debug.Log("distance " + distance);
-
-        if (angrySpeed.Value != speed && grow.Value == false)
-        {
-            CallStatus(5);
-            SetTypeActionServerRpc(5);
-            SetGrowServerRpc(true);
-            transform.localScale = new Vector2(transform.localScale.x * (float)1.1, transform.localScale.y * (float)1.1);
-            SetMinLengthMeleeAttackServerRpc(10);
-
-        }
-        else
-        {
-            // SetGrowServerRpc(true);
-            if (distance < minLengthMeleeAttack.Value)
+            if (distVector.x < 0)
             {
-                CallStatus(3);
-                SetTypeActionServerRpc(3);
-            }
-            else if (17.0 < distance && distance < 22.0)
-            {
-                CallStatus(4);
-                typeAction.Value = 4;
-                SetTypeActionServerRpc(4);
-            }
-            else if (26.0 <= distance && distance < 32.0)
-            {
-                CallStatus(1);
-                typeAction.Value = 1;
-                SetTypeActionServerRpc(1);
+                num = player1.transform.position.x + 4f;
+                sprite.flipX = true;
             }
             else
             {
-                if (angrySpeed.Value == speed)
+                sprite.flipX = false;
+                num = player1.transform.position.x - 4f;
+            }
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(num, transform.position.y), angrySpeed.Value * Time.deltaTime);
+        }
+
+        Debug.Log("distance " + distance);
+
+        if (angry.Value && grow.Value == false)
+        {
+            CallStatus(6);
+            SetTypeActionServerRpc(6);
+            SetGrowServerRpc(true);
+            transform.localScale = new Vector2(transform.localScale.x * (float)1.5, transform.localScale.y * (float)1.5);
+            sprite.color = new Color(0.72f, 0f, 0f);
+            SetMinLengthMeleeAttackServerRpc(15);
+            SetMinLengthLaserAttackServerRpc(16);
+            SetMaxLengthLaserAttackServerRpc(26);
+        }
+        else
+        {
+            if (typeAction.Value == 1)
+            {
+                DoDelayAction(8);
+            }
+            if (typeAction.Value != 1)
+            {
+                // SetGrowServerRpc(true);
+                if (distance < minLengthMeleeAttack.Value)
                 {
-                    CallStatus(2);
-                    SetTypeActionServerRpc(2);
+                    CallStatus(3);
+                    SetTypeActionServerRpc(3);
+                }
+                else if (minLengthLaserAttack.Value < distance && distance < maxLengthLaserAttack.Value)
+                {
+                    if (distVector.x > 0)
+                    {
+                        CallStatus(4);
+                        SetTypeActionServerRpc(4);
+                    }
+                    else
+                    {
+
+                        CallStatus(5);
+                        SetTypeActionServerRpc(5);
+                    }
                 }
                 else
                 {
-                    CallStatus(6);
-                    SetTypeActionServerRpc(6);
-                }
+                    if (!angry.Value)
+                    {
+                        CallStatus(2);
+                        SetTypeActionServerRpc(2);
+                    }
+                    else
+                    {
+                        CallStatus(7);
+                        SetTypeActionServerRpc(7);
+                    }
 
+                }
+            }
+
+        }
+    }
+
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Ground" || other.gameObject.tag == "BossStand")
+        {
+            Debug.Log("Va cham ground");
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+
+        }
+    }
+
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+
+        if (other.gameObject.tag == "Player" && this.typeAction.Value == 3)
+        {
+            CurrentTimer += Time.deltaTime;
+            if (CurrentTimer >= TimeBetweenTicks)
+            {
+                if (!angry.Value)
+                {
+                    other.gameObject.GetComponent<PlayerController>().TakeDamage(1);
+                }
+                else
+                {
+                    other.gameObject.GetComponent<PlayerController>().TakeDamage(2);
+                }
+                CurrentTimer = 0;
             }
         }
 
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Player" && this.typeAction.Value == 3)
+        if (other.gameObject.tag == "BossStand")
         {
-            other.gameObject.GetComponent<PlayerController>().TakeDamage(5);
+            Debug.Log("Trang thai cua boss stand" + other.gameObject.activeSelf);
         }
     }
 
@@ -393,34 +531,38 @@ public class bossAction : NetworkBehaviour
         {
             StartCoroutine(DelayAction(delayTime));
         }
-        // else if (angrySpeed.Value != speed && grow.Value == true)
-        // {
-        //     Debug.Log("growth");
-        //     StartCoroutine(DelayActionGrow(delayTime));
+        else
+        {
+            if (typeAction.Value == 1)
+            {
+                StartCoroutine(WaitTimeNormalAction(delayTime));
 
-        // }
-
+            }
+        }
     }
 
     IEnumerator DelayAction(float delayTime)
     {
-        //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(delayTime);
-
-        //Do the action after the delay time has finished.
         if (die.Value)
         {
             Destroy(gameObject);
         }
     }
-    // IEnumerator DelayActionGrow(float delayTime)
-    // {
-    //     //Wait for the specified delay time before continuing.
-    //     yield return new WaitForSeconds(delayTime);
-    //     SetTypeActionServerRpc(5);
-    //     // CallStatus(5);
-    // }
-
+    IEnumerator WaitTimeNormalAction(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        if (!angry.Value)
+        {
+            CallStatus(2);
+            SetTypeActionServerRpc(2);
+        }
+        else
+        {
+            CallStatus(7);
+            SetTypeActionServerRpc(7);
+        }
+    }
 
 
     // 0 : Die
@@ -428,8 +570,9 @@ public class bossAction : NetworkBehaviour
     // 2 : Idle
     // 3 : MeleeAttack
     // 4 : LaserAttack
-    // 5 : Grow 
-    // 6 : AmorBuff = Idle - angry
+    // 5 : LaserAttack2
+    // 6 : Grow 
+    // 7 : AmorBuff = Idle - angry
 
     private void CallStatus(int type)
     {
@@ -442,10 +585,12 @@ public class bossAction : NetworkBehaviour
                 ani.SetBool("Block", false);
                 ani.SetBool("MeleeAttack", false);
                 ani.SetBool("LaserAttack", false);
+                ani.SetBool("LaserAttack2", false);
                 ani.SetBool("Grow", false);
+                ani.SetBool("LaserAttack_angry2", false);
+                ani.SetBool("LaserAttack_angry", false);
                 ani.SetBool("AmorBuff", false);
                 SetDieServerRpc(true);
-                SetFightSatusServerRpc(false);
                 DoDelayAction(1);
                 break;
             case 1: // block
@@ -455,6 +600,9 @@ public class bossAction : NetworkBehaviour
                 ani.SetBool("MeleeAttack", false);
                 ani.SetBool("LaserAttack", false);
                 ani.SetBool("Grow", false);
+                ani.SetBool("LaserAttack_angry", false);
+                ani.SetBool("LaserAttack_angry2", false);
+                ani.SetBool("LaserAttack2", false);
                 ani.SetBool("AmorBuff", false);
                 break;
             // case 2:
@@ -472,26 +620,81 @@ public class bossAction : NetworkBehaviour
                 ani.SetBool("Block", false);
                 ani.SetBool("LaserAttack", false);
                 ani.SetBool("Grow", false);
+                ani.SetBool("LaserAttack2", false);
+                ani.SetBool("LaserAttack_angry", false);
+                ani.SetBool("LaserAttack_angry2", false);
                 ani.SetBool("AmorBuff", false);
                 break;
             case 4: // laser attack
-                ani.SetBool("LaserAttack", true);
+                if (!angry.Value)
+                {
+                    ani.SetBool("LaserAttack", true);
 
-                ani.SetBool("Die", false);
-                ani.SetBool("Block", false);
-                ani.SetBool("MeleeAttack", false);
-                ani.SetBool("Grow", false);
-                ani.SetBool("AmorBuff", false);
+                    ani.SetBool("Die", false);
+                    ani.SetBool("Block", false);
+                    ani.SetBool("MeleeAttack", false);
+                    ani.SetBool("Grow", false);
+                    ani.SetBool("LaserAttack2", false);
+                    ani.SetBool("LaserAttack_angry", false);
+                    ani.SetBool("LaserAttack_angry2", false);
+                    ani.SetBool("AmorBuff", false);
+                }
+                else
+                {
+                    ani.SetBool("LaserAttack_angry", true);
+
+                    ani.SetBool("Die", false);
+                    ani.SetBool("Block", false);
+                    ani.SetBool("MeleeAttack", false);
+                    ani.SetBool("Grow", false);
+                    ani.SetBool("LaserAttack2", false);
+                    ani.SetBool("LaserAttack", false);
+                    ani.SetBool("LaserAttack_angry2", false);
+                    ani.SetBool("AmorBuff", false);
+                }
+
                 break;
-            case 5: // grow
+            case 5: // laser attack 2
+                if (!angry.Value)
+                {
+                    ani.SetBool("LaserAttack2", true);
+
+                    ani.SetBool("LaserAttack", false);
+                    ani.SetBool("Die", false);
+                    ani.SetBool("Block", false);
+                    ani.SetBool("MeleeAttack", false);
+                    ani.SetBool("Grow", false);
+                    ani.SetBool("LaserAttack_angry", false);
+                    ani.SetBool("LaserAttack_angry2", false);
+                    ani.SetBool("AmorBuff", false);
+                }
+                else
+                {
+                    ani.SetBool("LaserAttack_angry2", true);
+
+                    ani.SetBool("LaserAttack2", false);
+                    ani.SetBool("LaserAttack", false);
+                    ani.SetBool("Die", false);
+                    ani.SetBool("Block", false);
+                    ani.SetBool("MeleeAttack", false);
+                    ani.SetBool("Grow", false);
+                    ani.SetBool("LaserAttack_angry", false);
+                    ani.SetBool("AmorBuff", false);
+                }
+
+                break;
+            case 6: // grow
                 // DoDelayAction(10);
 
                 ani.SetBool("Grow", true);
 
                 ani.SetBool("LaserAttack", false);
+                ani.SetBool("LaserAttack2", false);
                 ani.SetBool("Die", false);
                 ani.SetBool("Block", false);
                 ani.SetBool("MeleeAttack", false);
+                ani.SetBool("LaserAttack_angry", false);
+                ani.SetBool("LaserAttack_angry2", false);
                 ani.SetBool("AmorBuff", false);
                 break;
 
@@ -506,14 +709,16 @@ public class bossAction : NetworkBehaviour
             //     break;
             default:
                 // idle
-                bool check = angrySpeed.Value == speed;
-                if (angrySpeed.Value == speed)
+                if (!angry.Value)
                 {
                     ani.SetBool("Die", false);
                     ani.SetBool("Block", false);
                     ani.SetBool("MeleeAttack", false);
                     ani.SetBool("LaserAttack", false);
+                    ani.SetBool("LaserAttack2", false);
                     ani.SetBool("Grow", false);
+                    ani.SetBool("LaserAttack_angry", false);
+                    ani.SetBool("LaserAttack_angry2", false);
                     ani.SetBool("AmorBuff", false);
                 }
                 else // idle_angry
@@ -524,6 +729,9 @@ public class bossAction : NetworkBehaviour
                     ani.SetBool("Block", false);
                     ani.SetBool("MeleeAttack", false);
                     ani.SetBool("LaserAttack", false);
+                    ani.SetBool("LaserAttack2", false);
+                    ani.SetBool("LaserAttack_angry", false);
+                    ani.SetBool("LaserAttack_angry2", false);
                     ani.SetBool("Grow", false);
                 }
                 break;
@@ -540,7 +748,6 @@ public class bossAction : NetworkBehaviour
             {
                 isAttacked.Value = true;
             }
-
         }
 
     }
