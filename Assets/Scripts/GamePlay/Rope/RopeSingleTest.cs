@@ -15,10 +15,7 @@ public class RopeSingleTest : NetworkBehaviour
     private float lineWidth = 0.1f;
     private SpringJoint2D joint;
 
-    public float moveSpeed;
     private LineRenderer ropeMaxLinerenderer;
-    private float dirXplayer1;
-    private float dirXplayer2;
     // Use this for initialization
     void Start()
     {
@@ -57,23 +54,56 @@ public class RopeSingleTest : NetworkBehaviour
     {
         this.DrawRope();
         float distance = Vector2.Distance(player1.transform.position, player2.transform.position);
-        if (Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == dirXplayer1 &&
-        joint.enabled &&
-        (player1.GetComponent<player1>().isGrounded() &&
-        player2.GetComponent<player1>().isGrounded()))
+        if (GameState.Instance.GetGameState().Value == GameState.State.Rotate)
         {
-            joint.enabled = false;
-            ropeMaxLinerenderer.enabled = false;
-            lineRenderer.enabled = true;
-        }
-        else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == dirXplayer2 &&
-        joint.enabled &&
-        (player1.GetComponent<player1>().isGrounded() &&
-        player2.GetComponent<player1>().isGrounded()))
-        {
-            joint.enabled = false;
-            ropeMaxLinerenderer.enabled = false;
-            lineRenderer.enabled = true;
+            if ((Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == Mathf.Sign(player1.GetComponent<PlayerController>().GetComponent<Rigidbody2D>().velocity.x) || 
+            Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == Mathf.Sign(player2.GetComponent<PlayerController>().GetComponent<Rigidbody2D>().velocity.x)) &&
+            joint.enabled &&
+            player1.GetComponent<PlayerController>().IsGrounded() &&
+            player2.GetComponent<PlayerController>().IsGrounded())
+            {
+                joint.enabled = false;
+                ropeMaxLinerenderer.enabled = false;
+                lineRenderer.enabled = true;
+            }
+            // else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight() &&
+            // joint.enabled &&
+            // (player1.GetComponent<PlayerController>().IsGrounded() &&
+            // player2.GetComponent<PlayerController>().IsGrounded()))
+            // {
+            //     joint.enabled = false;
+            //     ropeMaxLinerenderer.enabled = false;
+            //     lineRenderer.enabled = true;
+            // }
+        }else{
+            if ((Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == Mathf.Sign(player1.GetComponent<PlayerController>().GetComponent<Rigidbody2D>().velocity.x) || 
+            Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == Mathf.Sign(player2.GetComponent<PlayerController>().GetComponent<Rigidbody2D>().velocity.x)) &&
+            joint.enabled &&
+            (player1.GetComponent<PlayerController>().IsGrounded() ||
+            player2.GetComponent<PlayerController>().IsGrounded()))
+            {
+                joint.enabled = false;
+                ropeMaxLinerenderer.enabled = false;
+                lineRenderer.enabled = true;
+            }
+            // if (Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == player1.GetComponent<PlayerController>().GetSignFacingRight() &&
+            // joint.enabled &&
+            // (player1.GetComponent<PlayerController>().IsGrounded() ||
+            // player2.GetComponent<PlayerController>().IsGrounded()))
+            // {
+            //     joint.enabled = false;
+            //     ropeMaxLinerenderer.enabled = false;
+            //     lineRenderer.enabled = true;
+            // }
+            // else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight() &&
+            // joint.enabled &&
+            // (player1.GetComponent<PlayerController>().IsGrounded() ||
+            // player2.GetComponent<PlayerController>().IsGrounded()))
+            // {
+            //     joint.enabled = false;
+            //     ropeMaxLinerenderer.enabled = false;
+            //     lineRenderer.enabled = true;
+            // }
         }
         if (distance > 4 && !joint.enabled)
         {
@@ -81,30 +111,6 @@ public class RopeSingleTest : NetworkBehaviour
             ropeMaxLinerenderer.enabled = true;
             lineRenderer.enabled = false;
         }
-        // if (Mathf.Sign(player2.transform.position.x - player1.transform.position.x) == player1.GetComponent<PlayerController>().GetSignFacingRight() &&
-        // joint.enabled &&
-        // (player1.GetComponent<PlayerController>().IsGrounded() &&
-        // player2.GetComponent<PlayerController>().IsGrounded()))
-        // {
-        //     joint.enabled = false;
-        //     ropeMaxLinerenderer.enabled = false;
-        //     lineRenderer.enabled = true;
-        // }
-        // else if (Mathf.Sign(player1.transform.position.x - player2.transform.position.x) == player2.GetComponent<PlayerController>().GetSignFacingRight() &&
-        // joint.enabled &&
-        // (player1.GetComponent<PlayerController>().IsGrounded() &&
-        // player2.GetComponent<PlayerController>().IsGrounded()))
-        // {
-        //     joint.enabled = false;
-        //     ropeMaxLinerenderer.enabled = false;
-        //     lineRenderer.enabled = true;
-        // }
-        // if (distance > 4 && !joint.enabled)
-        // {
-        //     joint.enabled = true;
-        //     ropeMaxLinerenderer.enabled = true;
-        //     lineRenderer.enabled = false;
-        // }
 
         // if ((player1.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting ||
         //      player2.GetComponent<PlayerController>().GetPlayerState() == PlayerController.PlayerState.Sitting) &&
@@ -115,7 +121,7 @@ public class RopeSingleTest : NetworkBehaviour
         //         SetGameStateServerRpc(GameState.State.Rotate);
         //     }
         // }
-        // else if ( player1.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
+        // else if (player1.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
         // player2.GetComponent<PlayerController>().GetPlayerState() != PlayerController.PlayerState.Sitting &&
         // GameState.GetGameState() == GameState.State.Rotate)
         // {
@@ -125,16 +131,16 @@ public class RopeSingleTest : NetworkBehaviour
         //     }
         // }
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void SetGameStateServerRpc(GameState.State value)
-    {
-        SetGameStateClientRpc(value);
-    }
-    [ClientRpc]
-    public void SetGameStateClientRpc(GameState.State value)
-    {
-        GameState.SetGameState(value);
-    }
+    // [ServerRpc(RequireOwnership = false)]
+    // public void SetGameStateServerRpc(GameState.State value)
+    // {
+    //     SetGameStateClientRpc(value);
+    // }
+    // [ClientRpc]
+    // public void SetGameStateClientRpc(GameState.State value)
+    // {
+    //     GameState.SetGameState(value);
+    // }
     public void SetPlayer1(GameObject player1)
     {
         this.player1 = player1;
@@ -146,45 +152,6 @@ public class RopeSingleTest : NetworkBehaviour
     private void FixedUpdate()
     {
         this.Simulate();
-        dirXplayer1 = 0;
-        dirXplayer2 = 0;
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            player2.GetComponent<Animator>().SetBool("sitting", true);
-            player2.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            player2.GetComponent<Animator>().SetBool("sitting", false);
-            player2.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            player2.GetComponent<Rigidbody2D>().velocity = new Vector2(player2.GetComponent<Rigidbody2D>().velocity.x, 18);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            player1.GetComponent<Rigidbody2D>().velocity = new Vector2(player1.GetComponent<Rigidbody2D>().velocity.x, 18);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            dirXplayer2 = 1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            dirXplayer2 = -1;
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            dirXplayer1 = 1;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            dirXplayer1 = -1;
-        }
-        player1.GetComponent<Rigidbody2D>().AddForce(moveSpeed * new Vector2(dirXplayer1, 0));
-        player2.GetComponent<Rigidbody2D>().AddForce(moveSpeed * new Vector2(dirXplayer2, 0));
-
     }
 
     private void Simulate()

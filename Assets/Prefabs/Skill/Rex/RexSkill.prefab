@@ -48,6 +48,7 @@ MonoBehaviour:
   normalAttack: {fileID: 242024271445923679, guid: 1885242e0d024fe4ea0e2f7f6de1e38a, type: 3}
   skillNormalAttack: {fileID: 242024271445923679, guid: 66d1b02e5eb79214e9e291f9c229442f, type: 3}
   player: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: 563b372899e0c334daa412ea1bea3048, type: 3}
 --- !u!114 &3900420247574437052
 MonoBehaviour:
   m_ObjectHideFlags: 0

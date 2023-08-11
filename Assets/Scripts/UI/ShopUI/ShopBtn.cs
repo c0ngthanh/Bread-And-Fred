@@ -27,7 +27,7 @@ public class ShopBtn : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     private PlayerController localPlayer;
     private void Start()
     {
-        localPlayer = Camera.main.GetComponent<CameraFollowPlayer>().GetPlayer().GetComponent<PlayerController>();
+        localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerController>();;
         if (item.sellBy == SellBy.Money)
         {
             iconCoin.sprite = shopUI.GetMoneySprite();

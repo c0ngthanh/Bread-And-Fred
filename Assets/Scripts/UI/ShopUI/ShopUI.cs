@@ -25,7 +25,7 @@ public class ShopUI : NetworkBehaviour
     }
     private void Start()
     {
-        localPlayer = Camera.main.GetComponent<CameraFollowPlayer>().GetPlayer().GetComponent<PlayerController>();
+        localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerController>();;
         moneyValue.text = localPlayer.GetMoney().Value.ToString();
         gemValue.text = localPlayer.GetGems().Value.ToString();
         localPlayer.GetMoney().OnValueChanged += UpdateMoneyValue;

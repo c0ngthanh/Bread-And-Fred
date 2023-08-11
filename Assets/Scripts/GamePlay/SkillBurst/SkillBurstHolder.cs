@@ -6,8 +6,8 @@ using UnityEngine;
 public class SkillBurstHolder : MonoBehaviour
 {
     [SerializeField] GameObject nameSkill;
+    [SerializeField] Sprite iconSkill;
     [SerializeField] float countDown;
-
     public float GetCountDown(){
         return countDown;
     }

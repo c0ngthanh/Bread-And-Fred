@@ -15,6 +15,7 @@ public class MonsterAndBullet : MonoBehaviour
         boss.TakeDamage(bullet.GetDamage());
         // Debug.Log(boss.GetHealth());
         Destroy(bullet.gameObject);
+
     }
 
 

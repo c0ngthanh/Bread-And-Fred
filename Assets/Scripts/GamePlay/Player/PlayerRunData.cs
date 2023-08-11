@@ -10,23 +10,12 @@ public class PlayerRunData : ScriptableObject
     public float decceleration; //Time (approx.) we want it to take for the player to accelerate from runMaxSpeed to 0.
     public float velPower;
     public float frictionAmount;
-    [HideInInspector] public float runDeccelAmount; //Actual force (multiplied with speedDiff) applied to the player .
-    [Space(10)]
-    [Range(0.01f, 1)] public float accelInAir; //Multipliers applied to acceleration rate when airborne.
-    [Range(0.01f, 1)] public float deccelInAir;
+    [Header("Jump")]
+    public float jumpForce;
+    public float jumpInputBufferTime;
+    public float coyoteTime;
+    [Header("Rotate")]
+    public float rotateForce;
+    [Header("Properties")]
     public int health; //when attack with stone boss
-
-
-
-    // private void OnValidate()
-    // {
-    // 	//Calculate are run acceleration & deceleration forces using formula: amount = ((1 / Time.fixedDeltaTime) * acceleration) / runMaxSpeed
-    // 	runAccelAmount = (50 * runAcceleration) / moveSpeed;
-    // 	runDeccelAmount = (50 * runDecceleration) / moveSpeed;
-
-    // 	#region Variable Ranges
-    // 	runAcceleration = Mathf.Clamp(runAcceleration, 0.01f, moveSpeed);
-    // 	runDecceleration = Mathf.Clamp(runDecceleration, 0.01f, moveSpeed);
-    // 	#endregion
-    // }
 }

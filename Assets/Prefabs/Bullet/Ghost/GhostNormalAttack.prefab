@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dir:
-    m_InternalValue: {x: 0, y: 1, z: 0}
+    m_InternalValue: {x: -1, y: 0, z: 0}
   damage:
     m_InternalValue: 0
-  element: 0
+  element: 1
   ghostBulletDataInfo: {fileID: 11400000, guid: 8dd09f712513a9f44a0afe2f52953148, type: 2}

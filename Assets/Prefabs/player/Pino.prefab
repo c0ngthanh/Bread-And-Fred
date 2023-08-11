@@ -225,12 +225,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86dd6691e2fe0ba459285cb9c062c3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: b91942908f530984b92320b84ceab847, type: 2}
   GroundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   normalAttackPrefab: {fileID: 5787519281460533075, guid: 3d44f033c4f347842a3e5effcf250ccb, type: 3}
   checkGroundPosition: {fileID: 3189133499424986951}
-  checkGroundRadius: 0
+  checkGroundRadius: 0.1
   spawnBulletPoint: {fileID: 3284621953705174142}
   skillBurstHolder: {fileID: 2065376986744114749, guid: 79a6d945a46390e4086e56c88bd81fe8, type: 3}
   disUpdate:

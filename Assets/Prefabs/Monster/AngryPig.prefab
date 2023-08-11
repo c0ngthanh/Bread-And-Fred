@@ -41,12 +41,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1997363893734141842}
   - component: {fileID: 1997363893734141843}
-  - component: {fileID: 1997363893734141847}
   - component: {fileID: 1997363893734141844}
   - component: {fileID: 1997363893734141845}
   - component: {fileID: 1997363893734141846}
   - component: {fileID: 1997363893734141833}
   - component: {fileID: -6230392750201518849}
+  - component: {fileID: 6264532321942231962}
   m_Layer: 9
   m_Name: AngryPig
   m_TagString: Monster
@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 1997363893734141840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 5}
+  m_LocalScale: {x: -7, y: 7, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1997363891810566817}
@@ -123,32 +123,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1997363893734141847
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1997363893734141840}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0053865016, y: -0.014812838}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.36, y: 0.3}
-    newSize: {x: 0.36, y: 0.3}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.32768112, y: 0.27037433}
-  m_EdgeRadius: 0
 --- !u!50 &1997363893734141844
 Rigidbody2D:
   serializedVersion: 4
@@ -256,6 +230,22 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!70 &6264532321942231962
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997363893734141840}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.010069643, y: -0.0028777125}
+  m_Size: {x: 0.2938285, y: 0.2938285}
+  m_Direction: 0
 --- !u!1001 &6831788729194657611
 PrefabInstance:
   m_ObjectHideFlags: 0

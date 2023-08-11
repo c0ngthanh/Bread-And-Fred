@@ -8,6 +8,7 @@ public class RexSkill : NetworkBehaviour
     [SerializeField] private Transform normalAttack;
     [SerializeField] private Transform skillNormalAttack;
     [SerializeField] private Transform player;
+    [SerializeField] Sprite skillIcon;
     public void SetPlayer(Transform value){
         player = value;
     }
@@ -28,5 +29,8 @@ public class RexSkill : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     private void DestroyObjectServerRpc(){
         Destroy(gameObject);
+    }
+    public Sprite GetSkillIcon(){
+        return skillIcon;
     }
 }

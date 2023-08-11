@@ -15,7 +15,7 @@ public class NormalChest : NetworkBehaviour
     protected UIManager uIManager;
     protected NotificationUI notificationUI;
     protected NetworkObject temp;
-    [SerializeField] protected NetworkVariable<bool> canOpen = new NetworkVariable<bool>(false);
+    protected NetworkVariable<bool> canOpen = new NetworkVariable<bool>(false);
     // public struct ObjectInChest
     // {
     //     GameObject chestObject;
