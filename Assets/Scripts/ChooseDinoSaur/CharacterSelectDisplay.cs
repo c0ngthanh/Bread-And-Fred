@@ -145,15 +145,19 @@ public class CharacterSelectDisplay : NetworkBehaviour
             if (players[i].CharacterId == character.Id) { return; }
             if (IsCharacterTaken(character.Id, false)) { return; }
         }
-        characterNameText.text = character.DisplayName;
 
-        characterInfoPanel.SetActive(true);
+        // characterInfoPanel = character.Description;
+        // characterInfoPanel.SetActive(true);
 
         if (introInstance != null)
         {
             Destroy(introInstance);
         }
-
+        // if (characterInfoPanel != null)
+        // {
+        //     Destroy(characterInfoPanel);
+        // }
+        // characterInfoPanel = Instantiate(character.Description);
         introInstance = Instantiate(character.IntroPrefab, introSpawnPoint);
 
         SelectServerRpc(character.Id);
@@ -163,7 +167,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
     private void SelectServerRpc(int characterId, ServerRpcParams serverRpcParams = default)
     {
         for (int i = 0; i < players.Count; i++)
-        {   
+        {
             if (players[i].ClientId != serverRpcParams.Receive.SenderClientId) { continue; }
 
             if (!characterDatabase.IsValidCharacterId(characterId)) { return; }
@@ -187,7 +191,7 @@ public class CharacterSelectDisplay : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void LockInServerRpc(ServerRpcParams serverRpcParams = default)
     {
-       for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < players.Count; i++)
         {
             if (players[i].ClientId != serverRpcParams.Receive.SenderClientId) { continue; }
 
@@ -203,13 +207,14 @@ public class CharacterSelectDisplay : NetworkBehaviour
 
             foreach (var player in players)
             {
-                if(!player.IsLockedIn){
+                if (!player.IsLockedIn)
+                {
                     return;
                 }
             }
             foreach (var player in players)
             {
-                ServerManager.Instance.SetCharacter(player.ClientId,player.CharacterId);
+                ServerManager.Instance.SetCharacter(player.ClientId, player.CharacterId);
             }
             ServerManager.Instance.StartGame();
         }
