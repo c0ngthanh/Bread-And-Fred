@@ -15,18 +15,22 @@ public class Laser : MonoBehaviour
         // new WaitForSeconds(10);
         if ((boss.GetTypeAction().Value == 4 || boss.GetTypeAction().Value == 5) && other != null)
         {
+
             CurrentTimer += Time.deltaTime;
             if (CurrentTimer >= TimeBetweenTicks)
             {
-                if (!boss.GetComponent<bossAction>().GetAngryStatus().Value)
+                if (other.gameObject.GetComponent<PlayerController>() != null)
                 {
-                    other.gameObject.GetComponent<PlayerController>().TakeDamage(2);
+                    if (!boss.GetComponent<bossAction>().GetAngryStatus().Value)
+                    {
+                        other.gameObject.GetComponent<PlayerController>().TakeDamage(2);
+                    }
+                    else
+                    {
+                        other?.gameObject.GetComponent<PlayerController>().TakeDamage(3);
+                    }
+                    CurrentTimer = 0;
                 }
-                else
-                {
-                    other?.gameObject.GetComponent<PlayerController>().TakeDamage(3);
-                }
-                CurrentTimer = 0;
             }
         }
     }

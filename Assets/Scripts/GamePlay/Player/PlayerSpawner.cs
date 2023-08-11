@@ -6,32 +6,36 @@ using UnityEngine;
 
 public class PlayerSpawner : NetworkBehaviour
 {
-    [SerializeField] public static GameObject[] playerList;
+    public static GameObject[] playerList;
     [SerializeField] Rope ropePrefab;
     [SerializeField] CharacterDatabase characterDatabase;
-    public override void OnNetworkSpawn()
+    private void Start()
     {
-        if (!IsServer)
+        if (IsServer)
         {
-            return;
-        }
-        Debug.Log(ServerManager.Instance.clientAndCharacterID);
-        foreach (var client in ServerManager.Instance.ClientData)
-        {
-            var character = characterDatabase.GetCharacterById(client.Value.characterId);
-            if (character != null)
+            Debug.Log(ServerManager.Instance.clientAndCharacterID);
+            foreach (var client in ServerManager.Instance.ClientData)
             {
-                var characterInstance = Instantiate(character.GameplayPrefab);
-                characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+                var character = characterDatabase.GetCharacterById(client.Value.characterId);
+                if (character != null)
+                {
+                    var characterInstance = Instantiate(character.GameplayPrefab);
+                    characterInstance.SpawnAsPlayerObject(client.Value.clientId);
+                }
+            }
+            AddPlayerClientRpc();
+            if (GameMode.Instance.GetGameMode().Value != GameMode.Mode.Single)
+            {
+                Rope rope = Instantiate(ropePrefab);
+                rope.NetworkObject.Spawn();
             }
         }
-        Rope rope = Instantiate(ropePrefab);
-        rope.NetworkObject.Spawn();
-        AddPlayerClientRpc();
     }
     [ClientRpc]
     private void AddPlayerClientRpc()
     {
+        // Debug.Log(NetworkManager.LocalClient.PlayerObject.gameObject);
+        // Camera.main.gameObject.GetComponent<CameraFollowPlayer>().SetPlayer(NetworkManager.LocalClient.PlayerObject.gameObject);
         playerList = GameObject.FindGameObjectsWithTag("Player");
     }
 }
