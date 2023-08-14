@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class ServerManager : NetworkBehaviour
 {
     private string ChooseDinoScene = "ChooseDinoScene";
-    private string GameScene = "SampleSceneNew";
+    private string GameScene = "SampleScene";
     private int maxPlayer = 2;
     public static ServerManager Instance { get; private set; }
 
@@ -43,7 +43,8 @@ public class ServerManager : NetworkBehaviour
         ClientData = new Dictionary<ulong, ClientData>();
 
         NetworkManager.Singleton.StartHost();
-        if(IsServer){
+        if (IsServer)
+        {
             GameMode.Instance.SetGameMode(GameMode.Mode.Multi);
         }
         if (IsServer)

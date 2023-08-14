@@ -141,6 +141,7 @@ MonoBehaviour:
   isActiveNow: {fileID: 0}
   oldTeleport: {fileID: 0}
   mapUI: {fileID: 77630997}
+  minimapCamera: {fileID: 0}
 --- !u!1 &884316020
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +804,7 @@ MonoBehaviour:
   image: {fileID: 7648118591315045580}
   defaultUI: {fileID: 2269326313716032054}
   lockIcon: {fileID: 884316022}
+  idPlayer: 0
 --- !u!1 &2269326312596231354
 GameObject:
   m_ObjectHideFlags: 0
@@ -3134,7 +3136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2269326313433225723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4554,9 +4556,11 @@ MonoBehaviour:
   characterDatabase: {fileID: 11400000, guid: 0a6c5e10beca3e74a99384b733005199, type: 2}
   notificationUI: {fileID: 2269326312778919693}
   shopUI: {fileID: 2269326313734844589}
+  shopUILocal: {fileID: 0}
   defaultUI: {fileID: 2269326313716032054}
   dialoguePanel: {fileID: 1147210913}
   mapUI: {fileID: 77630997}
+  tutorialUI: {fileID: 0}
 --- !u!114 &2269326313777943321
 MonoBehaviour:
   m_ObjectHideFlags: 0

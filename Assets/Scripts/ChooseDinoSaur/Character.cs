@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
+
 [CreateAssetMenu(fileName = "New Character",menuName ="Characters/Character")]
 public class Character : ScriptableObject
 {
@@ -11,6 +13,8 @@ public class Character : ScriptableObject
     [SerializeField] private GameObject introPrefab;
     [SerializeField] private NetworkObject gameplayPrefab;
     [SerializeField] private Sprite skillIcon;
+    [SerializeField] private string nameDisplay;
+    [SerializeField] private GameObject description;
 
 
     public int Id => id;
@@ -19,4 +23,5 @@ public class Character : ScriptableObject
     public GameObject IntroPrefab => introPrefab;
     public NetworkObject GameplayPrefab => gameplayPrefab;
     public Sprite SkillIcon => skillIcon;
+    public GameObject Description => description;
 }

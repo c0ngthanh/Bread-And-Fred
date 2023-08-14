@@ -65,7 +65,7 @@ public class LobbyManager : MonoBehaviour
     private string playerName;
 
 
-    private async void  Awake()
+    private async void Awake()
     {
         await UnityServices.InitializeAsync();
         Instance = this;
@@ -91,7 +91,7 @@ public class LobbyManager : MonoBehaviour
     {
         this.playerName = playerName;
         InitializationOptions initializationOptions = new InitializationOptions();
-        initializationOptions.SetProfile(playerName);
+        // initializationOptions.SetProfile(playerName);
 
         await UnityServices.InitializeAsync(initializationOptions);
 
