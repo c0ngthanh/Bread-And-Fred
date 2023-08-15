@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SingleStartScene.unity
     guid: 7b9a90b0627e61544a930424c72a2fa6
   - enabled: 1
+    path: Assets/Scenes/TestUI.unity
+    guid: d0cf4df9126a2b64a87eae7ada025f65
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1

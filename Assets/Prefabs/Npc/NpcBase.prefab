@@ -81,7 +81,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.92, y: 1.92}
+  m_Size: {x: 2.5, y: 3.1666667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -103,9 +103,9 @@ BoxCollider2D:
   m_Offset: {x: -0.005176425, y: 0.16047665}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.92, y: 1.92}
-    newSize: {x: 1.92, y: 1.92}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.5, y: 3.1666667}
+    newSize: {x: 2.5, y: 3.1666667}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -126,8 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: aa12e24e0f5492a40b27dacacdf720ec, type: 2}
-  dialoguePanel: {fileID: 0}
-  uIManager: {fileID: 2269326313777943326, guid: a802396aa7fc62f46bc50fd4fa894697, type: 3}
 --- !u!114 &3255735205494765885
 MonoBehaviour:
   m_ObjectHideFlags: 0

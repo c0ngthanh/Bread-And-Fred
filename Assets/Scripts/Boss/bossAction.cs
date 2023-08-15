@@ -97,6 +97,7 @@ public class bossAction : NetworkBehaviour
         checkTime_after = Time.time;
         checkHealth_after = currentHealth.Value;
         float num = (checkHealth_before - checkHealth_after) / (checkTime_after - checkTime_before);
+        Debug.Log(num);
         if (num > 5)
         {
             CallStatus(1);

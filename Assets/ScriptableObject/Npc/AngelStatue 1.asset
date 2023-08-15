@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affcb7b5542d8e94a8384e8c17fd6fc9, type: 3}
   m_Name: AngelStatue 1
   m_EditorClassIdentifier: 
-  npcSprite: {fileID: 21300000, guid: e0f500308d9a592489cca7fb49e2c374, type: 3}
-  npcName: "T\u01B0\u1EE3ng Thi\xEAn Th\u1EA7n"
-  scale: 3
+  npcSprite: {fileID: 8800081985865436245, guid: 6ab92aa679a06a344b59f2317bea948e, type: 3}
+  npcName: Trunk
+  scale: 1
   dialogue:
+  - You are like me
   - You are on the right track.
-  - Your brothers are still waiting for your arrival
+  - I heard that your brother has been arrested by them
   - Let's collect a lot of coins that will be useful in the final battle
   - A terrible thing is waiting for you
   - Stay calm and be careful

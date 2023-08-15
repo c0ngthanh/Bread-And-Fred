@@ -8,6 +8,7 @@ public class CameraFollowPlayer : NetworkBehaviour
 {
     [SerializeField] GameObject player;
     private float OldDirY;
+    private bool flag;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class CameraFollowPlayer : NetworkBehaviour
         // SetCameraClientRpc();
         player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
         OldDirY = player.transform.position.y + 5;
+        flag = true;
     }
     [ClientRpc]
     private void SetCameraClientRpc()
@@ -50,8 +52,13 @@ public class CameraFollowPlayer : NetworkBehaviour
                 OldDirY = player.transform.position.y;
             }
             // this.transform.position = new Vector3(player.transform.position.x, OldDirY, -10);
-
+            if (player.transform.position.y > 143 && flag)
+            {
+                OldDirY = player.transform.position.y + 10;
+                flag = false;
+            }
             transform.position = new Vector3(Mathf.Clamp(player.transform.position.x, -2.0f, 70f), Mathf.Clamp(OldDirY, 10f, 200f), this.transform.position.z);
+
         }
 
     }

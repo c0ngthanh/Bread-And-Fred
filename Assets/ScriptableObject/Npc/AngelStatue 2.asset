@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affcb7b5542d8e94a8384e8c17fd6fc9, type: 3}
   m_Name: AngelStatue 2
   m_EditorClassIdentifier: 
-  npcSprite: {fileID: 21300000, guid: e0f500308d9a592489cca7fb49e2c374, type: 3}
-  npcName: "T\u01B0\u1EE3ng Thi\xEAn Th\u1EA7n"
+  npcSprite: {fileID: 2775701068622945926, guid: 5118c99a78681624e91b6cb5232919a7, type: 3}
+  npcName: Rock
   scale: 3
   dialogue:
-  - Well done guys!
+  - I've been here for a long time waiting for you
   - Your destination is not far away
-  - Use your money wisely
-  - You must decipher the secrets to know the scary truth behind
-  - Everyone is still waiting for your rescue
+  - Please be careful. It's very strong
+  - If you come after the war between the gods begins, it will be very detrimental
+    to you

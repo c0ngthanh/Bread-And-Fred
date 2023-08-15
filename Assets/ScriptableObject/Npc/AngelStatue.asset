@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affcb7b5542d8e94a8384e8c17fd6fc9, type: 3}
   m_Name: AngelStatue
   m_EditorClassIdentifier: 
-  npcSprite: {fileID: 21300000, guid: e0f500308d9a592489cca7fb49e2c374, type: 3}
-  npcName: "T\u01B0\u1EE3ng Thi\xEAn Th\u1EA7n"
-  scale: 3
+  npcSprite: {fileID: 8834383540189861523, guid: d3afb93dcfe27bd469ca50325216bb56, type: 3}
+  npcName: Radish
+  scale: 1
   dialogue:
-  - 'Hi! '
+  - Help me!
   - I guess I know where you guys are going
-  - Unfortunate things happen like this
-  - My friends told that terrible story
-  - I hope you can do it with courage and perseverance
-  - Good luck!
+  - A horrible thing happened
+  - That monster made me like this and i lost my friend too
+  - Please find a way and save me
+  - I'll be waiting for you
