@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class ServerManager : NetworkBehaviour
 {
     private string ChooseDinoScene = "ChooseDinoScene";
-    private string GameScene = "TestUI";
+    private string GameScene = "SampleSceneNewer";
     private int maxPlayer = 2;
     public static ServerManager Instance { get; private set; }
 

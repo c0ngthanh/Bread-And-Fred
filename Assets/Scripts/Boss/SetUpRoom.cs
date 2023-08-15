@@ -11,7 +11,8 @@ public class SetUpRoom : NetworkBehaviour
     private GameObject finalDoor; 
     private GameObject bossStand; 
     private NetworkVariable<bool> closeDoor = new NetworkVariable<bool>(); 
-    private NetworkVariable<bool> bossAppear = new NetworkVariable<bool>(); 
+    private NetworkVariable<bool> bossAppear = new NetworkVariable<bool>();
+
  
     private GameObject[] gameObjectArray; 
  
@@ -93,6 +94,8 @@ public class SetUpRoom : NetworkBehaviour
         } 
         if (player1.transform.position.x < 40 && player1.transform.position.y > 143 && player2.transform.position.x < 50 && player2.transform.position.y > 143) 
         { 
+            // bossAction boss = Instantiate(bossPrefab, bossSpawnPoint);
+            // boss.GetComponent<NetworkObject>().Spawn();
             SetBossAppearServerRpc(true); 
         } 
         Debug.Log("trang thai boss _ boss appear" + bossAppear.Value); 
@@ -102,13 +105,17 @@ public class SetUpRoom : NetworkBehaviour
     { 
         finalDoor.SetActive(newVal); 
     } 
- 
+
+
     private void setUpBossAppear(bool oldVal, bool newVal) 
     { 
-        if (!newVal) { } 
+        if (!newVal) {
+            bossStand.SetActive(true); 
+         } 
         else 
         { 
             bossStand.SetActive(false); 
+            BackgroundAudio.Instance.SetBossBackgroundAudioServerRpc();
         } 
     } 
 }

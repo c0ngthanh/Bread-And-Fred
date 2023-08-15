@@ -28,6 +28,5 @@ MonoBehaviour:
   - 30
   - 50
   - 50
-  itemDescription: "Gi\u1EA3m th\u1EDDi gian gi\u1EEFa c\xE1c \u0111\xF2n \u0111\xE1nh
-    \u0111i 50%"
-  percentIncrease: 50
+  itemDescription: Increase attack speed by 20%
+  percentIncrease: 20

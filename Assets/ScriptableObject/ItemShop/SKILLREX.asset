@@ -24,7 +24,6 @@ MonoBehaviour:
   - 5
   - 10
   - 15
-  itemDescription: "K\u0129 n\u0103ng \u0111\u1EB7c bi\u1EC7t c\u1EE7a Rex: C\u01B0\u1EDDng
-    h\xF3a nh\u1EEFng ph\xE1t \u0111\xE1nh th\u01B0\u1EDDng c\u1EE7a Rex trong v\xF2ng
-    10s (15s h\u1ED3i chi\xEAu)"
+  itemDescription: 'Rexskill: bonus 2 bullet when attacking in 10 seconds (15 seconds
+    countdown)'
   percentIncrease: 100

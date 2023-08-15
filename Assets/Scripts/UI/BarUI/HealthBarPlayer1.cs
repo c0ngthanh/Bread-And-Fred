@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Helper;
 using Unity.Netcode;
+using System;
 
 public class HealthBarPlayer1 : NetworkBehaviour
 {
@@ -35,13 +36,21 @@ public class HealthBarPlayer1 : NetworkBehaviour
         }
         if (player1 != null)
         {
-            SetMaxHealth(100);
+            SetMaxHealth(player1.GetComponent<PlayerController>().GetMaxHealth().Value);
         }
         player1.GetComponent<PlayerController>().GetHealth().OnValueChanged += UpdateHealthBar;
+        player1.GetComponent<PlayerController>().GetMaxHealth().OnValueChanged += UpdateMaxHealth;
         grid.GetComponent<SetUpRoom>().GetBossAppear().OnValueChanged += UpdateHealthBarStatus;
         Hide();
 
     }
+
+    private void UpdateMaxHealth(float previousValue, float newValue)
+    {
+        slider.maxValue = newValue;
+        slider.value = player1.GetComponent<PlayerController>().GetHealth().Value;
+    }
+
     public void SetMaxHealth(float maxHealth)
     {
         slider.maxValue = maxHealth;
@@ -75,31 +84,31 @@ public class HealthBarPlayer1 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObjectArray.Length == 0)
-        {
-            GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
-            if (gameObjectArray.Length == 2)
-            {
-                if (gameObjectArray[0].GetComponent<PlayerController>().GetBullet().GetElement() == Element.Water)
-                {
-                    player1 = gameObjectArray[0];
-                }
-                else
-                {
-                    player1 = gameObjectArray[1];
-                }
-            }
-            else if (gameObjectArray.Length == 1)
-            {
-                player1 = gameObjectArray[0];
+        // if (gameObjectArray.Length == 0)
+        // {
+        //     GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
+        //     if (gameObjectArray.Length == 2)
+        //     {
+        //         if (gameObjectArray[0].GetComponent<PlayerController>().GetBullet().GetElement() == Element.Water)
+        //         {
+        //             player1 = gameObjectArray[0];
+        //         }
+        //         else
+        //         {
+        //             player1 = gameObjectArray[1];
+        //         }
+        //     }
+        //     else if (gameObjectArray.Length == 1)
+        //     {
+        //         player1 = gameObjectArray[0];
 
-            }
+        //     }
 
-        }
-        else
-        {
-            hp.Value = player1.GetComponent<PlayerController>().GetHealth().Value;
-        }
+        // }
+        // else
+        // {
+        //     hp.Value = player1.GetComponent<PlayerController>().GetHealth().Value;
+        // }
     }
 
     private void Hide()

@@ -20,7 +20,7 @@ public class SingleMode : MonoBehaviour
     //     };
     //     // await AuthenticationService.Instance.SignInAnonymouslyAsync();
     // }
-    internal async void StartHost()
+    public async void StartHost()
     {
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () =>

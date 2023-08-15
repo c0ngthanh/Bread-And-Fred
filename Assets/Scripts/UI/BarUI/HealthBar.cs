@@ -11,7 +11,7 @@ public class HealthBar : NetworkBehaviour
     // Start is called before the first frame update
     private GameObject boss;
     public Slider slider;
-    private NetworkVariable<float> hp = new NetworkVariable<float>();
+    // private NetworkVariable<float> hp = new NetworkVariable<float>();
     [SerializeField] public GameObject grid;
     void Start()
     {
@@ -56,18 +56,18 @@ public class HealthBar : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (boss == null)
-        {
-            boss = GameObject.FindGameObjectWithTag("StoneBoss");
-            if (boss != null)
-            {
-                SetMaxHealth(100);
-            }
-        }
-        else
-        {
-            hp.Value = boss.GetComponent<bossAction>().GetHealth().Value;
-        }
+        // if (boss == null)
+        // {
+        //     boss = GameObject.FindGameObjectWithTag("StoneBoss");
+        //     if (boss != null)
+        //     {
+        //         SetMaxHealth(100);
+        //     }
+        // }
+        // else
+        // {
+        //     hp.Value = boss.GetComponent<bossAction>().GetHealth().Value;
+        // }
     }
 
     private void Hide()

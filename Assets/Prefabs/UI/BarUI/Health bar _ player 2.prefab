@@ -89,7 +89,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 27
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 9003382396953060647}
+  grid: {fileID: 0}
 --- !u!114 &9003382396953060641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -8.583801, y: -21.015217}
+  m_AnchoredPosition: {x: -10, y: -21.015217}
   m_SizeDelta: {x: -143.9319, y: -94.1919}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9003382398504725528

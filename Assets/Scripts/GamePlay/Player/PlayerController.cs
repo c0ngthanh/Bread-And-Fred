@@ -37,14 +37,14 @@ public class PlayerController : NetworkBehaviour
     private NetworkVariable<float> damage = new NetworkVariable<float>(1);
     private NetworkVariable<float> countDownNormalAttack = new NetworkVariable<float>(2);
     private NetworkVariable<float> speed = new NetworkVariable<float>(15);
-    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(100);
-    private NetworkVariable<float> health = new NetworkVariable<float>(100);
+    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(10);
+    // private NetworkVariable<float> health = new NetworkVariable<float>(100);
     private NetworkVariable<SkillState> skillState = new NetworkVariable<SkillState>(SkillState.Locked);
     private NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false);
     //EventHandler 
     public event EventHandler<bool> SkillBurstChanged;
     public event EventHandler<bool> SkillStateChanged;
-    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(100);
+    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(10);
 
 
     //
@@ -97,11 +97,6 @@ public class PlayerController : NetworkBehaviour
                 //     die = true;
                 //     DoDelayAction(1);
                 // }
-                // if (this.currentHealth.Value <= 0)
-                // {
-                //     die = true;
-                //     DoDelayAction(1);
-                // }
             }
             if (Input.GetKeyDown(KeyCode.J) && canShoot)
             {
@@ -135,6 +130,11 @@ public class PlayerController : NetworkBehaviour
                 }
             }
         }
+        // if (this.currentHealth.Value <= 0)
+        // {
+        //     die = true;
+        //     DoDelayAction(1);
+        // }
         if (LastOnGroundTime > 0 && LastJumpTime > 0 && !isJumping.Value)
         {
             SetJumpServerRpc(true);
@@ -386,7 +386,8 @@ public class PlayerController : NetworkBehaviour
         }
     }
     [ServerRpc(RequireOwnership = false)]
-    private void SetGameStateServerRpc(GameState.State state){
+    private void SetGameStateServerRpc(GameState.State state)
+    {
         GameState.Instance.SetGameState(state);
     }
     public bool GetCanSkill()
@@ -423,7 +424,7 @@ public class PlayerController : NetworkBehaviour
     }
     public NetworkVariable<float> GetCurrentHealth()
     {
-        return this.health;
+        return this.currentHealth;
     }
     public NetworkVariable<SkillState> GetSkillState()
     {
@@ -443,6 +444,11 @@ public class PlayerController : NetworkBehaviour
     public void SetGemServerRpc(float value)
     {
         this.gems.Value = value;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void SetCurrentHealthServerRpc(float value)
+    {
+        this.currentHealth.Value = value;
     }
     [ServerRpc(RequireOwnership = false)]
     public void SetDamageServerRpc(float value)
@@ -465,7 +471,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (IsServer)
         {
-            this.health.Value = this.health.Value * value / this.maxHealth.Value;
+            this.currentHealth.Value = this.currentHealth.Value * value / this.maxHealth.Value;
             this.maxHealth.Value = value;
         }
     }

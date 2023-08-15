@@ -11,6 +11,7 @@ public class PlayerCard : MonoBehaviour
     [SerializeField] private Image characterIconImage;
     [SerializeField] private TMP_Text playerNameText;
     [SerializeField] private TMP_Text characterNameText;
+    [SerializeField] private CharacterInfo characterInfo;
 
     public void UpdateDisplay(CharacterSelectState state) {
         if(state.CharacterId != -1){
@@ -18,7 +19,12 @@ public class PlayerCard : MonoBehaviour
             characterIconImage.sprite = character.Icon;
             characterIconImage.enabled = true;
             characterNameText.text = character.DisplayName;
+            characterInfo.name.text = character.DisplayName;
+            characterInfo.skillIcon.sprite = character.SkillIcon;
+            characterInfo.des.text = character.Description + "\n" + character.Element;
+            characterInfo.gameObject.SetActive(true);
         }else{
+            characterInfo.gameObject.SetActive(false);
             characterIconImage.enabled = false;
         }
 

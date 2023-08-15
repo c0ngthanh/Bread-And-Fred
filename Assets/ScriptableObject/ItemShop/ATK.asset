@@ -28,5 +28,5 @@ MonoBehaviour:
   - 30
   - 50
   - 50
-  itemDescription: "T\u0103ng s\u1EE9c t\u1EA5n c\xF4ng th\xEAm 50%"
-  percentIncrease: 50
+  itemDescription: Increase attack by 10%
+  percentIncrease: 10

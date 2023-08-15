@@ -24,7 +24,6 @@ MonoBehaviour:
   - 5
   - 10
   - 15
-  itemDescription: "K\u0129 n\u0103ng \u0111\u1EB7c bi\u1EC7t c\u1EE7a Pino: N\xE9m
-    m\u1ED9t qu\u1EA3 thi\xEAn th\u1EA1ch g\xE2y s\xE1t th\u01B0\u01A1ng trong ph\u1EA1m
-    vi (15s h\u1ED3i chi\xEAu)"
+  itemDescription: 'Pinoskill: Throw fire meteorit deal 30 damage to all enemy in
+    skill range(15 seconds count down)'
   percentIncrease: 100

@@ -51,6 +51,7 @@ public class bossAction : NetworkBehaviour
     private float checkTime_after;
     private float checkHealth_before;
     private float checkHealth_after;
+    private float checkTime=2;
 
 
     private void Awake()
@@ -85,39 +86,39 @@ public class bossAction : NetworkBehaviour
         sprite.color = new Color(255, 255, 255);
 
         bossStand = GameObject.FindGameObjectWithTag("BossStand");
-        currentHealth.OnValueChanged += CheckAlphaHealth;
+        // currentHealth.OnValueChanged += CheckAlphaHealth;
         flag.Value = true;
         checkTime_before = Time.time;
         checkHealth_before = currentHealth.Value;
     }
 
-    private void CheckAlphaHealth(float oldVal, float newVal)
+    private void CheckAlphaHealth()
     {
-
-        checkTime_after = Time.time;
-        checkHealth_after = currentHealth.Value;
-        float num = (checkHealth_before - checkHealth_after) / (checkTime_after - checkTime_before);
-        Debug.Log(num);
+        // checkTime_after = Time.time;
+        // checkHealth_after = currentHealth.Value;
+        float num = checkHealth_before - currentHealth.Value;
+        // Debug.Log(checkTime_after + " " + checkTime_before);
+        // Debug.Log(num);
         if (num > 5)
         {
             CallStatus(1);
             SetTypeActionServerRpc(1);
         }
-        else if (num < 3)
-        {
-            if (!angry.Value)
-            {
-                CallStatus(2);
-                SetTypeActionServerRpc(2);
-            }
-            else
-            {
-                CallStatus(7);
-                SetTypeActionServerRpc(7);
-            }
-        }
-        checkHealth_before = checkHealth_after;
-        checkTime_before = checkTime_after;
+        // else if (num < 3)
+        // {
+        //     if (!angry.Value)
+        //     {
+        //         CallStatus(2);
+        //         SetTypeActionServerRpc(2);
+        //     }
+        //     else
+        //     {
+        //         CallStatus(7);
+        //         SetTypeActionServerRpc(7);
+        //     }
+        // }
+        checkHealth_before = currentHealth.Value;
+        // checkTime_before = checkTime_after;
     }
 
 
@@ -295,6 +296,11 @@ public class bossAction : NetworkBehaviour
 
     private void Update()
     {
+        checkTime-=Time.deltaTime;
+        if(checkTime<=0){
+            CheckAlphaHealth();
+            checkTime =2;
+        }
         if (player1 == null || player2 == null)
         {
             GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Player");
@@ -530,7 +536,7 @@ public class bossAction : NetworkBehaviour
     // 6 : Grow 
     // 7 : AmorBuff = Idle - angry
 
-    private void CallStatus(int type)
+    public void CallStatus(int type)
     {
 
         switch (type)

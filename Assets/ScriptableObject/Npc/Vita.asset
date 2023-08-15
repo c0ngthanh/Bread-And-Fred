@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affcb7b5542d8e94a8384e8c17fd6fc9, type: 3}
+  m_Name: Vita
+  m_EditorClassIdentifier: 
+  npcSprite: {fileID: 1948715544, guid: d157f89f0a2b3f04eaf887d8b797c409, type: 3}
+  npcName: Vita
+  scale: 4
+  dialogue:
+  - OH SHIT BRO

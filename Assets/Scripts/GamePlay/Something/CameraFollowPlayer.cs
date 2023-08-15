@@ -8,15 +8,17 @@ public class CameraFollowPlayer : NetworkBehaviour
 {
     [SerializeField] GameObject player;
     private float OldDirY;
-    private bool flag;
-
+    public bool flag; 
     private void Start()
     {
         // if (IsServer)
         // SetCameraClientRpc();
         player = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
+        if(GameMode.Instance.GetGameMode().Value == GameMode.Mode.Single){
+            player = player.GetComponent<PlayerHolder>().GetPlayerList()[0].gameObject;
+        }
         OldDirY = player.transform.position.y + 5;
-        flag = true;
+        flag = true; 
     }
     [ClientRpc]
     private void SetCameraClientRpc()
@@ -45,22 +47,20 @@ public class CameraFollowPlayer : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player != null)
-        {
-            if (player.transform.position.y - this.transform.position.y > 15 || this.transform.position.y - player.transform.position.y > 15)
-            {
-                OldDirY = player.transform.position.y;
-            }
-            // this.transform.position = new Vector3(player.transform.position.x, OldDirY, -10);
-            if (player.transform.position.y > 143 && flag)
-            {
-                OldDirY = player.transform.position.y + 10;
-                flag = false;
-            }
-            transform.position = new Vector3(Mathf.Clamp(player.transform.position.x, -2.0f, 70f), Mathf.Clamp(OldDirY, 10f, 200f), this.transform.position.z);
-
+        if (player != null) 
+        { 
+            if (player.transform.position.y - this.transform.position.y > 15 || this.transform.position.y - player.transform.position.y > 15) 
+            { 
+                OldDirY = player.transform.position.y; 
+            } 
+            // this.transform.position = new Vector3(player.transform.position.x, OldDirY, -10); 
+            if (player.transform.position.y > 140 && flag) 
+            { 
+                OldDirY = player.transform.position.y + 10; 
+                flag = false; 
+            } 
+            transform.position = new Vector3(Mathf.Clamp(player.transform.position.x, -2.0f, 70f), Mathf.Clamp(OldDirY, 10f, 200f), this.transform.position.z); 
         }
-
     }
     public GameObject GetPlayer()
     {
