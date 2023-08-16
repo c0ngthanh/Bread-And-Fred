@@ -180,7 +180,6 @@ public class PlayerController : NetworkBehaviour
     }
     IEnumerator CountDownTime()
     {
-        Debug.Log(countDown);
         CountDownTimeChanged?.Invoke(this, countDown);
         yield return new WaitForSeconds(1);
         countDown -= 1;
