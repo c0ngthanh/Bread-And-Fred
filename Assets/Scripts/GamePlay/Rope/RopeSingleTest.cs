@@ -105,7 +105,7 @@ public class RopeSingleTest : NetworkBehaviour
             //     lineRenderer.enabled = true;
             // }
         }
-        if (distance > 4 && !joint.enabled)
+        if (distance > 5 && !joint.enabled)
         {
             joint.enabled = true;
             ropeMaxLinerenderer.enabled = true;

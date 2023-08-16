@@ -44,6 +44,7 @@ public class PlayerController : NetworkBehaviour
     //EventHandler 
     public event EventHandler<bool> SkillBurstChanged;
     public event EventHandler<bool> SkillStateChanged;
+    public event EventHandler<float> CountDownTimeChanged;
     private NetworkVariable<float> currentHealth = new NetworkVariable<float>(10);
 
 
@@ -104,7 +105,15 @@ public class PlayerController : NetworkBehaviour
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
-                OnJumpInput();
+                if (GameMode.Instance.GetCheat().Value == false)
+                {
+                    if (IsGrounded())
+                        JumpServerRpc();
+                }
+                else if (GameMode.Instance.GetCheat().Value == true)
+                {
+                    JumpServerRpc();
+                }
             }
             SetDirXServerRpc(0);
             if (Input.GetKey(KeyCode.D))
@@ -171,8 +180,21 @@ public class PlayerController : NetworkBehaviour
     }
     IEnumerator CountDownTime()
     {
-        yield return new WaitForSeconds(countDown);
-        SetCanSkill(true);
+        Debug.Log(countDown);
+        CountDownTimeChanged?.Invoke(this, countDown);
+        yield return new WaitForSeconds(1);
+        countDown -= 1;
+        if (countDown <= 0)
+        {
+            CountDownTimeChanged?.Invoke(this, countDown);
+            SetCanSkill(true);
+            countDown = skillBurstHolder.GetComponent<SkillBurstHolder>().GetCountDown();
+            yield return null;
+        }
+        else
+        {
+            StartCoroutine(CountDownTime());
+        }
     }
     [ServerRpc(RequireOwnership = false)]
     private void SpawnSkillServerRpc(ulong clientID)
@@ -261,7 +283,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
     [ServerRpc(RequireOwnership = false)]
-    private void JumpServerRpc()
+    public void JumpServerRpc()
     {
         //Ensures we can't call Jump multiple times from one press
         LastJumpTime = 0;

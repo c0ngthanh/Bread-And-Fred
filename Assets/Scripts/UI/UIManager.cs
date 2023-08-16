@@ -13,4 +13,5 @@ public class UIManager : NetworkBehaviour
     public DialoguePanel dialoguePanel;
     public MapUI mapUI;
     public TutorialUI tutorialUI;
+    public PauseMenuUI pauseMenuUI;
 }

@@ -26,11 +26,21 @@ public class PlayerHolder : NetworkBehaviour
         player2.SetDirXServerRpc(0);
         if (Input.GetKeyDown(KeyCode.W))
         {
-            player1.OnJumpInput();
+            if (GameMode.Instance.GetCheat().Value == false)
+            {
+                player1.OnJumpInput();
+            }else{
+                player1.JumpServerRpc();
+            }
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            player2.OnJumpInput();
+            if (GameMode.Instance.GetCheat().Value == false)
+            {
+                player2.OnJumpInput();
+            }else{
+                player2.JumpServerRpc();
+            }
         }
         if (Input.GetKey(KeyCode.D))
         {

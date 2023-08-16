@@ -236,8 +236,7 @@ MonoBehaviour:
   skillBurstHolder: {fileID: 2065376986744114749, guid: c19043dfc89eeb74aad61f0cf6f983f5, type: 3}
   disUpdate:
     m_InternalValue: 0
-  currentHealth:
-    m_InternalValue: 0
+  canShoot: 1
 --- !u!231 &3804350872030280192
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -255,7 +254,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 4
+  m_Distance: 5
   m_DampingRatio: 0
   m_Frequency: 0
 --- !u!114 &6849237085536922547

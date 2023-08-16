@@ -18,8 +18,8 @@ MonoBehaviour:
   decceleration: 9
   velPower: 1.2
   frictionAmount: 0.2
-  jumpForce: 20
+  jumpForce: 10
   jumpInputBufferTime: 0.1
   coyoteTime: 0.15
-  rotateForce: 30
+  rotateForce: 40
   health: 0
