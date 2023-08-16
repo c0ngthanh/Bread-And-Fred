@@ -12,16 +12,13 @@ using UnityEngine.SceneManagement;
 
 public class SingleMode : MonoBehaviour
 {
-    // private void Start() {
-    //     await UnityServices.InitializeAsync();
-    //     AuthenticationService.Instance.SignedIn += () =>
-    //     {
-    //         Debug.Log("Signed in" + AuthenticationService.Instance.PlayerId);
-    //     };
-    //     // await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    // }
+    private void Start() {
+        loadingPanel.SetActive(false);
+    }
+    [SerializeField] GameObject loadingPanel;
     public async void StartHost()
     {
+        loadingPanel.SetActive(true);
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () =>
         {

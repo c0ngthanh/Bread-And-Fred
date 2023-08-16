@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2221240308267758107}
   - component: {fileID: 2221240308267758106}
   - component: {fileID: 2221240308267758105}
-  - component: {fileID: 2221240308267758104}
   - component: {fileID: 2221240308267758111}
+  - component: {fileID: 3326679481086136832}
   m_Layer: 0
   m_Name: Vita
   m_TagString: Untagged
@@ -114,19 +114,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6672468, y: 0.3359397}
   m_EdgeRadius: 0
---- !u!114 &2221240308267758104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2221240308267758110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb75efc35dfab1b47b92f8f6c8a6ae9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npcData: {fileID: 11400000, guid: c8afaaa1af9eef640b1563bc6cec59c8, type: 2}
 --- !u!114 &2221240308267758111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +130,19 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &3326679481086136832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2221240308267758110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ffae848772e624d8effb1179125ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcData: {fileID: 11400000, guid: c8afaaa1af9eef640b1563bc6cec59c8, type: 2}
 --- !u!1 &3746396351242823871
 GameObject:
   m_ObjectHideFlags: 0

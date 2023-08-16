@@ -10,15 +10,15 @@ public class Npc : NetworkBehaviour
     [SerializeField] NpcData npcData;
 
 
-    private UIManager uIManager;
-    private DialoguePanel dialoguePanel;
-    private TMP_Text dialogueText;
-    private string npcName;
-    private Sprite npcSprite;
-    private string[] dialogue;
-    private int index;
-    private float wordSpeed = 0.06f;
-    private bool canTalk = false;
+    protected UIManager uIManager;
+    protected DialoguePanel dialoguePanel;
+    protected TMP_Text dialogueText;
+    protected string npcName;
+    protected Sprite npcSprite;
+    protected string[] dialogue;
+    protected int index;
+    protected float wordSpeed = 0.06f;
+    protected bool canTalk = false;
 
 
     void Start()
@@ -60,7 +60,7 @@ public class Npc : NetworkBehaviour
             }
         }
     }
-    public void NextLine()
+    public virtual void NextLine()
     {
         if (index < dialogue.Length - 1)
         {
@@ -73,7 +73,7 @@ public class Npc : NetworkBehaviour
             ZeroText();
         }
     }
-    private void ZeroText()
+    protected void ZeroText()
     {
         dialogueText.text = "";
         wordSpeed = 0.06f;
@@ -81,7 +81,7 @@ public class Npc : NetworkBehaviour
         dialoguePanel.gameObject.SetActive(false);
     }
 
-    IEnumerator Typing()
+    protected IEnumerator Typing()
     {
         foreach (char letter in dialogue[index].ToCharArray())
         {
