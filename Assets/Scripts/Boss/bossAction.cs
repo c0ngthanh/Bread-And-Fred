@@ -7,6 +7,7 @@ using System;
 
 public class bossAction : NetworkBehaviour
 {
+    [SerializeField] GameObject hitEffect;
     // public HealthBar healthBar;
     private SpriteRenderer sprite;
     private Animator ani;
@@ -52,7 +53,7 @@ public class bossAction : NetworkBehaviour
     private float checkHealth_before;
     private float checkHealth_after;
     private float checkTime=2;
-
+    private FlashHit flashHit;
 
     private void Awake()
     {
@@ -90,6 +91,7 @@ public class bossAction : NetworkBehaviour
         flag.Value = true;
         checkTime_before = Time.time;
         checkHealth_before = currentHealth.Value;
+        flashHit = GetComponent<FlashHit>();
     }
 
     private void CheckAlphaHealth()
@@ -693,6 +695,8 @@ public class bossAction : NetworkBehaviour
                 isAttacked.Value = true;
             }
         }
+        flashHit.Flash();
+        Instantiate(hitEffect, transform.position,Quaternion.identity);
     }
 }
 
