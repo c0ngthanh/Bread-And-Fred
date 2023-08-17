@@ -52,7 +52,7 @@ public class bossAction : NetworkBehaviour
     private float checkTime_after;
     private float checkHealth_before;
     private float checkHealth_after;
-    private float checkTime=2;
+    private float checkTime = 2;
     private FlashHit flashHit;
 
     private void Awake()
@@ -84,7 +84,7 @@ public class bossAction : NetworkBehaviour
         minLengthMeleeAttack.Value = 9;
         minLengthLaserAttack.Value = 10;
         maxLengthLaserAttack.Value = 19;
-        sprite.color = new Color(255, 255, 255);
+        sprite.color = new Color(1, 1, 1);
 
         bossStand = GameObject.FindGameObjectWithTag("BossStand");
         // currentHealth.OnValueChanged += CheckAlphaHealth;
@@ -298,10 +298,11 @@ public class bossAction : NetworkBehaviour
 
     private void Update()
     {
-        checkTime-=Time.deltaTime;
-        if(checkTime<=0){
+        checkTime -= Time.deltaTime;
+        if (checkTime <= 0)
+        {
             CheckAlphaHealth();
-            checkTime =2;
+            checkTime = 2;
         }
         if (player1 == null || player2 == null)
         {
@@ -330,7 +331,10 @@ public class bossAction : NetworkBehaviour
         {
             distance = distance2;
         }
-
+        if (currentHealth.Value < 50)
+        {
+            SetAngryStatusServerRpc(true);
+        }
         if (currentHealth.Value > 60 && currentHealth.Value < 65)
         {
             SetAngrySpeedServerRpc(4f);
@@ -338,7 +342,6 @@ public class bossAction : NetworkBehaviour
         else if (currentHealth.Value > 50 && currentHealth.Value < 55)
         {
             SetAngrySpeedServerRpc(5f);
-            SetAngryStatusServerRpc(true);
         }
         else if (currentHealth.Value > 40 && currentHealth.Value < 45)
         {
@@ -696,7 +699,7 @@ public class bossAction : NetworkBehaviour
             }
         }
         flashHit.Flash();
-        Instantiate(hitEffect, transform.position,Quaternion.identity);
+        Instantiate(hitEffect, transform.position, Quaternion.identity);
     }
 }
 

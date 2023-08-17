@@ -6,14 +6,15 @@ using UnityEngine.UI;
 
 public class ExitBtn : MonoBehaviour
 {
-
+    [SerializeField] private GameObject TutorialUI;
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(ExitTutorial);
+        gameObject.SetActive(false);
     }
 
     private void ExitTutorial()
     {
-        GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().tutorialUI.gameObject.SetActive(false);
+        TutorialUI.SetActive(false);
     }
 }

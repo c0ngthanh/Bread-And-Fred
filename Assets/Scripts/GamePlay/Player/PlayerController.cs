@@ -34,10 +34,10 @@ public class PlayerController : NetworkBehaviour
     private NetworkVariable<PlayerState> playerState = new NetworkVariable<PlayerState>(PlayerState.Idle);
     private NetworkVariable<float> money = new NetworkVariable<float>(0);
     private NetworkVariable<float> gems = new NetworkVariable<float>(0);
-    private NetworkVariable<float> damage = new NetworkVariable<float>(1);
-    private NetworkVariable<float> countDownNormalAttack = new NetworkVariable<float>(2);
+    private NetworkVariable<float> damage = new NetworkVariable<float>(2);
+    private NetworkVariable<float> countDownNormalAttack = new NetworkVariable<float>(1);
     private NetworkVariable<float> speed = new NetworkVariable<float>(15);
-    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(10);
+    private NetworkVariable<float> maxHealth = new NetworkVariable<float>(20);
     // private NetworkVariable<float> health = new NetworkVariable<float>(100);
     private NetworkVariable<SkillState> skillState = new NetworkVariable<SkillState>(SkillState.Locked);
     private NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false);
@@ -45,7 +45,7 @@ public class PlayerController : NetworkBehaviour
     public event EventHandler<bool> SkillBurstChanged;
     public event EventHandler<bool> SkillStateChanged;
     public event EventHandler<float> CountDownTimeChanged;
-    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(10);
+    private NetworkVariable<float> currentHealth = new NetworkVariable<float>(20);
 
 
     //

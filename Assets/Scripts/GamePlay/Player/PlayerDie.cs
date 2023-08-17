@@ -21,7 +21,8 @@ public class PlayerDie : NetworkBehaviour
 
     private void BossDieAction(float previousValue, float newValue)
     {
-        if(newValue<=0){
+        if (newValue <= 0)
+        {
             cage.SetActive(false);
         }
     }
@@ -36,8 +37,8 @@ public class PlayerDie : NetworkBehaviour
                 PlayerController playerController = player.GetComponent<PlayerController>();
                 if (playerController.GetCurrentHealth().Value <= 0)
                 {
-                    if(IsServer)
-                    Reset();
+                    if (IsServer)
+                        Reset();
                 }
             }
         }
@@ -52,7 +53,7 @@ public class PlayerDie : NetworkBehaviour
             player.transform.position = teleportWaypoint.transform.position + Vector3.up * 2;
             // GameObject.FindGameObjectWithTag("BossStand").gameObject.SetActive(true);
         }
-        Camera.main.GetComponent<CameraFollowPlayer>().flag = true; 
+        Camera.main.GetComponent<CameraFollowPlayer>().flag = true;
         boss.SetHealthServerRpc(boss.maxHealth);
         boss.SetAngryStatusServerRpc(false);
         boss.SetAngrySpeedServerRpc(2f);
@@ -63,10 +64,15 @@ public class PlayerDie : NetworkBehaviour
         boss.transform.position = transform.position;
         grid.SetCloseDoorServerRpc(false);
         grid.SetBossAppearServerRpc(false);
+        boss.transform.localScale = new Vector2(10, 10);
+        boss.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+        boss.SetGrowServerRpc(false);
+        Camera.main.gameObject.GetComponent<CameraFollowPlayer>().flag = true;
         ResetClientRpc();
     }
     [ClientRpc]
-    private void ResetClientRpc(){
+    private void ResetClientRpc()
+    {
         BackgroundAudio.Instance.SetDefaultBackgroundAudioServerRpc();
     }
 }
