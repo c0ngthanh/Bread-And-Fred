@@ -6,11 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class TutorialBtn : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
+public class TutorialBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] UnityEngine.UI.Image image;
-    private void Start() {
-        image =  this.GetComponent<UnityEngine.UI.Image>();
+    private void Start()
+    {
+        image = this.GetComponent<UnityEngine.UI.Image>();
         this.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ActiveTutorialUI);
     }
 
@@ -22,7 +23,7 @@ public class TutorialBtn : MonoBehaviour,IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        image.color = new Color(1,1,1,0.3f);
+        image.color = new Color(1, 1, 1, 0.5f);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

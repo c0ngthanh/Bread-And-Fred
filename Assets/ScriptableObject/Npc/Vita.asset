@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Vita
   m_EditorClassIdentifier: 
   npcSprite: {fileID: 1948715544, guid: d157f89f0a2b3f04eaf887d8b797c409, type: 3}
-  npcName: Vita
+  npcName: Anky
   scale: 4
   dialogue:
-  - OH SHIT BRO
+  - Thanks for saving me!
+  - I'm scared
+  - Let's hurry to save Carno

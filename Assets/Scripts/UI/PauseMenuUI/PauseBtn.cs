@@ -6,11 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class PauseBtn : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
+public class PauseBtn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] UnityEngine.UI.Image image;
-    private void Start() {
-        image =  this.GetComponent<UnityEngine.UI.Image>();
+    private void Start()
+    {
+        image = this.GetComponent<UnityEngine.UI.Image>();
         this.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ActivePauseUI);
     }
 
@@ -18,12 +19,12 @@ public class PauseBtn : MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     {
         Debug.Log("PauseGame");
         GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().pauseMenuUI.gameObject.SetActive(true);
-        Time.timeScale =0;
+        Time.timeScale = 0;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        image.color = new Color(1,1,1,0.3f);
+        image.color = new Color(1, 1, 1, 0.5f);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
