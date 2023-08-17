@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1224717465159031918}
   - component: {fileID: 4825309245651558410}
   - component: {fileID: 3582837365629187962}
+  - component: {fileID: 8601247233374249813}
   m_Layer: 9
   m_Name: Golem
   m_TagString: StoneBoss
@@ -31,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1224717465159031894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.9, y: 55.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -173,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db8e2200d5278540b29f939f41a24c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEffect: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   maxHealth: 100
   currentHealth:
     m_InternalValue: 0
@@ -236,6 +238,20 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &8601247233374249813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224717465159031894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c46bcf77f0e14b4c8af4e295e936bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterial: {fileID: 2100000, guid: 7bb9ab52bb4423f42814ec64e791ddff, type: 2}
+  duration: 0.1
 --- !u!1 &1224717466268443950
 GameObject:
   m_ObjectHideFlags: 0
