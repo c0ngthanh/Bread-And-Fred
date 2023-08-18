@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static Helper;
 
 public class PlayerDie : NetworkBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerDie : NetworkBehaviour
     [SerializeField] bossAction boss;
     [SerializeField] SetUpRoom grid;
     [SerializeField] GameObject cage;
+    [SerializeField] LosePanel losePanel;
+    private int countDown = 5;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,18 +41,50 @@ public class PlayerDie : NetworkBehaviour
                 if (playerController.GetCurrentHealth().Value <= 0)
                 {
                     if (IsServer)
-                        Reset();
+                    {
+                        foreach (var deadplayer in players)
+                        {
+                            deadplayer.gameObject.SetActive(false);
+                            deadplayer.GetComponent<PlayerController>().SetCurrentHealthServerRpc(deadplayer.GetComponent<PlayerController>().GetMaxHealth().Value);
+                            if (deadplayer.GetComponent<PlayerController>().GetSkillState().Value == SkillState.Unlocked)
+                            {
+                                deadplayer.GetComponent<PlayerController>().SetCanSkill(true);
+                            }
+
+                        }
+                        losePanel.countDownText.text = countDown.ToString();
+                        losePanel.gameObject.SetActive(true);
+                        StartCoroutine(ResetCoroutine());
+                    }
                 }
             }
         }
     }
+
+    private IEnumerator ResetCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+        countDown -= 1;
+        losePanel.countDownText.text = countDown.ToString();
+        if (countDown <= 0)
+        {
+            Reset();
+            countDown = 5;
+            yield return null;
+        }
+        else
+        {
+            StartCoroutine(ResetCoroutine());
+        }
+    }
+
     // [ServerRpc(RequireOwnership = false)]
     private void Reset()
     {
-        Debug.Log("Reset");
+        losePanel.gameObject.SetActive(false);
         foreach (var player in players)
         {
-            player.GetComponent<PlayerController>().SetCurrentHealthServerRpc(player.GetComponent<PlayerController>().GetMaxHealth().Value);
+            player.gameObject.SetActive(true);
             player.transform.position = teleportWaypoint.transform.position + Vector3.up * 2;
             // GameObject.FindGameObjectWithTag("BossStand").gameObject.SetActive(true);
         }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class CharacterSelectDisplay : NetworkBehaviour
 {
-    [SerializeField] private GameObject characterInfoPanel;
+    [SerializeField] private CharacterInfo characterInfoPanel;
     [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Transform charactersHolder;
@@ -145,9 +145,10 @@ public class CharacterSelectDisplay : NetworkBehaviour
             if (players[i].CharacterId == character.Id) { return; }
             if (IsCharacterTaken(character.Id, false)) { return; }
         }
-
-        // characterInfoPanel = character.Description;
-        // characterInfoPanel.SetActive(true);
+        characterInfoPanel.name.text = character.DisplayName;
+        characterInfoPanel.skillIcon.sprite = character.SkillIcon;
+        characterInfoPanel.des.text = character.Description + "\n" + character.Element;
+        characterInfoPanel.gameObject.SetActive(true);
 
         if (introInstance != null)
         {

@@ -10,7 +10,7 @@ public class ExitBtn : MonoBehaviour
     void Start()
     {
         GetComponent<Button>().onClick.AddListener(ExitTutorial);
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
     private void ExitTutorial()

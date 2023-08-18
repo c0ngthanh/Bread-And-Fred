@@ -185,7 +185,6 @@ public class PlayerController : NetworkBehaviour
         countDown -= 1;
         if (countDown <= 0)
         {
-            CountDownTimeChanged?.Invoke(this, countDown);
             SetCanSkill(true);
             countDown = skillBurstHolder.GetComponent<SkillBurstHolder>().GetCountDown();
             yield return null;
@@ -516,6 +515,9 @@ public class PlayerController : NetworkBehaviour
     {
         canSkill = value;
         SkillBurstChanged?.Invoke(this, canSkill);
+        if(canSkill==true){
+            CountDownTimeChanged?.Invoke(this,0);
+        }
     }
 
     public Bullet GetBullet()
