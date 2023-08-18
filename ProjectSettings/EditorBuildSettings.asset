@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ChooseDinoScene.unity
     guid: fc3197e21a26fb449b64932c3a650387
   - enabled: 1
-    path: Assets/Scenes/SampleSceneNewer.unity
+    path: Assets/Scenes/MultiScene.unity
     guid: 404186851ed5bdd45b9282370192e328
   - enabled: 1
     path: Assets/Scenes/CreditScene.unity
